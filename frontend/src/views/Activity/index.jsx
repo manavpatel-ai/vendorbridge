@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../utility/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { History, Search, FileText, CheckCircle2, User, PlusCircle, CreditCard, Send, ShieldAlert, Loader2 } from 'lucide-react';
+import { CheckCircle2, Clock, FileText, User, Loader2 } from 'lucide-react';
 import api from '../../utility/api';
 
 const Activity = () => {
@@ -18,7 +18,7 @@ const Activity = () => {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [entityFilter, setEntityFilter] = useState('all');
-  const [limit, setLimit] = useState(50);
+  const [limit] = useState(50); // Muted from dropdown to keep layout sketch-matched and clean
 
   const fetchLogs = async () => {
     setLoading(true);
@@ -37,116 +37,143 @@ const Activity = () => {
 
   useEffect(() => {
     fetchLogs();
-  }, [entityFilter, limit]);
+  }, [entityFilter]);
 
-  const getEntityIcon = (type) => {
-    switch (type) {
-      case 'rfq':
-        return { icon: FileText, color: 'text-sky-400 bg-sky-950/40 border-sky-900/60' };
-      case 'quotation':
-        return { icon: PlusCircle, color: 'text-amber-400 bg-amber-950/40 border-amber-900/60' };
-      case 'approval':
-        return { icon: CheckCircle2, color: 'text-emerald-400 bg-emerald-950/40 border-emerald-900/60' };
-      case 'purchase_order':
-        return { icon: History, color: 'text-purple-400 bg-purple-950/40 border-purple-900/60' };
-      case 'invoice':
-        return { icon: CreditCard, color: 'text-[#22C55E] bg-[#22C55E]/10 border-[#22C55E]/20' };
-      default:
-        return { icon: User, color: 'text-zinc-400 bg-zinc-800 border-zinc-700' };
-    }
+  const formatLogDate = (dateString) => {
+    if (!dateString) return '';
+    const d = new Date(dateString);
+    const day = d.getDate();
+    const months = ["may", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "jan", "feb", "mar", "apr"];
+    const month = months[d.getMonth()];
+    const year = d.getFullYear();
+    let hours = d.getHours();
+    const minutes = d.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    return `${day} ${month} ${year}, ${hours}:${minutes} ${ampm}`;
   };
 
+  const getLogDisplay = (log) => {
+    const action = log.action?.toLowerCase() || '';
+    const desc = log.description?.toLowerCase() || '';
+    const entity = log.entity_type?.toLowerCase() || '';
+
+    // 1. Success / Checkmark: quotation selected, approval completed, marked paid
+    if (
+      action === 'selected' || 
+      action === 'approved' || 
+      action === 'paid' || 
+      desc.includes('selected') || 
+      desc.includes('approved') || 
+      desc.includes('paid')
+    ) {
+      return {
+        icon: CheckCircle2,
+        bgColor: 'bg-emerald-950/20 dark:bg-emerald-950/20 bg-emerald-50',
+        borderColor: 'border-emerald-500/20 dark:border-emerald-500/20 border-emerald-500/30',
+        textColor: 'text-emerald-400 dark:text-emerald-400 text-emerald-600',
+      };
+    }
+
+    // 2. Pending / Clock: pending L1/L2, awaiting, overdue
+    if (
+      action.includes('pending') || 
+      desc.includes('pending') || 
+      desc.includes('awaiting')
+    ) {
+      return {
+        icon: Clock,
+        bgColor: 'bg-blue-950/20 dark:bg-blue-950/20 bg-blue-50',
+        borderColor: 'border-blue-500/20 dark:border-blue-500/20 border-blue-500/30',
+        textColor: 'text-blue-400 dark:text-blue-400 text-blue-600',
+      };
+    }
+
+    // 3. Vendor: added/updated vendor
+    if (entity === 'vendor' || action.includes('vendor') || desc.includes('vendor')) {
+      return {
+        icon: User,
+        bgColor: 'bg-pink-950/20 dark:bg-pink-950/20 bg-pink-50',
+        borderColor: 'border-pink-500/20 dark:border-pink-500/20 border-pink-500/30',
+        textColor: 'text-pink-400 dark:text-pink-400 text-pink-600',
+      };
+    }
+
+    // 4. Default Document / RFQ / PO / Invoice:
+    return {
+      icon: FileText,
+      bgColor: 'bg-sky-950/20 dark:bg-sky-950/20 bg-sky-50',
+      borderColor: 'border-sky-500/20 dark:border-sky-500/20 border-sky-500/30',
+      textColor: 'text-sky-400 dark:text-sky-400 text-sky-600',
+    };
+  };
+
+  const filterOptions = [
+    { name: 'All', value: 'all' },
+    { name: 'RFQ', value: 'rfq' },
+    { name: 'Approvals', value: 'approval' },
+    { name: 'Invoices', value: 'invoice' },
+    { name: 'Vendors', value: 'vendor' }
+  ];
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto px-1 sm:px-0">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[#E8EDEA]">Audit Trail</h1>
-        <p className="text-xs text-[#8C9A93] mt-1">
-          Review immutable, system-wide transaction activity logs.
+        <h1 className="text-xl sm:text-2xl font-bold text-[#E8EDEA] tracking-tight">Activity & Logs</h1>
+        <p className="text-[11px] sm:text-xs text-[#8C9A93] mt-1">
+          Procurement audit trail
         </p>
       </div>
 
-      {/* Filter Toolbar */}
-      <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl flex flex-wrap gap-4 items-center justify-between shadow-md">
-        <div className="flex items-center gap-2">
-          <label className="text-xs text-[#8C9A93] font-semibold uppercase tracking-wide">Filter Entity:</label>
-          <select
-            value={entityFilter}
-            onChange={(e) => setEntityFilter(e.target.value)}
-            className="bg-[#0B0F0E] border border-[#223027] text-xs text-[#E8EDEA] rounded-lg px-3 py-1.5 focus:outline-none focus:border-[#22C55E]"
+      {/* Filter Tabs Row */}
+      <div className="flex flex-wrap gap-2 sm:gap-3 py-2 border-b border-[#223027]/40 pb-4">
+        {filterOptions.map(opt => (
+          <button
+            key={opt.value}
+            onClick={() => setEntityFilter(opt.value)}
+            className={`px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold border transition-all cursor-pointer ${
+              entityFilter === opt.value
+                ? 'bg-[#93C5FD] border-[#2563EB] text-[#1E3A8A] font-semibold dark:bg-[#1E3A8A]/35 dark:border-[#3B82F6]/60 dark:text-[#60A5FA] shadow-sm'
+                : 'bg-transparent text-[#8C9A93] border-[#223027] hover:text-[#E8EDEA] hover:border-[#8C9A93]/40'
+            }`}
           >
-            <option value="all">All Entities</option>
-            <option value="rfq">Requests for Quotation (RFQ)</option>
-            <option value="quotation">Quotations</option>
-            <option value="approval">Approvals</option>
-            <option value="purchase_order">Purchase Orders</option>
-            <option value="invoice">Invoices</option>
-            <option value="vendor">Vendors</option>
-          </select>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <label className="text-xs text-[#8C9A93] font-semibold uppercase tracking-wide">Limit:</label>
-          <select
-            value={limit}
-            onChange={(e) => setLimit(parseInt(e.target.value))}
-            className="bg-[#0B0F0E] border border-[#223027] text-xs text-[#E8EDEA] rounded-lg px-3 py-1.5 focus:outline-none focus:border-[#22C55E]"
-          >
-            <option value={20}>Last 20</option>
-            <option value={50}>Last 50</option>
-            <option value={100}>Last 100</option>
-          </select>
-        </div>
+            {opt.name}
+          </button>
+        ))}
       </div>
 
-      {/* Timeline Section */}
+      {/* Main Feed Container */}
       {loading ? (
         <div className="flex justify-center py-20">
           <Loader2 className="h-8 w-8 animate-spin text-[#22C55E]" />
         </div>
       ) : logs.length === 0 ? (
-        <div className="text-center py-12 bg-[#121A17] border border-[#223027] rounded-xl">
-          <p className="text-sm text-[#8C9A93]">No audit logs available for selected filter.</p>
+        <div className="text-center py-16 bg-[#121A17] border border-[#223027] rounded-xl">
+          <p className="text-xs sm:text-sm text-[#8C9A93] italic">No audit trail logs available for this filter.</p>
         </div>
       ) : (
-        <div className="relative pl-6 border-l border-[#223027] space-y-6 ml-4">
+        <div className="divide-y divide-[#223027]/40">
           {logs.map((log) => {
-            const displayConfig = getEntityIcon(log.entity_type);
-            const IconComponent = displayConfig.icon;
+            const display = getLogDisplay(log);
+            const IconComponent = display.icon;
             
             return (
-              <div key={log.id} className="relative animate-fade-in group">
-                {/* Timeline node */}
-                <div className={`absolute -left-[38px] top-1 h-6 w-6 rounded-full flex items-center justify-center border ${displayConfig.color} z-10 transition-transform group-hover:scale-110 shadow-sm`}>
-                  <IconComponent className="h-3 w-3" />
+              <div key={log.id} className="flex items-start gap-3 sm:gap-4 py-4 sm:py-5 animate-fade-in group">
+                {/* Circular Icon Container */}
+                <div className={`h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0 rounded-full border flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm ${display.bgColor} ${display.borderColor} ${display.textColor}`}>
+                  <IconComponent className="h-4 w-4 sm:h-5 w-5" />
                 </div>
 
-                {/* Log Details Card */}
-                <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl hover:border-[#22C55E]/30 transition-all duration-200 shadow-md">
-                  <div className="flex flex-wrap justify-between items-start gap-2">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-semibold text-xs text-[#E8EDEA]">{log.actor_name || 'System'}</span>
-                        <span className="text-[10px] bg-[#1a2d24] text-[#22C55E] px-1.5 py-0.5 rounded font-mono uppercase tracking-wider">
-                          {log.action}
-                        </span>
-                        <span className="text-[10px] text-[#8C9A93] capitalize">
-                          ({log.entity_type.replace('_', ' ')})
-                        </span>
-                      </div>
-                      <p className="text-xs text-[#E8EDEA] leading-relaxed pt-1">{log.description}</p>
-                    </div>
-
-                    <span className="text-[10px] text-[#8C9A93] font-mono whitespace-nowrap">
-                      {new Date(log.created_at).toLocaleString()}
-                    </span>
-                  </div>
-
-                  {log.metadata && Object.keys(log.metadata).length > 0 && (
-                    <div className="mt-3 p-2.5 bg-[#0B0F0E] rounded-md border border-[#223027]/40 text-[10px] font-mono text-[#8C9A93] overflow-x-auto">
-                      <pre>{JSON.stringify(log.metadata, null, 2)}</pre>
-                    </div>
-                  )}
+                {/* Log Text Content */}
+                <div className="flex-1 min-w-0 pt-0.5 sm:pt-1">
+                  <p className="text-xs sm:text-sm text-[#E8EDEA] font-medium leading-relaxed">
+                    {log.description}
+                  </p>
+                  <p className="text-[10px] sm:text-xs text-[#8C9A93] mt-1 sm:mt-1.5 font-medium lowercase">
+                    {formatLogDate(log.created_at)}
+                  </p>
                 </div>
               </div>
             );

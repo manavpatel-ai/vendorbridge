@@ -38,8 +38,12 @@ const InvoiceDetails = () => {
       
       // Fetch Vendor details
       if (poData.vendor_id) {
-        const vendorRes = await api.get(`/vendors/${poData.vendor_id}`);
-        setVendorDetails(vendorRes.data);
+        try {
+          const vendorRes = await api.get(`/vendors/${poData.vendor_id}`);
+          setVendorDetails(vendorRes.data);
+        } catch (vErr) {
+          console.warn("Failed to load vendor details:", vErr);
+        }
       }
     } catch (err) {
       console.error("Failed to load invoice details:", err);

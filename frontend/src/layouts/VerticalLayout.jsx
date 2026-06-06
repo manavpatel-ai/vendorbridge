@@ -6,6 +6,7 @@ import Topbar from './components/Topbar';
 import { Loader2 } from 'lucide-react';
 
 const VerticalLayout = () => {
+  // Unconditional Hooks at the top
   const { isAuthenticated, loading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
