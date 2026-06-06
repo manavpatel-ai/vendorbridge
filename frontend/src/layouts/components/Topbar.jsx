@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../utility/context/AuthContext';
-import { LogOut, Bell, Check, Sun, Moon } from 'lucide-react';
+import { LogOut, Bell, Check, Sun, Moon, Menu } from 'lucide-react';
 import api from '../../utility/api';
 
-const Topbar = () => {
+const Topbar = ({ onToggleSidebar }) => {
   const { user, logout } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
@@ -70,10 +70,17 @@ const Topbar = () => {
   const unreadCount = notifications.filter(n => !n.is_read).length;
 
   return (
-    <header className="h-16 bg-[#121A17] border-b border-[#223027] flex items-center justify-between px-8 z-10">
-      {/* Title */}
-      <div>
-        <h1 className="text-lg font-semibold text-[#E8EDEA]">
+    <header className="h-16 bg-[#121A17] border-b border-[#223027] flex items-center justify-between px-4 sm:px-8 z-10">
+      {/* Title & Mobile Toggle */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={onToggleSidebar}
+          className="p-2 text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg md:hidden cursor-pointer"
+          aria-label="Toggle Navigation Menu"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+        <h1 className="text-sm sm:text-lg font-semibold text-[#E8EDEA] whitespace-nowrap">
           Workspace ERP
         </h1>
       </div>

@@ -18,20 +18,30 @@ const VerticalLayout = () => {
     );
   }
 
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+
   // Redirect to login if user session is invalid or expired
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
   return (
-    <div className="flex h-screen bg-[#0B0F0E] text-[#E8EDEA] overflow-hidden">
+    <div className="flex h-screen bg-[#0B0F0E] text-[#E8EDEA] overflow-hidden relative">
+      {/* Sidebar Backdrop Overlay on Mobile */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-20 md:hidden transition-all duration-300"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Navigation Sidebar */}
-      <Sidebar />
+      <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
       {/* Main Workspace Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top bar controls */}
-        <Topbar />
+        <Topbar onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
 
         {/* Dynamic Inner Page Content */}
         <main className="flex-1 overflow-y-auto p-8 bg-[#0B0F0E]">
