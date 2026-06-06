@@ -10,7 +10,7 @@ const Approval = () => {
   
   // Enforce role
   useEffect(() => {
-    if (!hasRole(['admin', 'manager'])) {
+    if (!hasRole(['admin', 'manager', 'procurement_officer'])) {
       navigate('/');
     }
   }, []);
@@ -218,38 +218,46 @@ const Approval = () => {
 
               {/* Remarks & Approval Actions */}
               <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl shadow-md space-y-4">
-                <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wide">Manager Action</h3>
+                <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wide">Approval Action</h3>
                 
-                <div className="space-y-3">
-                  <label className="block text-xs text-[#8C9A93]">Remarks / Approval Notes</label>
-                  <textarea
-                    value={remarks}
-                    onChange={(e) => setRemarks(e.target.value)}
-                    rows={3}
-                    className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-3 py-2 text-xs text-[#E8EDEA] focus:outline-none focus:border-[#22C55E]"
-                    placeholder="Provide justification notes, pricing feedback, or approval remarks..."
-                  />
-                </div>
+                {hasRole(['admin', 'manager']) ? (
+                  <>
+                    <div className="space-y-3">
+                      <label className="block text-xs text-[#8C9A93]">Remarks / Approval Notes</label>
+                      <textarea
+                        value={remarks}
+                        onChange={(e) => setRemarks(e.target.value)}
+                        rows={3}
+                        className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-3 py-2 text-xs text-[#E8EDEA] focus:outline-none focus:border-[#22C55E]"
+                        placeholder="Provide justification notes, pricing feedback, or approval remarks..."
+                      />
+                    </div>
 
-                <div className="flex gap-4 pt-2">
-                  <button
-                    onClick={() => handleAction(false)}
-                    disabled={processing}
-                    className="flex-1 flex items-center justify-center gap-2 border border-rose-500 hover:bg-rose-500/10 text-rose-500 font-semibold py-2.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45"
-                  >
-                    <X className="h-4 w-4" />
-                    Reject Procurement
-                  </button>
+                    <div className="flex gap-4 pt-2">
+                      <button
+                        onClick={() => handleAction(false)}
+                        disabled={processing}
+                        className="flex-1 flex items-center justify-center gap-2 border border-rose-500 hover:bg-rose-500/10 text-rose-500 font-semibold py-2.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45"
+                      >
+                        <X className="h-4 w-4" />
+                        Reject Procurement
+                      </button>
 
-                  <button
-                    onClick={() => handleAction(true)}
-                    disabled={processing}
-                    className="flex-1 flex items-center justify-center gap-2 bg-[#22C55E] hover:bg-[#16a34a] text-black font-bold py-2.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45"
-                  >
-                    <Check className="h-4 w-4 text-black" />
-                    Approve Level {selectedStep.level}
-                  </button>
-                </div>
+                      <button
+                        onClick={() => handleAction(true)}
+                        disabled={processing}
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#22C55E] hover:bg-[#16a34a] text-black font-bold py-2.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45"
+                      >
+                        <Check className="h-4 w-4 text-black" />
+                        Approve Level {selectedStep.level}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="p-3 bg-zinc-800 text-zinc-400 rounded-lg text-xs text-center border border-zinc-700">
+                    Approval actions are restricted to Managers & Administrators.
+                  </div>
+                )}
               </div>
             </div>
           )}

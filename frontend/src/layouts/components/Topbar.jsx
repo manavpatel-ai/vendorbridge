@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../utility/context/AuthContext';
-import { LogOut, Bell, Check } from 'lucide-react';
+import { LogOut, Bell, Check, Sun, Moon } from 'lucide-react';
 import api from '../../utility/api';
 
 const Topbar = () => {
@@ -8,6 +8,23 @@ const Topbar = () => {
   const [notifications, setNotifications] = useState([]);
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
   const dropdownRef = useRef(null);
+
+  // Theme switcher state
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'light') {
+      root.classList.add('light-mode');
+    } else {
+      root.classList.remove('light-mode');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   // Fetch notifications
   const fetchNotifications = async () => {
@@ -64,6 +81,15 @@ const Topbar = () => {
       {/* Right Controls */}
       <div className="flex items-center gap-6">
         
+        {/* Theme Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          className="p-2 text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg transition-all cursor-pointer"
+          aria-label="Toggle Theme"
+        >
+          {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </button>
+
         {/* Notification Bell */}
         <div className="relative" ref={dropdownRef}>
           <button

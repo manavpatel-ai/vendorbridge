@@ -2,10 +2,12 @@ import {
   LayoutDashboard,
   Users,
   FileText,
+  TrendingUp,
   CheckSquare,
   FileSignature,
-  History,
-  BarChart3
+  Receipt,
+  BarChart3,
+  History
 } from 'lucide-react';
 
 const navigation = [
@@ -22,33 +24,45 @@ const navigation = [
     roles: ['admin', 'procurement_officer']
   },
   {
-    name: 'RFQs',
+    name: "RFQ's",
     to: '/rfqs',
     icon: FileText,
+    roles: ['admin', 'procurement_officer', 'manager', 'vendor']
+  },
+  {
+    name: 'Quotations',
+    to: '/quotations',
+    icon: TrendingUp,
     roles: ['admin', 'procurement_officer', 'manager', 'vendor']
   },
   {
     name: 'Approvals',
     to: '/approvals',
     icon: CheckSquare,
-    roles: ['admin', 'manager']
+    roles: ['admin', 'manager', 'procurement_officer']
   },
   {
-    name: 'POs & Invoices',
+    name: 'Purchase orders',
     to: '/purchase-orders',
     icon: FileSignature,
     roles: ['admin', 'procurement_officer', 'manager', 'vendor']
   },
   {
-    name: 'Activity Logs',
-    to: '/activity',
-    icon: History,
-    roles: ['admin', 'procurement_officer', 'manager']
+    name: 'Invoices',
+    to: '/invoices',
+    icon: Receipt,
+    roles: ['admin', 'procurement_officer', 'manager', 'vendor']
   },
   {
     name: 'Reports',
     to: '/reports',
     icon: BarChart3,
+    roles: ['admin', 'procurement_officer', 'manager']
+  },
+  {
+    name: 'Activity',
+    to: '/activity',
+    icon: History,
     roles: ['admin', 'procurement_officer', 'manager']
   }
 ];

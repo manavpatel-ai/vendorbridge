@@ -10,8 +10,10 @@ const RFQCreate = lazy(() => import('../../views/RFQ/RFQCreate'));
 const RFQDetails = lazy(() => import('../../views/RFQ/RFQDetails'));
 const QuotationSubmit = lazy(() => import('../../views/Quotation/QuotationSubmit'));
 const QuotationComparison = lazy(() => import('../../views/Quotation/QuotationComparison'));
+const Quotations = lazy(() => import('../../views/Quotation'));
 const Approval = lazy(() => import('../../views/Approval'));
 const PurchaseOrderInvoice = lazy(() => import('../../views/PurchaseOrder'));
+const Invoices = lazy(() => import('../../views/Invoice'));
 const Activity = lazy(() => import('../../views/Activity'));
 const Reports = lazy(() => import('../../views/Reports'));
 
@@ -83,6 +85,13 @@ export const RoutesList = [
     }
   },
   {
+    path: '/quotations',
+    element: <Quotations />,
+    meta: {
+      publicRoute: false
+    }
+  },
+  {
     path: '/approvals',
     element: <Approval />,
     meta: {
@@ -92,6 +101,13 @@ export const RoutesList = [
   {
     path: '/purchase-orders',
     element: <PurchaseOrderInvoice />,
+    meta: {
+      publicRoute: false
+    }
+  },
+  {
+    path: '/invoices',
+    element: <Invoices />,
     meta: {
       publicRoute: false
     }
