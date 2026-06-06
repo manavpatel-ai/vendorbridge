@@ -85,15 +85,19 @@ const ChatBot = () => {
   };
 
   // Custom markdown components for styling
+  const proseText = 'text-[#C5CEC9]';
+  const proseHeading = 'text-[#E8EDEA]';
+  const proseMuted = 'text-[#A8B5AE]';
+
   const markdownComponents = {
-    h1: ({ children }) => <h1 className="text-lg font-bold text-[#E8EDEA] mt-3 mb-1">{children}</h1>,
-    h2: ({ children }) => <h2 className="text-base font-bold text-[#E8EDEA] mt-2.5 mb-1">{children}</h2>,
-    h3: ({ children }) => <h3 className="text-sm font-semibold text-[#E8EDEA] mt-2 mb-1">{children}</h3>,
-    p: ({ children }) => <p className="text-[13px] leading-relaxed text-[#C5CEC9] mb-2">{children}</p>,
-    strong: ({ children }) => <strong className="font-semibold text-[#E8EDEA]">{children}</strong>,
-    em: ({ children }) => <em className="italic text-[#A8B5AE]">{children}</em>,
-    ul: ({ children }) => <ul className="list-disc list-inside space-y-0.5 mb-2 text-[13px] text-[#C5CEC9]">{children}</ul>,
-    ol: ({ children }) => <ol className="list-decimal list-inside space-y-0.5 mb-2 text-[13px] text-[#C5CEC9]">{children}</ol>,
+    h1: ({ children }) => <h1 className={`text-lg font-bold ${proseHeading} mt-3 mb-1`}>{children}</h1>,
+    h2: ({ children }) => <h2 className={`text-base font-bold ${proseHeading} mt-2.5 mb-1`}>{children}</h2>,
+    h3: ({ children }) => <h3 className={`text-sm font-semibold ${proseHeading} mt-2 mb-1`}>{children}</h3>,
+    p: ({ children }) => <p className={`text-[13px] leading-relaxed ${proseText} mb-2`}>{children}</p>,
+    strong: ({ children }) => <strong className={`font-semibold ${proseHeading}`}>{children}</strong>,
+    em: ({ children }) => <em className={`italic ${proseMuted}`}>{children}</em>,
+    ul: ({ children }) => <ul className={`list-disc list-inside space-y-0.5 mb-2 text-[13px] ${proseText}`}>{children}</ul>,
+    ol: ({ children }) => <ol className={`list-decimal list-inside space-y-0.5 mb-2 text-[13px] ${proseText}`}>{children}</ol>,
     li: ({ children }) => <li className="leading-relaxed">{children}</li>,
     code: ({ inline, className, children }) => {
       if (inline) {
@@ -112,9 +116,9 @@ const ChatBot = () => {
     ),
     thead: ({ children }) => <thead className="bg-[#1a2722]">{children}</thead>,
     th: ({ children }) => <th className="border border-[#223027] px-2 py-1.5 text-left font-semibold text-[#22C55E] text-[11px] uppercase tracking-wider">{children}</th>,
-    td: ({ children }) => <td className="border border-[#223027] px-2 py-1.5 text-[#C5CEC9]">{children}</td>,
+    td: ({ children }) => <td className={`border border-[#223027] px-2 py-1.5 ${proseText}`}>{children}</td>,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-[#22C55E] pl-3 my-2 text-[#A8B5AE] italic">{children}</blockquote>
+      <blockquote className={`border-l-2 border-[#22C55E] pl-3 my-2 ${proseMuted} italic`}>{children}</blockquote>
     ),
     hr: () => <hr className="border-[#223027] my-3" />,
     a: ({ href, children }) => <a href={href} className="text-[#22C55E] underline hover:text-[#16a34a]" target="_blank" rel="noopener noreferrer">{children}</a>,

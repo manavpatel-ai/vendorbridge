@@ -112,16 +112,6 @@ const Login = () => {
         </form>
 
         {/* Demo Credentials Alert Box */}
-<<<<<<< HEAD
-        <div className="mt-6 p-3 bg-[#16211d] border border-[#223027] rounded-lg text-[11px] text-[#8C9A93] space-y-1">
-          <p className="font-semibold text-[#22C55E]">Demo Credentials:</p>
-          <div className="grid grid-cols-1 gap-1 text-[10px]">
-            <div><span className="font-medium text-[#E8EDEA]">Admin:</span> admin@vendorbridge.com / <code className="text-[#22C55E]">admin123</code></div>
-            <div><span className="font-medium text-[#E8EDEA]">Procurement:</span> procurement@vendorbridge.com / <code className="text-[#22C55E]">officer123</code></div>
-            <div><span className="font-medium text-[#E8EDEA]">Manager:</span> manager@vendorbridge.com / <code className="text-[#22C55E]">manager123</code></div>
-            <div><span className="font-medium text-[#E8EDEA]">Vendor:</span> contact@technoserv.in / <code className="text-[#22C55E]">vendor123</code></div>
-          </div>
-=======
         <div className="mt-6 p-3 bg-[#16211d] border border-[#223027] rounded-lg text-[11px] text-[#94A3B8] space-y-2">
           <p className="font-semibold text-[#22C55E]">Try out these seeded credentials:</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px]">
@@ -131,7 +121,6 @@ const Login = () => {
             <div className="break-all"><span className="font-medium text-[#E8EDEA]">Vendor 2:</span> vendor2@globaltech.com</div>
           </div>
           <p className="text-[9px] pt-1.5 border-t border-[#223027] text-center">Password for all is <code className="text-[#22C55E]">password123</code></p>
->>>>>>> df2c831f2736e32a69a878eaf98e98ed7b92b14e
         </div>
 
         {/* Register Redirect */}
