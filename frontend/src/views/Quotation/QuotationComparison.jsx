@@ -66,7 +66,7 @@ const QuotationComparison = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-[#8C9A93]">
+      <div className="flex flex-col items-center justify-center py-20 text-[#94A3B8]">
         <Loader2 className="h-8 w-8 animate-spin text-[#22C55E] mb-2" />
         <span>Loading quotation comparison matrix...</span>
       </div>
@@ -83,7 +83,7 @@ const QuotationComparison = () => {
       {/* Back button */}
       <button
         onClick={() => navigate(`/rfqs/${id}`)}
-        className="flex items-center gap-2 text-xs text-[#8C9A93] hover:text-[#E8EDEA] transition-all cursor-pointer"
+        className="flex items-center gap-2 text-xs text-[#94A3B8] hover:text-[#E8EDEA] transition-all cursor-pointer"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to RFQ Details
@@ -92,14 +92,14 @@ const QuotationComparison = () => {
       {/* Header matching user sketch */}
       <div>
         <h1 className="text-3xl font-extrabold text-[#E8EDEA] tracking-tight">Quotation Comparison</h1>
-        <p className="text-xs sm:text-sm text-[#8C9A93] mt-1 font-semibold capitalize">
+        <p className="text-xs sm:text-sm text-[#94A3B8] mt-1 font-semibold capitalize">
           RFQ: {rfq?.title || 'procurement'} - {quotes.length} quotations received
         </p>
       </div>
 
       {quotes.length === 0 ? (
-        <div className="text-center py-16 bg-[#121A17] border border-[#223027] rounded-xl space-y-2">
-          <p className="text-sm text-[#8C9A93]">No quotations have been submitted for this RFQ yet.</p>
+        <div className="text-center py-16 bg-[#0B0F0E] border border-[#223027] rounded-xl space-y-2">
+          <p className="text-sm text-[#94A3B8]">No quotations have been submitted for this RFQ yet.</p>
           <button
             onClick={() => navigate('/rfqs')}
             className="text-xs text-[#22C55E] hover:underline"
@@ -110,12 +110,12 @@ const QuotationComparison = () => {
       ) : (
         <div className="space-y-6 animate-fade-in">
           {/* Comparison Matrix Box */}
-          <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-xl">
+          <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-xl">
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-xs text-left">
                 <thead>
                   <tr className="bg-[#0F1513] border-b border-[#223027]">
-                    <th className="p-4 text-xs font-semibold text-[#8C9A93] uppercase tracking-wider min-w-[150px]">
+                    <th className="p-4 text-xs font-semibold text-[#94A3B8] uppercase tracking-wider min-w-[150px]">
                       Criteria
                     </th>
                     {quotes.map((q) => {
@@ -132,7 +132,7 @@ const QuotationComparison = () => {
                           <span className="block font-bold text-sm">
                             {q.vendor_name} {isLowest && '(Lowest)'}
                           </span>
-                          <span className="inline-block text-[9px] font-mono text-[#8C9A93] mt-0.5">
+                          <span className="inline-block text-[9px] font-mono text-[#94A3B8] mt-0.5">
                             {q.quotation_number}
                           </span>
                           {isLowest && (
@@ -167,7 +167,7 @@ const QuotationComparison = () => {
 
                   {/* Row 2: GST % */}
                   <tr>
-                    <td className="p-4 font-medium text-[#8C9A93]">GST %</td>
+                    <td className="p-4 font-medium text-[#94A3B8]">GST %</td>
                     {quotes.map((q) => {
                       const isLowest = q.grand_total === lowestTotal;
                       return (
@@ -185,7 +185,7 @@ const QuotationComparison = () => {
 
                   {/* Row 3: Delivery (days) */}
                   <tr>
-                    <td className="p-4 font-medium text-[#8C9A93]">Delivery (days)</td>
+                    <td className="p-4 font-medium text-[#94A3B8]">Delivery (days)</td>
                     {quotes.map((q) => {
                       const isLowest = q.grand_total === lowestTotal;
                       return (
@@ -203,7 +203,7 @@ const QuotationComparison = () => {
 
                   {/* Row 4: Vendor rating */}
                   <tr>
-                    <td className="p-4 font-medium text-[#8C9A93]">Vendor rating</td>
+                    <td className="p-4 font-medium text-[#94A3B8]">Vendor rating</td>
                     {quotes.map((q) => {
                       const isLowest = q.grand_total === lowestTotal;
                       return (
@@ -221,7 +221,7 @@ const QuotationComparison = () => {
 
                   {/* Row 5: Payment terms */}
                   <tr>
-                    <td className="p-4 font-medium text-[#8C9A93]">Payment terms</td>
+                    <td className="p-4 font-medium text-[#94A3B8]">Payment terms</td>
                     {quotes.map((q) => {
                       const isLowest = q.grand_total === lowestTotal;
                       return (
@@ -277,20 +277,20 @@ const QuotationComparison = () => {
           </div>
 
           {/* Sketch notice box */}
-          <div className="p-3 bg-[#16211d]/50 border border-[#223027] rounded-lg text-xs text-[#8C9A93] flex items-center gap-2 animate-fade-in w-fit">
+          <div className="p-3 bg-[#16211d]/50 border border-[#223027] rounded-lg text-xs text-[#94A3B8] flex items-center gap-2 animate-fade-in w-fit">
             <div className="h-2 w-2 rounded-full bg-[#22C55E]" />
             <span>Green = lowest price, selecting vendor initiates the approval workflow.</span>
           </div>
 
           {/* Detailed Item-wise Comparison Table */}
-          <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg mt-8">
+          <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-lg mt-8">
             <div className="p-4 border-b border-[#223027] bg-[#0F1513]/40">
               <h3 className="text-xs font-semibold text-[#E8EDEA] uppercase tracking-wide">Detailed Item-wise Comparison</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-xs text-left">
                 <thead>
-                  <tr className="bg-[#0F1513]/60 border-b border-[#223027] text-[#8C9A93]">
+                  <tr className="bg-[#0F1513]/60 border-b border-[#223027] text-[#94A3B8]">
                     <th className="p-4 font-semibold uppercase tracking-wider">Item Details</th>
                     {quotes.map(q => (
                       <th key={q.id} className="p-4 border-l border-[#223027] text-center font-bold text-[#E8EDEA]">
@@ -299,12 +299,12 @@ const QuotationComparison = () => {
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#223027]/40 bg-[#121A17]">
+                <tbody className="divide-y divide-[#223027]/40 bg-[#0B0F0E]">
                   {rfq?.line_items?.map((rfqItem) => (
                     <tr key={rfqItem.id} className="hover:bg-[#16211d]/20 transition-colors">
                       <td className="p-4">
                         <span className="font-semibold text-[#E8EDEA]">{rfqItem.item_name}</span>
-                        <span className="block text-[10px] text-[#8C9A93] mt-0.5">Required Quantity: {parseInt(rfqItem.quantity)} {rfqItem.unit || 'pcs'}</span>
+                        <span className="block text-[10px] text-[#94A3B8] mt-0.5">Required Quantity: {parseInt(rfqItem.quantity)} {rfqItem.unit || 'pcs'}</span>
                       </td>
                       {quotes.map(q => {
                         const qItem = q.line_items?.find(qi => qi.item_name === rfqItem.item_name);
@@ -312,11 +312,11 @@ const QuotationComparison = () => {
                           <td key={q.id} className="p-4 border-l border-[#223027]/50 text-center font-mono">
                             {qItem ? (
                               <div className="space-y-0.5">
-                                <span className="font-bold text-[#E8EDEA]">{formatCurrency(qItem.unit_price)} <span className="text-[9px] text-[#8C9A93] font-normal">/ unit</span></span>
-                                <span className="block text-[10px] text-[#8C9A93]">Total: {formatCurrency(qItem.total)}</span>
+                                <span className="font-bold text-[#E8EDEA]">{formatCurrency(qItem.unit_price)} <span className="text-[9px] text-[#94A3B8] font-normal">/ unit</span></span>
+                                <span className="block text-[10px] text-[#94A3B8]">Total: {formatCurrency(qItem.total)}</span>
                               </div>
                             ) : (
-                              <span className="text-[#8C9A93] italic">Not Quoted</span>
+                              <span className="text-[#94A3B8] italic">Not Quoted</span>
                             )}
                           </td>
                         );

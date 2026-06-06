@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utility/context/AuthContext';
 import { 
   Search, 
@@ -18,6 +19,7 @@ import {
 import api from '../../utility/api';
 
 const Vendors = () => {
+  const navigate = useNavigate();
   const { hasRole } = useAuth();
   const isStaff = hasRole(['admin', 'procurement_officer']);
   
@@ -31,7 +33,6 @@ const Vendors = () => {
   const [categoryFilter, setCategoryFilter] = useState('');
   
   // Detail overlay state
-  const [selectedVendor, setSelectedVendor] = useState(null);
   
   // Modal state
   const [showAddModal, setShowAddModal] = useState(false);
@@ -74,10 +75,6 @@ const Vendors = () => {
       await api.patch(`/vendors/${vendorId}/status`, null, {
         params: { status: newStatus }
       });
-      // If the selected vendor is currently open in the detail drawer, update it in real-time
-      if (selectedVendor && selectedVendor.id === vendorId) {
-        setSelectedVendor(prev => ({ ...prev, status: newStatus }));
-      }
       fetchVendors();
     } catch (err) {
       console.error("Failed to update status:", err);
@@ -137,7 +134,7 @@ const Vendors = () => {
       <div className="flex justify-between items-start">
         <div>
           <h1 className="text-3xl font-extrabold text-[#E8EDEA] tracking-tight">Vendors</h1>
-          <p className="text-xs sm:text-sm text-[#8C9A93] mt-1 font-medium">
+          <p className="text-xs sm:text-sm text-[#94A3B8] mt-1 font-medium">
             Manage supplier profiles and registrations
           </p>
         </div>
@@ -153,15 +150,15 @@ const Vendors = () => {
       </div>
 
       {/* Full Width Search Input from Sketch */}
-      <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl shadow-md space-y-4">
+      <div className="bg-[#0B0F0E] border border-[#223027] p-5 rounded-xl shadow-md space-y-4">
         <div className="relative w-full">
-          <Search className="absolute left-4 top-3 h-5 w-5 text-[#8C9A93]/60" />
+          <Search className="absolute left-4 top-3 h-5 w-5 text-[#94A3B8]/60" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by name, gst number, category..."
-            className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg pl-12 pr-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/30 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all"
+            className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg pl-12 pr-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/30 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all"
           />
         </div>
 
@@ -180,7 +177,7 @@ const Vendors = () => {
                 className={`px-4 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all whitespace-nowrap capitalize ${
                   statusFilter === tab.value
                     ? 'bg-[#1a2d24] text-[#22C55E] border border-[#22C55E]/30'
-                    : 'text-[#8C9A93] hover:text-[#E8EDEA] border border-transparent'
+                    : 'text-[#94A3B8] hover:text-[#E8EDEA] border border-transparent'
                 }`}
               >
                 {tab.label} <span className="text-[10px] opacity-75 font-mono ml-1">({tab.count})</span>
@@ -189,7 +186,7 @@ const Vendors = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <SlidersHorizontal className="h-4 w-4 text-[#8C9A93]" />
+            <SlidersHorizontal className="h-4 w-4 text-[#94A3B8]" />
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
@@ -213,15 +210,15 @@ const Vendors = () => {
           <Loader2 className="h-8 w-8 animate-spin text-[#22C55E]" />
         </div>
       ) : vendors.length === 0 ? (
-        <div className="text-center py-16 bg-[#121A17] border border-[#223027] rounded-xl">
-          <p className="text-sm text-[#8C9A93] italic">No vendors matching your search filter were found.</p>
+        <div className="text-center py-16 bg-[#0B0F0E] border border-[#223027] rounded-xl">
+          <p className="text-sm text-[#94A3B8] italic">No vendors matching your search filter were found.</p>
         </div>
       ) : (
-        <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg">
+        <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-lg">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-xs text-left">
               <thead>
-                <tr className="bg-[#0F1513] border-b border-[#223027] text-[#8C9A93]">
+                <tr className="bg-[#0F1513] border-b border-[#223027] text-[#94A3B8]">
                   <th className="p-4 font-semibold uppercase tracking-wider">Vendor Name</th>
                   <th className="p-4 font-semibold uppercase tracking-wider">Category</th>
                   <th className="p-4 font-semibold uppercase tracking-wider">GST no.</th>
@@ -244,7 +241,7 @@ const Vendors = () => {
                         </div>
                         <div>
                           <span className="font-semibold text-[#E8EDEA] text-sm block">{vendor.name}</span>
-                          <span className="text-[10px] text-[#8C9A93] block mt-0.5">{vendor.contact_email || 'No Email'}</span>
+                          <span className="text-[10px] text-[#94A3B8] block mt-0.5">{vendor.contact_email || 'No Email'}</span>
                         </div>
                       </div>
                     </td>
@@ -256,7 +253,7 @@ const Vendors = () => {
 
                     {/* GST no. */}
                     <td className="p-4">
-                      <span className="font-mono text-[#8C9A93]">{vendor.gst_number || 'N/A'}</span>
+                      <span className="font-mono text-[#94A3B8]">{vendor.gst_number || 'N/A'}</span>
                     </td>
 
                     {/* contact no. */}
@@ -280,7 +277,7 @@ const Vendors = () => {
                     {/* Action button matching sketch */}
                     <td className="p-4 text-center">
                       <button
-                        onClick={() => setSelectedVendor(vendor)}
+                        onClick={() => navigate(`/vendors/${vendor.id}`)}
                         className="px-4 py-1.5 border border-[#22C55E]/30 text-[#22C55E] hover:bg-[#22C55E] hover:text-black font-semibold rounded-lg transition-all duration-200 cursor-pointer text-xs"
                       >
                         View
@@ -294,172 +291,22 @@ const Vendors = () => {
         </div>
       )}
 
-      {/* Slide-over overlay Drawer for Vendor Details */}
-      {selectedVendor && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-all duration-300"
-          onClick={() => setSelectedVendor(null)}
-        />
-      )}
 
-      <div className={`fixed inset-y-0 right-0 w-full sm:max-w-md bg-[#121A17] border-l border-[#223027] shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
-        selectedVendor ? 'translate-x-0' : 'translate-x-full'
-      }`}>
-        {selectedVendor && (
-          <div className="h-full flex flex-col justify-between">
-            {/* Drawer Header */}
-            <div className="p-6 border-b border-[#223027] bg-[#0F1513] flex justify-between items-center">
-              <div>
-                <span className="text-[10px] font-mono text-[#22C55E] font-semibold uppercase">Supplier Profile</span>
-                <h2 className="text-base font-bold text-[#E8EDEA] mt-0.5">Details Overview</h2>
-              </div>
-              <button
-                onClick={() => setSelectedVendor(null)}
-                className="p-1.5 rounded-lg text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d] cursor-pointer"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {/* Drawer Content */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
-              {/* Profile Card Summary */}
-              <div className="flex items-center gap-4 bg-[#0B0F0E] p-4 rounded-xl border border-[#223027]/80">
-                <div className="h-14 w-14 rounded-full bg-[#1b3d2b] border border-[#22C55E] flex items-center justify-center text-xl font-bold text-[#22C55E] shadow-inner flex-shrink-0">
-                  {selectedVendor.name.charAt(0)}
-                </div>
-                <div className="min-w-0">
-                  <h3 className="font-bold text-[#E8EDEA] text-base truncate">{selectedVendor.name}</h3>
-                  <span className="text-xs bg-[#1a2d24] text-[#22C55E] px-2 py-0.5 rounded font-medium mt-1 inline-block">
-                    {selectedVendor.category}
-                  </span>
-                </div>
-              </div>
-
-              {/* Rating Card */}
-              <div className="bg-[#0B0F0E]/40 border border-[#223027] p-4 rounded-xl flex items-center justify-between">
-                <div className="space-y-1">
-                  <span className="text-[10px] text-[#8C9A93] font-semibold uppercase">Vendor Rating</span>
-                  <div className="flex items-center text-amber-400 text-sm font-bold gap-1">
-                    <Star className="h-4 w-4 fill-amber-400" />
-                    <span>{formatRating(selectedVendor.rating)} / 5.0</span>
-                  </div>
-                </div>
-                <Award className="h-8 w-8 text-amber-400/20" />
-              </div>
-
-              {/* Contact Information block */}
-              <div className="space-y-3">
-                <h4 className="text-[10px] font-bold text-[#22C55E] uppercase tracking-wider flex items-center gap-1.5">
-                  <UserCheck className="h-4 w-4" />
-                  Primary Contact Person
-                </h4>
-                <div className="bg-[#0F1513]/40 border border-[#223027] p-4 rounded-xl space-y-3 text-xs">
-                  <div>
-                    <span className="text-[#8C9A93] block text-[10px] uppercase">Full Name</span>
-                    <span className="text-[#E8EDEA] font-semibold text-sm mt-0.5 block">{selectedVendor.contact_name || 'N/A'}</span>
-                  </div>
-                  {selectedVendor.contact_email && (
-                    <div>
-                      <span className="text-[#8C9A93] block text-[10px] uppercase">Email Address</span>
-                      <a href={`mailto:${selectedVendor.contact_email}`} className="text-[#22C55E] hover:underline flex items-center gap-1.5 mt-0.5">
-                        <Mail className="h-3.5 w-3.5" />
-                        <span>{selectedVendor.contact_email}</span>
-                      </a>
-                    </div>
-                  )}
-                  {selectedVendor.contact_phone && (
-                    <div>
-                      <span className="text-[#8C9A93] block text-[10px] uppercase">Phone Number</span>
-                      <a href={`tel:${selectedVendor.contact_phone}`} className="text-[#E8EDEA] hover:text-[#22C55E] flex items-center gap-1.5 mt-0.5">
-                        <Phone className="h-3.5 w-3.5 text-[#8C9A93]" />
-                        <span>{selectedVendor.contact_phone}</span>
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Organization and Registration Info */}
-              <div className="space-y-3">
-                <h4 className="text-[10px] font-bold text-[#22C55E] uppercase tracking-wider flex items-center gap-1.5">
-                  <Building2 className="h-4 w-4" />
-                  Business Information
-                </h4>
-                <div className="bg-[#0F1513]/40 border border-[#223027] p-4 rounded-xl space-y-3 text-xs">
-                  <div>
-                    <span className="text-[#8C9A93] block text-[10px] uppercase">GSTIN / Registration Number</span>
-                    <span className="font-mono text-[#E8EDEA] text-sm font-semibold mt-0.5 block">{selectedVendor.gst_number || 'N/A'}</span>
-                  </div>
-                  {selectedVendor.address && (
-                    <div>
-                      <span className="text-[#8C9A93] block text-[10px] uppercase">Company Location Address</span>
-                      <div className="flex items-start gap-1.5 mt-1 text-[#E8EDEA] leading-relaxed">
-                        <MapPin className="h-4 w-4 text-[#8C9A93] mt-0.5 flex-shrink-0" />
-                        <span>{selectedVendor.address}</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Status Management */}
-              {isStaff && (
-                <div className="border-t border-[#223027]/60 pt-6 space-y-3">
-                  <h4 className="text-[10px] font-bold text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <ShieldAlert className="h-4 w-4" />
-                    Administrative Registry Override
-                  </h4>
-                  <div className="bg-[#1c1212]/20 border border-red-950/40 p-4 rounded-xl space-y-3">
-                    <span className="text-[#8C9A93] text-xs block">Select the registry status for this vendor. Changes apply immediately:</span>
-                    <div className="flex gap-2">
-                      {['active', 'pending', 'blocked'].map(st => (
-                        <button
-                          key={st}
-                          onClick={() => handleStatusChange(selectedVendor.id, st)}
-                          disabled={selectedVendor.status === st}
-                          className={`flex-1 text-[10px] font-bold py-2 rounded-lg capitalize transition-all cursor-pointer ${
-                            selectedVendor.status === st
-                              ? 'bg-[#1a2d24] text-[#22C55E] border border-[#22C55E]/30 cursor-default'
-                              : 'bg-[#0B0F0E] text-[#8C9A93] hover:text-[#E8EDEA] border border-[#223027]'
-                          }`}
-                        >
-                          {st}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Drawer Footer */}
-            <div className="p-4 border-t border-[#223027] bg-[#0F1513] text-center">
-              <button
-                onClick={() => setSelectedVendor(null)}
-                className="w-full bg-[#16211d] border border-[#223027] hover:border-[#22C55E]/40 text-[#E8EDEA] hover:text-[#22C55E] font-semibold py-2 rounded-lg text-xs cursor-pointer transition-all"
-              >
-                Close Drawer
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
 
       {/* Add Vendor Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="bg-[#121A17] border border-[#223027] w-full max-w-lg rounded-xl shadow-2xl overflow-hidden relative">
+          <div className="bg-[#0B0F0E] border border-[#223027] w-full max-w-lg rounded-xl shadow-2xl overflow-hidden relative">
             <button
               onClick={() => setShowAddModal(false)}
-              className="absolute top-4 right-4 p-1.5 text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg transition-all"
+              className="absolute top-4 right-4 p-1.5 text-[#94A3B8] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg transition-all"
             >
               <X className="h-5 w-5" />
             </button>
 
             <div className="p-6 border-b border-[#223027] bg-[#0F1513]">
               <h2 className="text-lg font-semibold text-[#E8EDEA]">Add Vendor Profile</h2>
-              <p className="text-xs text-[#8C9A93]">Register a new vendor partner in the system.</p>
+              <p className="text-xs text-[#94A3B8]">Register a new vendor partner in the system.</p>
             </div>
 
             <form onSubmit={handleCreateVendor} className="p-6 space-y-4">
@@ -471,13 +318,13 @@ const Vendors = () => {
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Vendor/Company Name</label>
+                  <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Vendor/Company Name</label>
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E]"
+                    className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E]"
                     placeholder="e.g. Apex Industrial Solutions"
                     required
                   />
@@ -485,7 +332,7 @@ const Vendors = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Category</label>
+                    <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Category</label>
                     <select
                       name="category"
                       value={formData.category}
@@ -502,13 +349,13 @@ const Vendors = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">GSTIN Number</label>
+                    <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">GSTIN Number</label>
                     <input
                       type="text"
                       name="gst_number"
                       value={formData.gst_number}
                       onChange={handleInputChange}
-                      className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E]"
+                      className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E]"
                       placeholder="e.g. 29AAAAA1111A1Z1"
                     />
                   </div>
@@ -519,7 +366,7 @@ const Vendors = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div className="md:col-span-1">
-                      <label className="block text-[10px] font-semibold text-[#8C9A93] mb-1 uppercase">Name</label>
+                      <label className="block text-[10px] font-semibold text-[#94A3B8] mb-1 uppercase">Name</label>
                       <input
                         type="text"
                         name="contact_name"
@@ -530,7 +377,7 @@ const Vendors = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-semibold text-[#8C9A93] mb-1 uppercase">Email</label>
+                      <label className="block text-[10px] font-semibold text-[#94A3B8] mb-1 uppercase">Email</label>
                       <input
                         type="email"
                         name="contact_email"
@@ -541,7 +388,7 @@ const Vendors = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-semibold text-[#8C9A93] mb-1 uppercase">Phone</label>
+                      <label className="block text-[10px] font-semibold text-[#94A3B8] mb-1 uppercase">Phone</label>
                       <input
                         type="text"
                         name="contact_phone"
@@ -555,13 +402,13 @@ const Vendors = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Company Address</label>
+                  <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Company Address</label>
                   <textarea
                     name="address"
                     value={formData.address}
                     onChange={handleInputChange}
                     rows={2}
-                    className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E]"
+                    className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E]"
                     placeholder="Physical office address..."
                   />
                 </div>
@@ -571,7 +418,7 @@ const Vendors = () => {
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 border border-[#223027] hover:border-[#8C9A93]/30 rounded-lg text-sm text-[#8C9A93] hover:text-[#E8EDEA] cursor-pointer transition-all"
+                  className="px-4 py-2 border border-[#223027] hover:border-[#94A3B8]/30 rounded-lg text-sm text-[#94A3B8] hover:text-[#E8EDEA] cursor-pointer transition-all"
                 >
                   Cancel
                 </button>

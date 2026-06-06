@@ -55,15 +55,15 @@ const Dashboard = () => {
   if (loading) {
     return (
       <div className="space-y-6 animate-pulse">
-        <div className="h-8 bg-[#121A17] rounded-md w-1/4"></div>
+        <div className="h-8 bg-[#0B0F0E] rounded-md w-1/4"></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="h-32 bg-[#121A17] rounded-xl border border-[#223027]"></div>
+            <div key={i} className="h-32 bg-[#0B0F0E] rounded-xl border border-[#223027]"></div>
           ))}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 h-96 bg-[#121A17] rounded-xl border border-[#223027]"></div>
-          <div className="h-96 bg-[#121A17] rounded-xl border border-[#223027]"></div>
+          <div className="lg:col-span-2 h-96 bg-[#0B0F0E] rounded-xl border border-[#223027]"></div>
+          <div className="h-96 bg-[#0B0F0E] rounded-xl border border-[#223027]"></div>
         </div>
       </div>
     );
@@ -99,8 +99,8 @@ const Dashboard = () => {
       name: 'Overdue Invoices',
       value: data?.overdue_invoices || 0,
       icon: AlertCircle,
-      color: data?.overdue_invoices > 0 ? 'text-rose-500' : 'text-[#8C9A93]',
-      bg: data?.overdue_invoices > 0 ? 'bg-rose-500/10' : 'bg-[#121A17]',
+      color: data?.overdue_invoices > 0 ? 'text-rose-500' : 'text-[#94A3B8]',
+      bg: data?.overdue_invoices > 0 ? 'bg-rose-500/10' : 'bg-[#0B0F0E]',
       description: 'Unpaid past due invoices'
     }
   ];
@@ -113,7 +113,7 @@ const Dashboard = () => {
           <h1 className="text-2xl md:text-3xl font-extrabold text-[#E8EDEA] tracking-tight flex items-center gap-2">
             Dashboard
           </h1>
-          <p className="text-xs sm:text-sm text-[#8C9A93] mt-1 font-medium">
+          <p className="text-xs sm:text-sm text-[#94A3B8] mt-1 font-medium">
             Welcome back, <span className="text-[#E8EDEA] font-semibold">{user?.first_name} {user?.last_name || ''}</span> – Today's Overview
           </p>
         </div>
@@ -127,15 +127,15 @@ const Dashboard = () => {
           return (
             <div 
               key={idx} 
-              className="bg-[#121A17] border border-[#223027] p-6 rounded-xl shadow-lg hover:border-[#22C55E]/40 hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 flex items-center justify-between group relative overflow-hidden"
+              className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl shadow-lg hover:border-[#22C55E]/40 hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 flex items-center justify-between group relative overflow-hidden"
             >
               {/* Card Hover Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#22C55E]/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
               
               <div className="space-y-2 relative z-10">
-                <span className="text-[10px] font-bold text-[#8C9A93] tracking-wider uppercase block">{kpi.name}</span>
+                <span className="text-[10px] font-bold text-[#94A3B8] tracking-wider uppercase block">{kpi.name}</span>
                 <h3 className="text-2xl md:text-3xl font-black text-[#E8EDEA]">{kpi.value}</h3>
-                <span className="text-[10px] text-[#8C9A93] block">{kpi.description}</span>
+                <span className="text-[10px] text-[#94A3B8] block">{kpi.description}</span>
               </div>
               <div className={`p-3.5 rounded-xl ${kpi.bg} ${kpi.color} relative z-10 shadow-inner group-hover:scale-110 transition-transform duration-300`}>
                 <Icon className="h-6.5 w-6.5" />
@@ -149,17 +149,17 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Recent Purchase Orders Table */}
-        <div className="lg:col-span-2 bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg flex flex-col justify-between">
+        <div className="lg:col-span-2 bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-lg flex flex-col justify-between">
           <div>
             <div className="p-6 border-b border-[#223027] bg-[#0F1513]/40">
               <h3 className="font-bold text-[#E8EDEA] text-sm tracking-wide">Recent Purchase Orders</h3>
-              <p className="text-[11px] text-[#8C9A93] mt-0.5">Summary of newly generated and approved POs</p>
+              <p className="text-[11px] text-[#94A3B8] mt-0.5">Summary of newly generated and approved POs</p>
             </div>
             
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-xs text-left">
                 <thead>
-                  <tr className="bg-[#0F1513]/60 border-b border-[#223027] text-[#8C9A93]">
+                  <tr className="bg-[#0F1513]/60 border-b border-[#223027] text-[#94A3B8]">
                     <th className="p-4 font-semibold uppercase tracking-wider">PO#</th>
                     <th className="p-4 font-semibold uppercase tracking-wider">Vendor</th>
                     <th className="p-4 font-semibold uppercase tracking-wider text-right">Amount</th>
@@ -169,7 +169,7 @@ const Dashboard = () => {
                 <tbody className="divide-y divide-[#223027]/40">
                   {data?.recent_purchase_orders?.length === 0 ? (
                     <tr>
-                      <td colSpan="4" className="p-8 text-center text-[#8C9A93] italic">No Purchase Orders available.</td>
+                      <td colSpan="4" className="p-8 text-center text-[#94A3B8] italic">No Purchase Orders available.</td>
                     </tr>
                   ) : (
                     data?.recent_purchase_orders?.slice(0, 5).map(po => (
@@ -212,14 +212,14 @@ const Dashboard = () => {
         </div>
 
         {/* Spend Trend Chart */}
-        <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl flex flex-col shadow-lg justify-between">
+        <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl flex flex-col shadow-lg justify-between">
           <div>
             <div className="flex justify-between items-center mb-6">
               <div>
                 <h3 className="font-bold text-[#E8EDEA] text-sm tracking-wide">
                   {user?.role === 'vendor' ? 'Billing Trend' : 'Spending Trends'}
                 </h3>
-                <p className="text-[11px] text-[#8C9A93] mt-0.5">Spends over the last 6 months</p>
+                <p className="text-[11px] text-[#94A3B8] mt-0.5">Spends over the last 6 months</p>
               </div>
               <div className="flex items-center gap-1 text-xs text-[#22C55E] bg-[#22C55E]/10 px-2.5 py-1 rounded-full font-bold">
                 <TrendingUp className="h-3.5 w-3.5" />
@@ -242,19 +242,19 @@ const Dashboard = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#223027" opacity={0.5} />
                   <XAxis 
                     dataKey="name" 
-                    stroke="#8C9A93" 
+                    stroke="#94A3B8" 
                     fontSize={10}
                     tickLine={false}
                   />
                   <YAxis 
-                    stroke="#8C9A93" 
+                    stroke="#94A3B8" 
                     fontSize={10}
                     tickLine={false}
                     tickFormatter={(v) => v >= 100000 ? `${(v/100000).toFixed(1)}L` : v}
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#121A17', 
+                      backgroundColor: '#0B0F0E', 
                       borderColor: '#223027', 
                       borderRadius: '8px',
                       color: '#E8EDEA',
@@ -280,7 +280,7 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Actions Panel */}
-      <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl shadow-lg relative overflow-hidden">
+      <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl shadow-lg relative overflow-hidden">
         {/* Glow behind buttons */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-[#22C55E]/5 rounded-full blur-3xl" />
         
@@ -306,7 +306,7 @@ const Dashboard = () => {
             onClick={() => navigate('/invoices')}
             className="flex items-center justify-center gap-2 bg-[#16211d] border border-[#223027] hover:border-[#22C55E]/40 text-[#E8EDEA] font-bold py-3 rounded-lg text-xs cursor-pointer transition-all duration-300"
           >
-            <Receipt className="h-4 w-4 text-[#8C9A93]" />
+            <Receipt className="h-4 w-4 text-[#94A3B8]" />
             <span>View Invoices</span>
           </button>
         </div>

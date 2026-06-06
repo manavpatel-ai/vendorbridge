@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Invoice - {{ invoice.invoice_number }}</title>
+    <title>Quotation - {{ quotation.quotation_number }}</title>
     <style>
         body {
             margin: 0;
@@ -35,6 +35,7 @@
         .iv-parties,
         .iv-tbl,
         .iv-sec-row,
+        .iv-terms,
         .iv-totals,
         .iv-grand,
         .iv-foot {
@@ -101,9 +102,10 @@
             border-radius: 20px;
             font-size: 9.5px;
             font-weight: 500;
-            background: #fff7e6;
-            color: #b45309;
-            border: 1px solid #fcd34d;
+            background: #eef6ff;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+            text-transform: capitalize;
         }
         .iv-parties {
             border-bottom: 1px solid #e4e8f0;
@@ -190,6 +192,21 @@
             font-family: monospace;
             margin-top: 1px;
         }
+        .iv-terms {
+            margin-top: 6px;
+            background: #f7f9ff;
+            border: 1px solid #e4e8f0;
+        }
+        .iv-terms td {
+            width: 33.33%;
+            padding: 5px 7px;
+            vertical-align: top;
+        }
+        .iv-note {
+            padding: 0 7px 5px;
+            color: #5a6478;
+            font-size: 9.5px;
+        }
         .iv-totals {
             border-top: 1.5px solid #dde3f0;
         }
@@ -259,8 +276,8 @@
                         <div class="iv-logo-text">Vendor<span>Bridge</span></div>
                     </td>
                     <td class="iv-inv-badge">
-                        <div class="iv-inv-label">Invoice Number</div>
-                        <div class="iv-inv-num">{{ invoice.invoice_number }}</div>
+                        <div class="iv-inv-label">Quotation Number</div>
+                        <div class="iv-inv-num">{{ quotation.quotation_number }}</div>
                     </td>
                 </tr>
             </table>
@@ -269,16 +286,16 @@
         <table class="iv-meta">
             <tr>
                 <td class="iv-meta-cell">
-                    <div class="iv-meta-lbl">Issue Date</div>
-                    <div class="iv-meta-val">{{ invoice.invoice_date.strftime('%d %b %Y') }}</div>
+                    <div class="iv-meta-lbl">Submitted Date</div>
+                    <div class="iv-meta-val">{{ quotation.submitted_at.strftime('%d %b %Y') if quotation.submitted_at else 'N/A' }}</div>
                 </td>
                 <td class="iv-meta-cell">
-                    <div class="iv-meta-lbl">Due Date</div>
-                    <div class="iv-meta-val">{{ invoice.due_date.strftime('%d %b %Y') if invoice.due_date else 'N/A' }}</div>
+                    <div class="iv-meta-lbl">RFQ</div>
+                    <div class="iv-meta-val">{{ rfq.rfq_number if rfq else 'N/A' }}</div>
                 </td>
                 <td class="iv-meta-cell iv-meta-cell-last">
                     <div class="iv-meta-lbl">Status</div>
-                    <div class="iv-meta-val"><span class="iv-pill">{{ status_text }}</span></div>
+                    <div class="iv-meta-val"><span class="iv-pill">{{ quotation.status.value if quotation.status.value else quotation.status }}</span></div>
                 </td>
             </tr>
         </table>
@@ -286,19 +303,19 @@
         <table class="iv-parties">
             <tr>
                 <td class="iv-party iv-party-first">
-                    <div class="iv-party-role">Bill To</div>
-                    <div class="iv-party-name">{{ buyer.org_name }}</div>
-                    <div class="iv-party-addr">{{ buyer.address or '' }}</div>
-                    {% if buyer.gstin %}
-                    <div class="iv-gstin">GSTIN: {{ buyer.gstin }}</div>
-                    {% endif %}
-                </td>
-                <td class="iv-party">
-                    <div class="iv-party-role">From</div>
+                    <div class="iv-party-role">Supplier</div>
                     <div class="iv-party-name">{{ vendor.name }}</div>
                     <div class="iv-party-addr">{{ vendor.address or '' }}{% if vendor.contact_name or vendor.contact_phone %}<br />{% endif %}{% if vendor.contact_name %}{{ vendor.contact_name }}{% endif %}{% if vendor.contact_phone %} · {{ vendor.contact_phone }}{% endif %}</div>
                     {% if vendor.gst_number %}
                     <div class="iv-gstin">GSTIN: {{ vendor.gst_number }}</div>
+                    {% endif %}
+                </td>
+                <td class="iv-party">
+                    <div class="iv-party-role">Request</div>
+                    <div class="iv-party-name">{{ rfq.title if rfq else 'Quotation request' }}</div>
+                    <div class="iv-party-addr">{{ rfq.description if rfq and rfq.description else '' }}</div>
+                    {% if rfq and rfq.deadline %}
+                    <div class="iv-gstin">Deadline: {{ rfq.deadline.strftime('%d %b %Y') }}</div>
                     {% endif %}
                 </td>
             </tr>
@@ -307,9 +324,9 @@
         <div class="iv-body">
             <table class="iv-sec-row">
                 <tr>
-                    <td><div class="iv-sec-title">Line Items</div></td>
+                    <td><div class="iv-sec-title">Quoted Line Items</div></td>
                     <td style="text-align: right;">
-                        <div class="iv-po">{{ po.po_number }} · {{ po.po_date.strftime('%d %b %Y') if po.po_date else 'No PO date' }}</div>
+                        <div class="iv-po">{{ rfq.rfq_number if rfq else 'RFQ' }}</div>
                     </td>
                 </tr>
             </table>
@@ -328,16 +345,41 @@
                     <tr>
                         <td>
                             <div class="iv-item-n">{{ item.item_name }}</div>
-                            {% if item.sku %}
-                            <div class="iv-item-sku">{{ item.sku }}</div>
+                            {% if item.delivery_days %}
+                            <div class="iv-item-sku">Delivery: {{ item.delivery_days }} days</div>
                             {% endif %}
                         </td>
-                        <td class="r">{{ item.quantity }}</td>
+                        <td class="r">{{ "{:,.0f}".format(item.quantity) }}</td>
                         <td class="r">Rs. {{ "{:,.2f}".format(item.unit_price) }}</td>
                         <td class="r">Rs. {{ "{:,.2f}".format(item.total) }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
+            </table>
+
+            <table class="iv-terms">
+                <tr>
+                    <td>
+                        <div class="iv-meta-lbl">Lead Time</div>
+                        <div class="iv-meta-val">{{ quotation.delivery_days if quotation.delivery_days else 'N/A' }}{% if quotation.delivery_days %} Days{% endif %}</div>
+                    </td>
+                    <td>
+                        <div class="iv-meta-lbl">GST / Tax</div>
+                        <div class="iv-meta-val">{{ quotation.tax_percent }}%</div>
+                    </td>
+                    <td>
+                        <div class="iv-meta-lbl">Payment Terms</div>
+                        <div class="iv-meta-val">{{ quotation.payment_terms or 'Not specified' }}</div>
+                    </td>
+                </tr>
+                {% if quotation.notes %}
+                <tr>
+                    <td colspan="3" class="iv-note">
+                        <div class="iv-meta-lbl">Additional Notes</div>
+                        {{ quotation.notes }}
+                    </td>
+                </tr>
+                {% endif %}
             </table>
         </div>
 
@@ -347,28 +389,18 @@
                     <table class="iv-tot-inner" align="right">
                         <tr>
                             <td>Subtotal</td>
-                            <td class="amt">Rs. {{ "{:,.2f}".format(invoice.subtotal) }}</td>
+                            <td class="amt">Rs. {{ "{:,.2f}".format(quotation.subtotal) }}</td>
                         </tr>
                         <tr>
-                            <td>CGST (9%)</td>
-                            <td class="amt">Rs. {{ "{:,.2f}".format(invoice.cgst) }}</td>
+                            <td>GST / Tax ({{ quotation.tax_percent }}%)</td>
+                            <td class="amt">Rs. {{ "{:,.2f}".format(quotation.tax_amount) }}</td>
                         </tr>
-                        <tr>
-                            <td>SGST (9%)</td>
-                            <td class="amt">Rs. {{ "{:,.2f}".format(invoice.sgst) }}</td>
-                        </tr>
-                        {% if invoice.igst and invoice.igst != 0 %}
-                        <tr>
-                            <td>IGST</td>
-                            <td class="amt">Rs. {{ "{:,.2f}".format(invoice.igst) }}</td>
-                        </tr>
-                        {% endif %}
                         <tr>
                             <td colspan="2" class="iv-grand-wrap">
                                 <table class="iv-grand">
                                     <tr>
                                         <td class="iv-grand-lbl">Grand Total</td>
-                                        <td class="iv-grand-amt">Rs. {{ "{:,.0f}".format(invoice.grand_total) }}</td>
+                                        <td class="iv-grand-amt">Rs. {{ "{:,.0f}".format(quotation.grand_total) }}</td>
                                     </tr>
                                 </table>
                             </td>
@@ -380,7 +412,7 @@
 
         <table class="iv-foot">
             <tr>
-                <td>Payment due within 30 days of invoice date.</td>
+                <td>Generated by VendorBridge for procurement review.</td>
                 <td>Contact support for any queries.</td>
             </tr>
         </table>

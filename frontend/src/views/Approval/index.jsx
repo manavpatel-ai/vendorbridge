@@ -149,7 +149,7 @@ const Approval = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-extrabold text-[#E8EDEA] tracking-tight">Pending Approvals</h1>
-        <p className="text-xs sm:text-sm text-[#8C9A93] mt-1 font-medium">
+        <p className="text-xs sm:text-sm text-[#94A3B8] mt-1 font-medium">
           Review purchase requests, check vendor quotations, and grant approvals.
         </p>
       </div>
@@ -158,7 +158,7 @@ const Approval = () => {
         
         {/* Left Col: Pending Approvals list */}
         <div className="lg:col-span-1 space-y-4">
-          <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl shadow-lg">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-5 rounded-xl shadow-lg">
             <h3 className="text-xs font-semibold text-[#E8EDEA] uppercase tracking-wide border-b border-[#223027] pb-3 mb-4">Pending Tasks</h3>
 
             {loadingList ? (
@@ -166,7 +166,7 @@ const Approval = () => {
                 <Loader2 className="h-6 w-6 animate-spin text-[#22C55E]" />
               </div>
             ) : pendingSteps.length === 0 ? (
-              <div className="py-12 text-center text-xs text-[#8C9A93] italic bg-[#0B0F0E]/40 border border-dashed border-[#223027] rounded-xl">
+              <div className="py-12 text-center text-xs text-[#94A3B8] italic bg-[#0B0F0E]/40 border border-dashed border-[#223027] rounded-xl">
                 No pending approvals. All caught up!
               </div>
             ) : (
@@ -180,17 +180,17 @@ const Approval = () => {
                       className={`p-4 rounded-lg border transition-all cursor-pointer ${
                         isSelected
                           ? 'bg-[#1a2d24] border-[#22C55E] text-[#E8EDEA] shadow-lg shadow-[#22C55E]/5'
-                          : 'bg-[#0B0F0E] border-[#223027] hover:border-[#22C55E]/30 text-[#8C9A93] hover:text-[#E8EDEA]'
+                          : 'bg-[#0B0F0E] border-[#223027] hover:border-[#22C55E]/30 text-[#94A3B8] hover:text-[#E8EDEA]'
                       }`}
                     >
                       <div className="flex justify-between items-start">
                         <span className="font-semibold text-xs text-[#E8EDEA]">Level {stepItem.level} Approval</span>
-                        <span className="text-[10px] text-[#8C9A93] font-mono">
+                        <span className="text-[10px] text-[#94A3B8] font-mono">
                           {new Date(stepItem.created_at).toLocaleDateString()}
                         </span>
                       </div>
                       <p className="text-[10px] font-mono text-[#22C55E] mt-2">ID: {stepItem.id.substring(0, 8)}...</p>
-                      <div className="flex justify-between items-center mt-3 pt-2 border-t border-[#223027]/40 text-[10px] text-[#8C9A93]">
+                      <div className="flex justify-between items-center mt-3 pt-2 border-t border-[#223027]/40 text-[10px] text-[#94A3B8]">
                         <span>Click to review workflow</span>
                         <ArrowRight className="h-3 w-3" />
                       </div>
@@ -205,21 +205,21 @@ const Approval = () => {
         {/* Right 2 Cols: Details & Decisions Panel */}
         <div className="lg:col-span-2">
           {!selectedStep ? (
-            <div className="h-72 bg-[#121A17] border border-[#223027] rounded-xl flex items-center justify-center text-xs text-[#8C9A93] italic shadow-md">
+            <div className="h-72 bg-[#0B0F0E] border border-[#223027] rounded-xl flex items-center justify-center text-xs text-[#94A3B8] italic shadow-md">
               Select a pending approval task from the list to load workflow.
             </div>
           ) : loadingDetails ? (
-            <div className="h-72 bg-[#121A17] border border-[#223027] rounded-xl flex flex-col items-center justify-center gap-2 text-xs text-[#8C9A93] shadow-md">
+            <div className="h-72 bg-[#0B0F0E] border border-[#223027] rounded-xl flex flex-col items-center justify-center gap-2 text-xs text-[#94A3B8] shadow-md">
               <Loader2 className="h-6 w-6 animate-spin text-[#22C55E]" />
               <span>Fetching workflow specifications...</span>
             </div>
           ) : (
-            <div className="bg-[#121A17] border border-[#223027] p-8 rounded-xl shadow-lg space-y-8 animate-fade-in">
+            <div className="bg-[#0B0F0E] border border-[#223027] p-8 rounded-xl shadow-lg space-y-8 animate-fade-in">
               
               {/* Workflow details title matching user's sketch */}
               <div className="border-b border-[#223027] pb-4">
                 <h2 className="text-xl font-bold text-[#E8EDEA]">Approval Workflow</h2>
-                <p className="text-xs text-[#8C9A93] mt-1 font-semibold capitalize">
+                <p className="text-xs text-[#94A3B8] mt-1 font-semibold capitalize">
                   RFQ: {rfqDetails?.title} - Vendor: {quoteDetails?.vendor_name} - {formatCurrency(quoteDetails?.grand_total)}
                 </p>
               </div>
@@ -280,7 +280,7 @@ const Approval = () => {
                             {l1Step?.approver_name || 'Rahul Verma'} (Procurement Head)
                           </span>
                           <span className={`text-[10px] block mt-1 ${
-                            l1Step?.status === 'approved' ? 'text-emerald-400 font-medium' : 'text-[#8C9A93]'
+                            l1Step?.status === 'approved' ? 'text-emerald-400 font-medium' : 'text-[#94A3B8]'
                           }`}>
                             {l1Step?.status === 'approved' 
                               ? `Approved on ${new Date(l1Step.acted_at).toLocaleDateString()} at ${new Date(l1Step.acted_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
@@ -310,7 +310,7 @@ const Approval = () => {
                             {l2Step?.approver_name || 'Priya Shah'} (Finance Manager)
                           </span>
                           <span className={`text-[10px] block mt-1 ${
-                            l2Step?.status === 'approved' ? 'text-emerald-400 font-medium' : 'text-[#8C9A93]'
+                            l2Step?.status === 'approved' ? 'text-emerald-400 font-medium' : 'text-[#94A3B8]'
                           }`}>
                             {l2Step?.status === 'approved'
                               ? `Approved on ${new Date(l2Step.acted_at).toLocaleDateString()} at ${new Date(l2Step.acted_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
@@ -327,7 +327,7 @@ const Approval = () => {
                   {/* Approval remarks section */}
                   {hasRole(['admin', 'manager']) && (
                     <div className="space-y-2">
-                      <span className="block text-xs font-semibold text-[#8C9A93] uppercase tracking-wider">
+                      <span className="block text-xs font-semibold text-[#94A3B8] uppercase tracking-wider">
                         Approval Remarks
                       </span>
                       <textarea
@@ -350,19 +350,19 @@ const Approval = () => {
                     
                     <div className="space-y-3.5 text-xs">
                       <div className="flex justify-between border-b border-[#223027]/40 pb-2">
-                        <span className="text-[#8C9A93]">Vendor:</span>
+                        <span className="text-[#94A3B8]">Vendor:</span>
                         <span className="font-semibold text-[#E8EDEA]">{quoteDetails?.vendor_name}</span>
                       </div>
                       <div className="flex justify-between border-b border-[#223027]/40 pb-2">
-                        <span className="text-[#8C9A93]">Total:</span>
+                        <span className="text-[#94A3B8]">Total:</span>
                         <span className="font-bold text-[#22C55E] font-mono">{formatCurrency(quoteDetails?.grand_total)}</span>
                       </div>
                       <div className="flex justify-between border-b border-[#223027]/40 pb-2">
-                        <span className="text-[#8C9A93]">Delivery:</span>
+                        <span className="text-[#94A3B8]">Delivery:</span>
                         <span className="font-semibold text-[#E8EDEA]">{quoteDetails?.delivery_days} days</span>
                       </div>
                       <div className="flex justify-between pb-1">
-                        <span className="text-[#8C9A93]">Rating:</span>
+                        <span className="text-[#94A3B8]">Rating:</span>
                         <div className="flex items-center text-amber-400 font-bold gap-0.5">
                           <span>★ {formatRating(quoteDetails?.vendor_rating)} / 5</span>
                         </div>

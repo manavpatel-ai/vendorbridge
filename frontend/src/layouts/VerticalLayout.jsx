@@ -16,7 +16,7 @@ const VerticalLayout = () => {
     return (
       <div className="h-screen w-screen bg-[#0B0F0E] flex flex-col items-center justify-center gap-4 text-[#E8EDEA]">
         <Loader2 className="h-10 w-10 text-[#22C55E] animate-spin" />
-        <span className="text-sm font-medium tracking-wide text-[#8C9A93]">Loading VendorBridge...</span>
+        <span className="text-sm font-medium tracking-wide text-[#94A3B8]">Loading VendorBridge...</span>
       </div>
     );
   }
