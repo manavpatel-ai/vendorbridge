@@ -55,15 +55,15 @@ const Dashboard = () => {
   if (loading) {
     return (
       <div className="space-y-6 animate-pulse">
-        <div className="h-8 bg-[#121A17] rounded-md w-1/4"></div>
+        <div className="h-8 bg-[#0B0F0E] rounded-md w-1/4"></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="h-32 bg-[#121A17] rounded-xl border border-[#223027]"></div>
+            <div key={i} className="h-32 bg-[#0B0F0E] rounded-xl border border-[#223027]"></div>
           ))}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 h-96 bg-[#121A17] rounded-xl border border-[#223027]"></div>
-          <div className="h-96 bg-[#121A17] rounded-xl border border-[#223027]"></div>
+          <div className="lg:col-span-2 h-96 bg-[#0B0F0E] rounded-xl border border-[#223027]"></div>
+          <div className="h-96 bg-[#0B0F0E] rounded-xl border border-[#223027]"></div>
         </div>
       </div>
     );
@@ -100,7 +100,7 @@ const Dashboard = () => {
       value: data?.overdue_invoices || 0,
       icon: AlertCircle,
       color: data?.overdue_invoices > 0 ? 'text-rose-500' : 'text-[#94A3B8]',
-      bg: data?.overdue_invoices > 0 ? 'bg-rose-500/10' : 'bg-[#121A17]',
+      bg: data?.overdue_invoices > 0 ? 'bg-rose-500/10' : 'bg-[#0B0F0E]',
       description: 'Unpaid past due invoices'
     }
   ];
@@ -127,7 +127,7 @@ const Dashboard = () => {
           return (
             <div 
               key={idx} 
-              className="bg-[#121A17] border border-[#223027] p-6 rounded-xl shadow-lg hover:border-[#22C55E]/40 hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 flex items-center justify-between group relative overflow-hidden"
+              className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl shadow-lg hover:border-[#22C55E]/40 hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 flex items-center justify-between group relative overflow-hidden"
             >
               {/* Card Hover Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#22C55E]/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
@@ -149,7 +149,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Recent Purchase Orders Table */}
-        <div className="lg:col-span-2 bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg flex flex-col justify-between">
+        <div className="lg:col-span-2 bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-lg flex flex-col justify-between">
           <div>
             <div className="p-6 border-b border-[#223027] bg-[#0F1513]/40">
               <h3 className="font-bold text-[#E8EDEA] text-sm tracking-wide">Recent Purchase Orders</h3>
@@ -212,7 +212,7 @@ const Dashboard = () => {
         </div>
 
         {/* Spend Trend Chart */}
-        <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl flex flex-col shadow-lg justify-between">
+        <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl flex flex-col shadow-lg justify-between">
           <div>
             <div className="flex justify-between items-center mb-6">
               <div>
@@ -254,7 +254,7 @@ const Dashboard = () => {
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#121A17', 
+                      backgroundColor: '#0B0F0E', 
                       borderColor: '#223027', 
                       borderRadius: '8px',
                       color: '#E8EDEA',
@@ -280,7 +280,7 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Actions Panel */}
-      <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl shadow-lg relative overflow-hidden">
+      <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl shadow-lg relative overflow-hidden">
         {/* Glow behind buttons */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-[#22C55E]/5 rounded-full blur-3xl" />
         

@@ -11,6 +11,7 @@ const RFQCreate = lazy(() => import('../../views/RFQ/RFQCreate'));
 const RFQDetails = lazy(() => import('../../views/RFQ/RFQDetails'));
 const QuotationSubmit = lazy(() => import('../../views/Quotation/QuotationSubmit'));
 const QuotationComparison = lazy(() => import('../../views/Quotation/QuotationComparison'));
+const QuotationDetails = lazy(() => import('../../views/Quotation/QuotationDetails'));
 const Quotations = lazy(() => import('../../views/Quotation'));
 const Approval = lazy(() => import('../../views/Approval'));
 const PurchaseOrderInvoice = lazy(() => import('../../views/PurchaseOrder'));
@@ -90,6 +91,13 @@ export const RoutesList = [
   {
     path: '/quotations/submit',
     element: <QuotationSubmit />,
+    meta: {
+      publicRoute: false
+    }
+  },
+  {
+    path: '/quotations/:id',
+    element: <QuotationDetails />,
     meta: {
       publicRoute: false
     }

@@ -61,7 +61,7 @@ html, body {
 .light-mode .bg-\[\#0B0F0E\] {
   background-color: #F8FAFC !important;
 }
-.light-mode .bg-\[\#121A17\] {
+.light-mode .bg-\[\#0B0F0E\] {
   background-color: #FFFFFF !important;
 }
 .light-mode .bg-\[\#0F1513\] {
@@ -242,7 +242,7 @@ html, body {
   }
 
   /* Specific overrides for containers inside print-container to print cleanly in black on white */
-  .print-container .bg-\[\#121A17\],
+  .print-container .bg-\[\#0B0F0E\],
   .print-container .bg-\[\#0F1513\],
   .print-container div,
   .print-container table,

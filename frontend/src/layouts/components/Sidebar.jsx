@@ -8,7 +8,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const { user, hasRole } = useAuth();
 
   return (
-    <aside className={`w-64 bg-[#121A17] border-r border-[#223027] flex flex-col min-h-screen fixed md:relative inset-y-0 left-0 z-30 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out`}>
+    <aside className={`w-64 bg-[#0B0F0E] border-r border-[#223027] flex flex-col min-h-screen fixed md:relative inset-y-0 left-0 z-30 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out`}>
       {/* Brand Header */}
       <div className="h-16 flex items-center justify-between px-6 border-b border-[#223027]">
         <div className="flex items-center gap-2">

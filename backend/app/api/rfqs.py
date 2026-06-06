@@ -52,7 +52,7 @@ async def list_rfqs(
 @router.post("/", response_model=RfqResponse, status_code=status.HTTP_201_CREATED)
 async def create_rfq(
     rfq_in: RfqCreate,
-    current_user: User = Depends(require_role("admin", "procurement_officer")),
+    current_user: User = Depends(require_role("admin", "procurement_officer", "manager")),
     db: AsyncSession = Depends(get_db)
 ) -> Any:
     # Generate sequential RFQ Number

@@ -54,7 +54,7 @@ const Invoices = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-md">
+          <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-md">
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-xs text-left">
                 <thead>
@@ -67,7 +67,7 @@ const Invoices = () => {
                   </tr>
                 </thead>
                 
-                <tbody className="divide-y divide-[#223027]/40 bg-[#121A17]">
+                <tbody className="divide-y divide-[#223027]/40 bg-[#0B0F0E]">
                   {invoices.length === 0 ? (
                     <tr>
                       <td colSpan="5" className="p-8 text-center text-[#94A3B8] italic">No Invoices available.</td>

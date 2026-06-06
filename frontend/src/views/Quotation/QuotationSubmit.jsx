@@ -160,7 +160,7 @@ const QuotationSubmit = () => {
       )}
 
       {/* RFQ Summary Box from sketch */}
-      <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl flex gap-3 items-start shadow-sm relative overflow-hidden">
+      <div className="bg-[#0B0F0E] border border-[#223027] p-5 rounded-xl flex gap-3 items-start shadow-sm relative overflow-hidden">
         <div className="absolute top-0 left-0 w-1 h-full bg-[#22C55E]" />
         <Info className="h-5 w-5 text-[#22C55E] flex-shrink-0 mt-0.5" />
         <div>
@@ -172,7 +172,7 @@ const QuotationSubmit = () => {
       </div>
 
       {/* Quotation Table Section */}
-      <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg">
+      <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-lg">
         <div className="p-5 border-b border-[#223027] bg-[#0F1513]/40">
           <h3 className="text-xs font-semibold text-[#E8EDEA] uppercase tracking-wide">Your Quotation</h3>
         </div>
@@ -188,7 +188,7 @@ const QuotationSubmit = () => {
                 <th className="p-4 font-semibold uppercase tracking-wider text-center w-36">Delivery (days)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#223027]/40 bg-[#121A17]">
+            <tbody className="divide-y divide-[#223027]/40 bg-[#0B0F0E]">
               {lineItems.map((item, idx) => (
                 <tr key={idx} className="hover:bg-[#16211d]/20 transition-colors">
                   {/* Item name */}
@@ -248,7 +248,7 @@ const QuotationSubmit = () => {
             <select
               value={taxPercent}
               onChange={(e) => setTaxPercent(parseInt(e.target.value))}
-              className="w-full max-w-xs bg-[#121A17] border border-[#223027] rounded-lg px-3 py-2 text-xs text-[#E8EDEA] focus:outline-none focus:border-[#22C55E]"
+              className="w-full max-w-xs bg-[#0B0F0E] border border-[#223027] rounded-lg px-3 py-2 text-xs text-[#E8EDEA] focus:outline-none focus:border-[#22C55E]"
             >
               <option value={18}>18% (Standard GST)</option>
               <option value={12}>12% (Reduced Tax)</option>
@@ -264,14 +264,14 @@ const QuotationSubmit = () => {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={4}
-              className="w-full bg-[#121A17] border border-[#223027] rounded-lg px-4 py-3 text-xs text-[#E8EDEA] focus:outline-none focus:border-[#22C55E]"
+              className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-3 text-xs text-[#E8EDEA] focus:outline-none focus:border-[#22C55E]"
               placeholder="e.g. Payment terms: 20 days net from invoice date..."
             />
           </div>
         </div>
 
         {/* Right Side: Financial Summary Box */}
-        <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl space-y-4 shadow-lg">
+        <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl space-y-4 shadow-lg">
           <div className="space-y-3 text-xs font-medium">
             <div className="flex justify-between">
               <span className="text-[#94A3B8]">Subtotal</span>

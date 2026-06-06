@@ -20,7 +20,7 @@ const RFQCreate = () => {
   
   // Enforce staff roles
   useEffect(() => {
-    if (!hasRole(['admin', 'procurement_officer'])) {
+    if (!hasRole(['admin', 'procurement_officer', 'manager'])) {
       navigate('/rfqs');
     }
   }, []);
@@ -216,7 +216,7 @@ const RFQCreate = () => {
       </div>
 
       {/* Stepper Header (Static visual indicator of preparation flow) */}
-      <div className="relative flex justify-between items-center bg-[#121A17] border border-[#223027] px-8 py-3.5 rounded-xl">
+      <div className="relative flex justify-between items-center bg-[#0B0F0E] border border-[#223027] px-8 py-3.5 rounded-xl">
         <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#22C55E]/40 -translate-y-1/2 z-0 mx-16"></div>
         
         {[
@@ -246,7 +246,7 @@ const RFQCreate = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         
         {/* Left Column: Basic Info */}
-        <div className="bg-[#121A17] border border-[#223027] p-8 rounded-xl shadow-lg space-y-5">
+        <div className="bg-[#0B0F0E] border border-[#223027] p-8 rounded-xl shadow-lg space-y-5">
           <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wider border-b border-[#223027] pb-3 mb-2">
             Basic Specifications
           </h3>
@@ -316,7 +316,7 @@ const RFQCreate = () => {
         <div className="space-y-8">
           
           {/* Line Items Box */}
-          <div className="bg-[#121A17] border border-[#223027] p-8 rounded-xl shadow-lg space-y-4">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-8 rounded-xl shadow-lg space-y-4">
             <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wider border-b border-[#223027] pb-3">
               Line items
             </h3>
@@ -350,7 +350,7 @@ const RFQCreate = () => {
                           value={item.quantity}
                           min="1"
                           onChange={(e) => handleItemChange(idx, 'quantity', e.target.value)}
-                          className="w-full bg-[#121A17] border border-[#223027] rounded px-2 py-1 text-[#E8EDEA] text-center text-xs focus:outline-none focus:border-[#22C55E]"
+                          className="w-full bg-[#0B0F0E] border border-[#223027] rounded px-2 py-1 text-[#E8EDEA] text-center text-xs focus:outline-none focus:border-[#22C55E]"
                           required
                         />
                       </td>
@@ -359,7 +359,7 @@ const RFQCreate = () => {
                           type="text"
                           value={item.unit}
                           onChange={(e) => handleItemChange(idx, 'unit', e.target.value)}
-                          className="w-full bg-[#121A17] border border-[#223027] rounded px-2 py-1 text-[#E8EDEA] text-center text-xs focus:outline-none focus:border-[#22C55E]"
+                          className="w-full bg-[#0B0F0E] border border-[#223027] rounded px-2 py-1 text-[#E8EDEA] text-center text-xs focus:outline-none focus:border-[#22C55E]"
                           placeholder="Unit"
                         />
                       </td>
@@ -390,7 +390,7 @@ const RFQCreate = () => {
           </div>
 
           {/* Assign Vendors Box */}
-          <div className="bg-[#121A17] border border-[#223027] p-8 rounded-xl shadow-lg space-y-4 relative">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-8 rounded-xl shadow-lg space-y-4 relative">
             <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wider border-b border-[#223027] pb-3">
               ASSIGN VENDORS
             </h3>
@@ -408,7 +408,7 @@ const RFQCreate = () => {
                   >
                     <div>
                       <span className="font-semibold">{vendor.name}</span>
-                      <span className="text-[10px] text-[#94A3B8] bg-[#121A17] border border-[#223027]/40 px-2 py-0.5 rounded ml-2">
+                      <span className="text-[10px] text-[#94A3B8] bg-[#0B0F0E] border border-[#223027]/40 px-2 py-0.5 rounded ml-2">
                         {vendor.category}
                       </span>
                     </div>
@@ -436,7 +436,7 @@ const RFQCreate = () => {
               </button>
 
               {showVendorDropdown && (
-                <div className="absolute left-0 right-0 mt-2 bg-[#121A17] border border-[#223027] rounded-lg shadow-2xl z-30 max-h-56 overflow-y-auto divide-y divide-[#223027]/40">
+                <div className="absolute left-0 right-0 mt-2 bg-[#0B0F0E] border border-[#223027] rounded-lg shadow-2xl z-30 max-h-56 overflow-y-auto divide-y divide-[#223027]/40">
                   <div className="p-2 bg-[#0F1513] text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider">
                     Select Active Supplier
                   </div>
@@ -515,7 +515,7 @@ const RFQCreate = () => {
             className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
               isDragging
                 ? 'border-[#22C55E] bg-[#22C55E]/5'
-                : 'border-[#223027] bg-[#121A17] hover:border-[#22C55E]/40'
+                : 'border-[#223027] bg-[#0B0F0E] hover:border-[#22C55E]/40'
             }`}
           >
             <input
@@ -541,7 +541,7 @@ const RFQCreate = () => {
               {filesList.map((file, index) => (
                 <div 
                   key={index} 
-                  className="flex items-center justify-between p-2.5 bg-[#121A17] border border-[#223027] rounded-lg text-xs text-[#E8EDEA] animate-fade-in"
+                  className="flex items-center justify-between p-2.5 bg-[#0B0F0E] border border-[#223027] rounded-lg text-xs text-[#E8EDEA] animate-fade-in"
                 >
                   <div className="flex items-center gap-2 truncate">
                     <Paperclip className="h-4 w-4 text-[#22C55E] flex-shrink-0" />

@@ -7,8 +7,7 @@ import api from '../../utility/api';
 const RFQs = () => {
   const navigate = useNavigate();
   const { user, hasRole } = useAuth();
-  const isStaff = hasRole(['admin', 'procurement_officer']);
-  const isManager = hasRole('manager');
+  const isStaff = hasRole(['admin', 'procurement_officer', 'manager']);
 
   const [rfqs, setRfqs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -99,7 +98,7 @@ const RFQs = () => {
       </div>
 
       {/* Filter Toolbar */}
-      <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl flex flex-wrap gap-4 items-center justify-between">
+      <div className="bg-[#0B0F0E] border border-[#223027] p-5 rounded-xl flex flex-wrap gap-4 items-center justify-between">
         <div className="flex-1 min-w-[260px] relative">
           <Search className="absolute left-3 top-2.5 h-4.5 w-4.5 text-[#94A3B8]/60" />
           <input
@@ -133,11 +132,11 @@ const RFQs = () => {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="h-48 bg-[#121A17] rounded-xl border border-[#223027] animate-pulse"></div>
+            <div key={i} className="h-48 bg-[#0B0F0E] rounded-xl border border-[#223027] animate-pulse"></div>
           ))}
         </div>
       ) : rfqs.length === 0 ? (
-        <div className="text-center py-12 bg-[#121A17] border border-[#223027] rounded-xl">
+        <div className="text-center py-12 bg-[#0B0F0E] border border-[#223027] rounded-xl">
           <p className="text-sm text-[#94A3B8]">No RFQs found.</p>
         </div>
       ) : (
@@ -149,7 +148,7 @@ const RFQs = () => {
             return (
               <div
                 key={rfq.id}
-                className="bg-[#121A17] border border-[#223027] rounded-xl p-5 hover:border-[#22C55E]/40 transition-all duration-200 flex flex-col justify-between shadow-md group"
+                className="bg-[#0B0F0E] border border-[#223027] rounded-xl p-5 hover:border-[#22C55E]/40 transition-all duration-200 flex flex-col justify-between shadow-md group"
               >
                 <div>
                   {/* Top line */}

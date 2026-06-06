@@ -70,7 +70,7 @@ const Topbar = ({ onToggleSidebar }) => {
   const unreadCount = notifications.filter(n => !n.is_read).length;
 
   return (
-    <header className="h-16 bg-[#121A17] border-b border-[#223027] flex items-center justify-between px-4 sm:px-8 z-10">
+    <header className="h-16 bg-[#0B0F0E] border-b border-[#223027] flex items-center justify-between px-4 sm:px-8 z-10">
       {/* Title & Mobile Toggle */}
       <div className="flex items-center gap-3">
         <button
@@ -114,7 +114,7 @@ const Topbar = ({ onToggleSidebar }) => {
 
           {/* Notifications Dropdown */}
           {showNotifDropdown && (
-            <div className="absolute right-0 mt-2 w-80 bg-[#121A17] border border-[#223027] rounded-lg shadow-xl overflow-hidden z-20">
+            <div className="absolute right-0 mt-2 w-80 bg-[#0B0F0E] border border-[#223027] rounded-lg shadow-xl overflow-hidden z-20">
               <div className="p-3 border-b border-[#223027] flex justify-between items-center bg-[#0F1513]">
                 <span className="text-xs font-semibold text-[#E8EDEA]">Notifications</span>
                 {unreadCount > 0 && (

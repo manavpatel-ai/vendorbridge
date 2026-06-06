@@ -146,7 +146,7 @@ const PurchaseOrderDetails = () => {
           <ArrowLeft className="h-4 w-4" />
           <span>Back to Purchase Orders</span>
         </button>
-        <div className="bg-[#121A17] border border-[#223027] rounded-xl p-8 text-center text-[#94A3B8]">
+        <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl p-8 text-center text-[#94A3B8]">
           Purchase Order not found or failed to load.
         </div>
       </div>
@@ -165,7 +165,7 @@ const PurchaseOrderDetails = () => {
       </button>
 
       {/* Main Details Sheet */}
-      <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg print-container">
+      <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-lg print-container">
         {/* Header: Title and Top Action Buttons */}
         <div className="p-6 border-b border-[#223027] bg-[#0F1513] flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -181,7 +181,7 @@ const PurchaseOrderDetails = () => {
               <button
                 onClick={() => handleDownloadPDF(relatedInvoice.id)}
                 disabled={actionLoading}
-                className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#121A17]"
+                className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#0B0F0E]"
               >
                 <Download className="h-3.5 w-3.5" />
                 <span>Download PDF</span>
@@ -190,7 +190,7 @@ const PurchaseOrderDetails = () => {
             <button
               onClick={() => window.print()}
               disabled={actionLoading}
-              className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#121A17]"
+              className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#0B0F0E]"
             >
               <Printer className="h-3.5 w-3.5" />
               <span>Print</span>
@@ -199,7 +199,7 @@ const PurchaseOrderDetails = () => {
               <button
                 onClick={() => handleEmailInvoice(relatedInvoice.id)}
                 disabled={actionLoading}
-                className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#121A17]"
+                className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#0B0F0E]"
               >
                 <Mail className="h-3.5 w-3.5" />
                 <span>Email invoice</span>
@@ -296,7 +296,7 @@ const PurchaseOrderDetails = () => {
           </div>
 
           {/* Items Table */}
-          <div className="border border-[#223027] rounded-xl overflow-hidden bg-[#121A17]">
+          <div className="border border-[#223027] rounded-xl overflow-hidden bg-[#0B0F0E]">
             <table className="w-full text-xs text-left border-collapse">
               <thead>
                 <tr className="bg-[#0F1513] border-b border-[#223027] text-[#94A3B8]">

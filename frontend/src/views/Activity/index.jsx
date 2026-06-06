@@ -150,7 +150,7 @@ const Activity = () => {
           <Loader2 className="h-8 w-8 animate-spin text-[#22C55E]" />
         </div>
       ) : logs.length === 0 ? (
-        <div className="text-center py-16 bg-[#121A17] border border-[#223027] rounded-xl">
+        <div className="text-center py-16 bg-[#0B0F0E] border border-[#223027] rounded-xl">
           <p className="text-xs sm:text-sm text-[#94A3B8] italic">No audit trail logs available for this filter.</p>
         </div>
       ) : (

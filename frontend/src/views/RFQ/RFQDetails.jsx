@@ -86,7 +86,7 @@ const RFQDetails = () => {
       </button>
 
       {/* Hero Header Card */}
-      <div className="bg-[#121A17] border border-[#223027] p-8 rounded-xl shadow-md relative overflow-hidden flex flex-col md:flex-row justify-between md:items-center gap-6">
+      <div className="bg-[#0B0F0E] border border-[#223027] p-8 rounded-xl shadow-md relative overflow-hidden flex flex-col md:flex-row justify-between md:items-center gap-6">
         <div className="space-y-2">
           <span className="font-mono text-xs text-[#22C55E] font-semibold">{rfq.rfq_number}</span>
           <h1 className="text-xl font-bold text-[#E8EDEA]">{rfq.title}</h1>
@@ -140,7 +140,7 @@ const RFQDetails = () => {
         {/* Left 2 Cols: Details, Line Items */}
         <div className="lg:col-span-2 space-y-6">
           {/* Specifications description */}
-          <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl space-y-3">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl space-y-3">
             <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wide">Procurement Details</h3>
             <p className="text-xs text-[#E8EDEA] leading-relaxed whitespace-pre-wrap">
               {rfq.description || 'No detailed specifications sheet attached to this request.'}
@@ -148,11 +148,11 @@ const RFQDetails = () => {
           </div>
 
           {/* Line items table */}
-          <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-md">
+          <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-md">
             <div className="p-4 border-b border-[#223027] bg-[#0F1513]">
               <h3 className="text-xs font-semibold text-[#E8EDEA] uppercase tracking-wide">Required Items & Quantities</h3>
             </div>
-            <div className="divide-y divide-[#223027] bg-[#121A17]">
+            <div className="divide-y divide-[#223027] bg-[#0B0F0E]">
               {rfq.line_items?.map((item) => (
                 <div key={item.id} className="p-4 flex justify-between items-center text-xs">
                   <span className="font-semibold text-[#E8EDEA]">{item.item_name}</span>
@@ -165,7 +165,7 @@ const RFQDetails = () => {
           </div>
 
           {/* Attachments Section */}
-          <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl space-y-4 shadow-md">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl space-y-4 shadow-md">
             <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wide flex items-center gap-1">
               <Paperclip className="h-4 w-4" />
               Reference Attachments ({rfq.attachments?.length || 0})
@@ -227,7 +227,7 @@ const RFQDetails = () => {
 
         {/* Right 1 Col: Invite/Quotation Statuses */}
         <div className="space-y-6">
-          <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl space-y-4 shadow-md">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-xl space-y-4 shadow-md">
             <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wide flex items-center gap-1.5">
               <UserCheck className="h-4.5 w-4.5" />
               Vendor Invitation Status

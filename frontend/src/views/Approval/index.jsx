@@ -158,7 +158,7 @@ const Approval = () => {
         
         {/* Left Col: Pending Approvals list */}
         <div className="lg:col-span-1 space-y-4">
-          <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl shadow-lg">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-5 rounded-xl shadow-lg">
             <h3 className="text-xs font-semibold text-[#E8EDEA] uppercase tracking-wide border-b border-[#223027] pb-3 mb-4">Pending Tasks</h3>
 
             {loadingList ? (
@@ -205,16 +205,16 @@ const Approval = () => {
         {/* Right 2 Cols: Details & Decisions Panel */}
         <div className="lg:col-span-2">
           {!selectedStep ? (
-            <div className="h-72 bg-[#121A17] border border-[#223027] rounded-xl flex items-center justify-center text-xs text-[#94A3B8] italic shadow-md">
+            <div className="h-72 bg-[#0B0F0E] border border-[#223027] rounded-xl flex items-center justify-center text-xs text-[#94A3B8] italic shadow-md">
               Select a pending approval task from the list to load workflow.
             </div>
           ) : loadingDetails ? (
-            <div className="h-72 bg-[#121A17] border border-[#223027] rounded-xl flex flex-col items-center justify-center gap-2 text-xs text-[#94A3B8] shadow-md">
+            <div className="h-72 bg-[#0B0F0E] border border-[#223027] rounded-xl flex flex-col items-center justify-center gap-2 text-xs text-[#94A3B8] shadow-md">
               <Loader2 className="h-6 w-6 animate-spin text-[#22C55E]" />
               <span>Fetching workflow specifications...</span>
             </div>
           ) : (
-            <div className="bg-[#121A17] border border-[#223027] p-8 rounded-xl shadow-lg space-y-8 animate-fade-in">
+            <div className="bg-[#0B0F0E] border border-[#223027] p-8 rounded-xl shadow-lg space-y-8 animate-fade-in">
               
               {/* Workflow details title matching user's sketch */}
               <div className="border-b border-[#223027] pb-4">

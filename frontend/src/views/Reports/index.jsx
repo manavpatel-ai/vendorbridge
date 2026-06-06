@@ -137,15 +137,15 @@ const Reports = () => {
   if (loading) {
     return (
       <div className="space-y-6 animate-pulse">
-        <div className="h-8 bg-[#121A17] rounded-md w-1/4"></div>
+        <div className="h-8 bg-[#0B0F0E] rounded-md w-1/4"></div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="h-28 bg-[#121A17] rounded-xl border border-[#223027]"></div>
+            <div key={i} className="h-28 bg-[#0B0F0E] rounded-xl border border-[#223027]"></div>
           ))}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="h-80 bg-[#121A17] rounded-xl border border-[#223027]"></div>
-          <div className="h-80 bg-[#121A17] rounded-xl border border-[#223027]"></div>
+          <div className="h-80 bg-[#0B0F0E] rounded-xl border border-[#223027]"></div>
+          <div className="h-80 bg-[#0B0F0E] rounded-xl border border-[#223027]"></div>
         </div>
       </div>
     );
@@ -165,7 +165,7 @@ const Reports = () => {
         {/* Date Selector & Export Actions */}
         <div className="flex items-center gap-3">
           {/* Custom Date Pill */}
-          <div className="relative flex items-center justify-center bg-[#121A17] border border-[#223027] hover:border-[#22C55E]/40 px-4 py-2 rounded-xl text-xs text-[#E8EDEA] cursor-pointer transition-all min-w-[100px] text-center">
+          <div className="relative flex items-center justify-center bg-[#0B0F0E] border border-[#223027] hover:border-[#22C55E]/40 px-4 py-2 rounded-xl text-xs text-[#E8EDEA] cursor-pointer transition-all min-w-[100px] text-center">
             <span className="font-semibold">{formatMonthPill(selectedMonth)}</span>
             <input
               type="month"
@@ -179,7 +179,7 @@ const Reports = () => {
           <button
             onClick={handleExportCSV}
             disabled={exporting}
-            className="border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-5 py-2 rounded-xl text-xs cursor-pointer transition-all bg-[#121A17] flex items-center gap-1.5 disabled:opacity-45"
+            className="border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-5 py-2 rounded-xl text-xs cursor-pointer transition-all bg-[#0B0F0E] flex items-center gap-1.5 disabled:opacity-45"
           >
             {exporting && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
             <span>Export</span>
@@ -190,7 +190,7 @@ const Reports = () => {
       {/* Analytics KPI cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Total Spend */}
-        <div className="bg-[#121A17] border border-[#223027] p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-md min-h-[120px]">
+        <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-md min-h-[120px]">
           <h3 className="text-3xl font-bold text-[#3B82F6] dark:text-[#60A5FA] tracking-tight">
             {formatSpendKPI(analytics?.total_spend)}
           </h3>
@@ -198,7 +198,7 @@ const Reports = () => {
         </div>
 
         {/* Active Vendors */}
-        <div className="bg-[#121A17] border border-[#223027] p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-md min-h-[120px]">
+        <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-md min-h-[120px]">
           <h3 className="text-3xl font-bold text-[#10B981] dark:text-[#34D399] tracking-tight">
             {analytics?.active_vendors}
           </h3>
@@ -206,7 +206,7 @@ const Reports = () => {
         </div>
 
         {/* PO Fulfillment */}
-        <div className="bg-[#121A17] border border-[#223027] p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-md min-h-[120px]">
+        <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-md min-h-[120px]">
           <h3 className="text-3xl font-bold text-[#F59E0B] dark:text-[#FBBF24] tracking-tight">
             {parseFloat(analytics?.po_fulfillment_pct || 100).toFixed(0)}%
           </h3>
@@ -214,7 +214,7 @@ const Reports = () => {
         </div>
 
         {/* Overdue Invoices */}
-        <div className="bg-[#121A17] border border-[#223027] p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-md min-h-[120px]">
+        <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-md min-h-[120px]">
           <h3 className="text-3xl font-bold text-[#EF4444] dark:text-[#F87171] tracking-tight">
             {analytics?.overdue_invoices}
           </h3>
@@ -228,7 +228,7 @@ const Reports = () => {
         {/* Spend by Category Column */}
         <div className="flex flex-col">
           <h3 className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-4">Spend by Category</h3>
-          <div className="bg-[#121A17] border border-[#223027] p-6 rounded-2xl shadow-md flex-1">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-2xl shadow-md flex-1">
             {analytics?.spend_by_category?.length === 0 ? (
               <div className="h-full flex items-center justify-center text-xs text-[#94A3B8] italic py-16">
                 No categorical spend recorded for this month.
@@ -264,7 +264,7 @@ const Reports = () => {
           {/* Top Vendors by Spend */}
           <div className="flex flex-col">
             <h3 className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-4">Top Vendors by Spend</h3>
-            <div className="bg-[#121A17] border border-[#223027] rounded-2xl overflow-hidden shadow-md">
+            <div className="bg-[#0B0F0E] border border-[#223027] rounded-2xl overflow-hidden shadow-md">
               <table className="w-full text-xs text-left border-collapse">
                 <thead>
                   <tr className="bg-[#0F1513] border-b border-[#223027] text-[#94A3B8]">
@@ -273,7 +273,7 @@ const Reports = () => {
                     <th className="p-3.5 font-semibold uppercase tracking-wider text-center">POs</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#223027]/40 bg-[#121A17]">
+                <tbody className="divide-y divide-[#223027]/40 bg-[#0B0F0E]">
                   {analytics?.top_vendors_by_spend?.length === 0 ? (
                     <tr>
                       <td colSpan="3" className="p-8 text-center text-[#94A3B8] italic">No supplier spend recorded.</td>
@@ -295,7 +295,7 @@ const Reports = () => {
           {/* Monthly Trend */}
           <div className="flex flex-col">
             <h3 className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-4">Monthly Trend</h3>
-            <div className="bg-[#121A17] border border-[#223027] p-6 rounded-2xl shadow-md">
+            <div className="bg-[#0B0F0E] border border-[#223027] p-6 rounded-2xl shadow-md">
               <div className="w-full pt-2">
                 <ResponsiveContainer width="100%" height={150}>
                   <BarChart 
@@ -310,7 +310,7 @@ const Reports = () => {
                       tickFormatter={(val) => val ? val.split(' ')[0] : ''}
                     />
                     <Tooltip
-                      contentStyle={{ backgroundColor: '#121A17', borderColor: '#223027', borderRadius: '8px', color: '#E8EDEA', fontSize: '11px' }}
+                      contentStyle={{ backgroundColor: '#0B0F0E', borderColor: '#223027', borderRadius: '8px', color: '#E8EDEA', fontSize: '11px' }}
                       formatter={(v) => [`₹${formatNumberComma(v)}`, 'Spend']}
                     />
                     <Bar dataKey="value" radius={[4, 4, 0, 0]}>

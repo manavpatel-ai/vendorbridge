@@ -150,7 +150,7 @@ const Vendors = () => {
       </div>
 
       {/* Full Width Search Input from Sketch */}
-      <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl shadow-md space-y-4">
+      <div className="bg-[#0B0F0E] border border-[#223027] p-5 rounded-xl shadow-md space-y-4">
         <div className="relative w-full">
           <Search className="absolute left-4 top-3 h-5 w-5 text-[#94A3B8]/60" />
           <input
@@ -210,11 +210,11 @@ const Vendors = () => {
           <Loader2 className="h-8 w-8 animate-spin text-[#22C55E]" />
         </div>
       ) : vendors.length === 0 ? (
-        <div className="text-center py-16 bg-[#121A17] border border-[#223027] rounded-xl">
+        <div className="text-center py-16 bg-[#0B0F0E] border border-[#223027] rounded-xl">
           <p className="text-sm text-[#94A3B8] italic">No vendors matching your search filter were found.</p>
         </div>
       ) : (
-        <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg">
+        <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-lg">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-xs text-left">
               <thead>
@@ -296,7 +296,7 @@ const Vendors = () => {
       {/* Add Vendor Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="bg-[#121A17] border border-[#223027] w-full max-w-lg rounded-xl shadow-2xl overflow-hidden relative">
+          <div className="bg-[#0B0F0E] border border-[#223027] w-full max-w-lg rounded-xl shadow-2xl overflow-hidden relative">
             <button
               onClick={() => setShowAddModal(false)}
               className="absolute top-4 right-4 p-1.5 text-[#94A3B8] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg transition-all"

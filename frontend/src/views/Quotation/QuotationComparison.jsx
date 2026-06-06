@@ -98,7 +98,7 @@ const QuotationComparison = () => {
       </div>
 
       {quotes.length === 0 ? (
-        <div className="text-center py-16 bg-[#121A17] border border-[#223027] rounded-xl space-y-2">
+        <div className="text-center py-16 bg-[#0B0F0E] border border-[#223027] rounded-xl space-y-2">
           <p className="text-sm text-[#94A3B8]">No quotations have been submitted for this RFQ yet.</p>
           <button
             onClick={() => navigate('/rfqs')}
@@ -110,7 +110,7 @@ const QuotationComparison = () => {
       ) : (
         <div className="space-y-6 animate-fade-in">
           {/* Comparison Matrix Box */}
-          <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-xl">
+          <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-xl">
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-xs text-left">
                 <thead>
@@ -283,7 +283,7 @@ const QuotationComparison = () => {
           </div>
 
           {/* Detailed Item-wise Comparison Table */}
-          <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg mt-8">
+          <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-lg mt-8">
             <div className="p-4 border-b border-[#223027] bg-[#0F1513]/40">
               <h3 className="text-xs font-semibold text-[#E8EDEA] uppercase tracking-wide">Detailed Item-wise Comparison</h3>
             </div>
@@ -299,7 +299,7 @@ const QuotationComparison = () => {
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#223027]/40 bg-[#121A17]">
+                <tbody className="divide-y divide-[#223027]/40 bg-[#0B0F0E]">
                   {rfq?.line_items?.map((rfqItem) => (
                     <tr key={rfqItem.id} className="hover:bg-[#16211d]/20 transition-colors">
                       <td className="p-4">

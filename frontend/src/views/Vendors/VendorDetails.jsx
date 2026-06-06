@@ -81,7 +81,7 @@ const VendorDetails = () => {
           <ArrowLeft className="h-4 w-4" />
           <span>Back to Vendors</span>
         </button>
-        <div className="bg-[#121A17] border border-[#223027] rounded-xl p-8 text-center text-[#94A3B8]">
+        <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl p-8 text-center text-[#94A3B8]">
           Vendor profile not found or failed to load.
         </div>
       </div>
@@ -100,7 +100,7 @@ const VendorDetails = () => {
       </button>
 
       {/* Main Vendor Details Panel */}
-      <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg">
+      <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-lg">
         {/* Header Block */}
         <div className="p-6 border-b border-[#223027] bg-[#0F1513] flex justify-between items-center">
           <div>
