@@ -31,9 +31,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F0E] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-[#0B0F0E] flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 lg:p-12">
       {/* Login Card */}
-      <div className="w-full max-w-md bg-[#121A17] border border-[#223027] rounded-xl p-8 shadow-2xl relative overflow-hidden">
+      <div className="w-[95%] sm:w-[75%] md:w-[50%] lg:w-[35%] xl:w-[28%] min-w-[320px] max-w-[480px] bg-[#0B0F0E] border border-[#223027] rounded-xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
         {/* Glow effect */}
         <div className="absolute -top-12 -left-12 w-24 h-24 bg-[#22C55E]/10 rounded-full blur-2xl"></div>
         <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-[#22C55E]/10 rounded-full blur-2xl"></div>
@@ -45,7 +45,7 @@ const Login = () => {
             <div className="absolute inset-0 bg-[#22C55E]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             {/* SVG Shield + Bridge Logo */}
             <svg viewBox="0 0 100 100" className="w-11 h-11 text-[#22C55E]" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M50 20 C62 20 72 24 72 24 V46 C72 59 59 69 50 76 C41 69 28 59 28 46 V24 C28 24 38 20 50 20 Z" fill="#121A17" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
+              <path d="M50 20 C62 20 72 24 72 24 V46 C72 59 59 69 50 76 C41 69 28 59 28 46 V24 C28 24 38 20 50 20 Z" fill="#0B0F0E" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
               <path d="M38 48 C38 41 62 41 62 48" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
               <path d="M34 54 H66" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
               <line x1="44" y1="48" x2="44" y2="54" stroke="currentColor" strokeWidth="2.5" />
@@ -55,11 +55,11 @@ const Login = () => {
           <span className="font-bold text-2xl tracking-wider text-[#E8EDEA]">
             Vendor<span className="text-[#22C55E]">Bridge</span>
           </span>
-          <p className="text-xs text-[#8C9A93] mt-1">Digital Procurement Network</p>
+          <p className="text-xs text-[#94A3B8] mt-1">Digital Procurement Network</p>
         </div>
 
         <h2 className="text-base font-semibold text-[#E8EDEA] mb-1 text-center">Welcome Back</h2>
-        <p className="text-xs text-[#8C9A93] mb-6 text-center">Log in to manage procurements & vendor quotations</p>
+        <p className="text-xs text-[#94A3B8] mb-6 text-center">Log in to manage procurements & vendor quotations</p>
 
         {error && (
           <div className="mb-4 p-3 bg-red-950/40 border border-red-800/60 rounded-lg text-red-400 text-xs text-center">
@@ -70,12 +70,12 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Email field */}
           <div>
-            <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Email Address</label>
+            <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Email Address</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/40 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/50 transition-all duration-200"
+              className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/40 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/50 transition-all duration-200"
               placeholder="e.g. officer@vendorbridge.com"
               required
             />
@@ -83,12 +83,12 @@ const Login = () => {
 
           {/* Password field */}
           <div>
-            <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Password</label>
+            <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/40 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/50 transition-all duration-200"
+              className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/40 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/50 transition-all duration-200"
               placeholder="••••••••"
               required
             />
@@ -112,6 +112,7 @@ const Login = () => {
         </form>
 
         {/* Demo Credentials Alert Box */}
+<<<<<<< HEAD
         <div className="mt-6 p-3 bg-[#16211d] border border-[#223027] rounded-lg text-[11px] text-[#8C9A93] space-y-1">
           <p className="font-semibold text-[#22C55E]">Demo Credentials:</p>
           <div className="grid grid-cols-1 gap-1 text-[10px]">
@@ -120,10 +121,21 @@ const Login = () => {
             <div><span className="font-medium text-[#E8EDEA]">Manager:</span> manager@vendorbridge.com / <code className="text-[#22C55E]">manager123</code></div>
             <div><span className="font-medium text-[#E8EDEA]">Vendor:</span> contact@technoserv.in / <code className="text-[#22C55E]">vendor123</code></div>
           </div>
+=======
+        <div className="mt-6 p-3 bg-[#16211d] border border-[#223027] rounded-lg text-[11px] text-[#94A3B8] space-y-2">
+          <p className="font-semibold text-[#22C55E]">Try out these seeded credentials:</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px]">
+            <div className="break-all"><span className="font-medium text-[#E8EDEA]">Officer:</span> officer@vendorbridge.com</div>
+            <div className="break-all"><span className="font-medium text-[#E8EDEA]">Manager:</span> priya@vendorbridge.com</div>
+            <div className="break-all"><span className="font-medium text-[#E8EDEA]">Vendor 1:</span> vendor1@acme.com</div>
+            <div className="break-all"><span className="font-medium text-[#E8EDEA]">Vendor 2:</span> vendor2@globaltech.com</div>
+          </div>
+          <p className="text-[9px] pt-1.5 border-t border-[#223027] text-center">Password for all is <code className="text-[#22C55E]">password123</code></p>
+>>>>>>> df2c831f2736e32a69a878eaf98e98ed7b92b14e
         </div>
 
         {/* Register Redirect */}
-        <div className="mt-6 text-center text-xs text-[#8C9A93]">
+        <div className="mt-6 text-center text-xs text-[#94A3B8]">
           Don't have an account?{' '}
           <Link to="/register" className="text-[#22C55E] hover:underline font-medium">
             Register as a Vendor

@@ -20,7 +20,7 @@ const RFQCreate = () => {
   
   // Enforce staff roles
   useEffect(() => {
-    if (!hasRole(['admin', 'procurement_officer'])) {
+    if (!hasRole(['admin', 'procurement_officer', 'manager'])) {
       navigate('/rfqs');
     }
   }, []);
@@ -199,7 +199,7 @@ const RFQCreate = () => {
       {/* Back to list */}
       <button
         onClick={() => navigate('/rfqs')}
-        className="flex items-center gap-2 text-xs text-[#8C9A93] hover:text-[#E8EDEA] transition-all cursor-pointer"
+        className="flex items-center gap-2 text-xs text-[#94A3B8] hover:text-[#E8EDEA] transition-all cursor-pointer"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to RFQ List
@@ -209,14 +209,14 @@ const RFQCreate = () => {
       <div className="flex justify-between items-start">
         <div>
           <h1 className="text-3xl font-extrabold text-[#E8EDEA] tracking-tight">Create RFQ's</h1>
-          <p className="text-xs sm:text-sm text-[#8C9A93] mt-1 font-medium">
+          <p className="text-xs sm:text-sm text-[#94A3B8] mt-1 font-medium">
             new request for quotation
           </p>
         </div>
       </div>
 
       {/* Stepper Header (Static visual indicator of preparation flow) */}
-      <div className="relative flex justify-between items-center bg-[#121A17] border border-[#223027] px-8 py-3.5 rounded-xl">
+      <div className="relative flex justify-between items-center bg-[#0B0F0E] border border-[#223027] px-8 py-3.5 rounded-xl">
         <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#22C55E]/40 -translate-y-1/2 z-0 mx-16"></div>
         
         {[
@@ -246,28 +246,28 @@ const RFQCreate = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         
         {/* Left Column: Basic Info */}
-        <div className="bg-[#121A17] border border-[#223027] p-8 rounded-xl shadow-lg space-y-5">
+        <div className="bg-[#0B0F0E] border border-[#223027] p-8 rounded-xl shadow-lg space-y-5">
           <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wider border-b border-[#223027] pb-3 mb-2">
             Basic Specifications
           </h3>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">
                 RFQ's title*
               </label>
               <input
                 type="text"
                 value={basicInfo.title}
                 onChange={(e) => setBasicInfo(prev => ({ ...prev, title: e.target.value }))}
-                className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/20"
+                className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/20"
                 placeholder="e.g. Office Furniture procurement Q2"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">
                 Category
               </label>
               <select
@@ -285,7 +285,7 @@ const RFQCreate = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">
                 Deadline*
               </label>
               <input
@@ -298,14 +298,14 @@ const RFQCreate = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">
                 Description
               </label>
               <textarea
                 value={basicInfo.description}
                 onChange={(e) => setBasicInfo(prev => ({ ...prev, description: e.target.value }))}
                 rows={5}
-                className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/20"
+                className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/20"
                 placeholder="Include specifications, warranty terms, or location notes (e.g., Ergonomic chairs and standing desks for 3rd floor)..."
               />
             </div>
@@ -316,7 +316,7 @@ const RFQCreate = () => {
         <div className="space-y-8">
           
           {/* Line Items Box */}
-          <div className="bg-[#121A17] border border-[#223027] p-8 rounded-xl shadow-lg space-y-4">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-8 rounded-xl shadow-lg space-y-4">
             <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wider border-b border-[#223027] pb-3">
               Line items
             </h3>
@@ -324,7 +324,7 @@ const RFQCreate = () => {
             <div className="border border-[#223027] rounded-lg overflow-hidden bg-[#0B0F0E]/40">
               <table className="w-full text-xs text-left border-collapse">
                 <thead>
-                  <tr className="bg-[#0F1513] border-b border-[#223027] text-[#8C9A93]">
+                  <tr className="bg-[#0F1513] border-b border-[#223027] text-[#94A3B8]">
                     <th className="p-3 font-semibold uppercase tracking-wider">item</th>
                     <th className="p-3 font-semibold uppercase tracking-wider text-center w-24">qty</th>
                     <th className="p-3 font-semibold uppercase tracking-wider text-center w-24">Unit</th>
@@ -339,7 +339,7 @@ const RFQCreate = () => {
                           type="text"
                           value={item.item_name}
                           onChange={(e) => handleItemChange(idx, 'item_name', e.target.value)}
-                          className="w-full bg-transparent border-0 text-[#E8EDEA] placeholder-[#8C9A93]/30 focus:ring-0 focus:outline-none text-xs"
+                          className="w-full bg-transparent border-0 text-[#E8EDEA] placeholder-[#94A3B8]/30 focus:ring-0 focus:outline-none text-xs"
                           placeholder="e.g. Ergonomic chair"
                           required
                         />
@@ -350,7 +350,7 @@ const RFQCreate = () => {
                           value={item.quantity}
                           min="1"
                           onChange={(e) => handleItemChange(idx, 'quantity', e.target.value)}
-                          className="w-full bg-[#121A17] border border-[#223027] rounded px-2 py-1 text-[#E8EDEA] text-center text-xs focus:outline-none focus:border-[#22C55E]"
+                          className="w-full bg-[#0B0F0E] border border-[#223027] rounded px-2 py-1 text-[#E8EDEA] text-center text-xs focus:outline-none focus:border-[#22C55E]"
                           required
                         />
                       </td>
@@ -359,7 +359,7 @@ const RFQCreate = () => {
                           type="text"
                           value={item.unit}
                           onChange={(e) => handleItemChange(idx, 'unit', e.target.value)}
-                          className="w-full bg-[#121A17] border border-[#223027] rounded px-2 py-1 text-[#E8EDEA] text-center text-xs focus:outline-none focus:border-[#22C55E]"
+                          className="w-full bg-[#0B0F0E] border border-[#223027] rounded px-2 py-1 text-[#E8EDEA] text-center text-xs focus:outline-none focus:border-[#22C55E]"
                           placeholder="Unit"
                         />
                       </td>
@@ -390,14 +390,14 @@ const RFQCreate = () => {
           </div>
 
           {/* Assign Vendors Box */}
-          <div className="bg-[#121A17] border border-[#223027] p-8 rounded-xl shadow-lg space-y-4 relative">
+          <div className="bg-[#0B0F0E] border border-[#223027] p-8 rounded-xl shadow-lg space-y-4 relative">
             <h3 className="text-xs font-semibold text-[#22C55E] uppercase tracking-wider border-b border-[#223027] pb-3">
               ASSIGN VENDORS
             </h3>
 
             <div className="border border-[#223027] rounded-lg divide-y divide-[#223027] bg-[#0B0F0E]/40 overflow-hidden min-h-[44px]">
               {assignedVendorObjects.length === 0 ? (
-                <div className="p-4 text-xs text-[#8C9A93] italic text-center">
+                <div className="p-4 text-xs text-[#94A3B8] italic text-center">
                   No suppliers assigned yet. Click add vendor below.
                 </div>
               ) : (
@@ -408,7 +408,7 @@ const RFQCreate = () => {
                   >
                     <div>
                       <span className="font-semibold">{vendor.name}</span>
-                      <span className="text-[10px] text-[#8C9A93] bg-[#121A17] border border-[#223027]/40 px-2 py-0.5 rounded ml-2">
+                      <span className="text-[10px] text-[#94A3B8] bg-[#0B0F0E] border border-[#223027]/40 px-2 py-0.5 rounded ml-2">
                         {vendor.category}
                       </span>
                     </div>
@@ -436,12 +436,12 @@ const RFQCreate = () => {
               </button>
 
               {showVendorDropdown && (
-                <div className="absolute left-0 right-0 mt-2 bg-[#121A17] border border-[#223027] rounded-lg shadow-2xl z-30 max-h-56 overflow-y-auto divide-y divide-[#223027]/40">
-                  <div className="p-2 bg-[#0F1513] text-[10px] font-bold text-[#8C9A93] uppercase tracking-wider">
+                <div className="absolute left-0 right-0 mt-2 bg-[#0B0F0E] border border-[#223027] rounded-lg shadow-2xl z-30 max-h-56 overflow-y-auto divide-y divide-[#223027]/40">
+                  <div className="p-2 bg-[#0F1513] text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider">
                     Select Active Supplier
                   </div>
                   {unselectedVendors.length === 0 ? (
-                    <div className="p-4 text-xs text-[#8C9A93] text-center italic">
+                    <div className="p-4 text-xs text-[#94A3B8] text-center italic">
                       No more active vendors available
                     </div>
                   ) : (
@@ -455,7 +455,7 @@ const RFQCreate = () => {
                         className="p-3 text-xs text-[#E8EDEA] hover:bg-[#1a2d24] hover:text-[#22C55E] cursor-pointer transition-colors flex justify-between items-center"
                       >
                         <span className="font-semibold">{vendor.name}</span>
-                        <span className="text-[10px] text-[#8C9A93] bg-[#0B0F0E] px-2.5 py-0.5 rounded border border-[#223027]">
+                        <span className="text-[10px] text-[#94A3B8] bg-[#0B0F0E] px-2.5 py-0.5 rounded border border-[#223027]">
                           {vendor.category}
                         </span>
                       </div>
@@ -495,7 +495,7 @@ const RFQCreate = () => {
             {submitting ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              <Upload className="h-4 w-4 text-[#8C9A93]" />
+              <Upload className="h-4 w-4 text-[#94A3B8]" />
             )}
             <span>Save as Draft</span>
           </button>
@@ -503,7 +503,7 @@ const RFQCreate = () => {
 
         {/* Bottom Right: Drag & Drop Attachments Box aligned with sketch */}
         <div className="space-y-4">
-          <span className="block text-xs font-semibold text-[#8C9A93] uppercase tracking-wider">
+          <span className="block text-xs font-semibold text-[#94A3B8] uppercase tracking-wider">
             Attachments
           </span>
 
@@ -515,7 +515,7 @@ const RFQCreate = () => {
             className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
               isDragging
                 ? 'border-[#22C55E] bg-[#22C55E]/5'
-                : 'border-[#223027] bg-[#121A17] hover:border-[#22C55E]/40'
+                : 'border-[#223027] bg-[#0B0F0E] hover:border-[#22C55E]/40'
             }`}
           >
             <input
@@ -526,11 +526,11 @@ const RFQCreate = () => {
               onChange={handleFileSelect}
             />
             
-            <Upload className="h-8 w-8 text-[#8C9A93] mx-auto mb-3" />
+            <Upload className="h-8 w-8 text-[#94A3B8] mx-auto mb-3" />
             <p className="text-xs text-[#E8EDEA] font-medium">
               Drag & drop files or click to upload
             </p>
-            <p className="text-[10px] text-[#8C9A93] mt-1">
+            <p className="text-[10px] text-[#94A3B8] mt-1">
               Supports specifications PDFs, terms documents, or designs
             </p>
           </div>
@@ -541,12 +541,12 @@ const RFQCreate = () => {
               {filesList.map((file, index) => (
                 <div 
                   key={index} 
-                  className="flex items-center justify-between p-2.5 bg-[#121A17] border border-[#223027] rounded-lg text-xs text-[#E8EDEA] animate-fade-in"
+                  className="flex items-center justify-between p-2.5 bg-[#0B0F0E] border border-[#223027] rounded-lg text-xs text-[#E8EDEA] animate-fade-in"
                 >
                   <div className="flex items-center gap-2 truncate">
                     <Paperclip className="h-4 w-4 text-[#22C55E] flex-shrink-0" />
                     <span className="truncate font-medium">{file.name}</span>
-                    <span className="text-[9px] text-[#8C9A93] font-mono">
+                    <span className="text-[9px] text-[#94A3B8] font-mono">
                       ({(file.size / 1024).toFixed(1)} KB)
                     </span>
                   </div>

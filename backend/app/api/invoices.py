@@ -21,6 +21,32 @@ from app.services.logging_service import write_activity
 
 router = APIRouter()
 
+def build_invoice_pdf_data(inv: Invoice) -> dict:
+    current_status = inv.status
+    if current_status == InvoiceStatus.pending_payment and inv.due_date and inv.due_date < date.today():
+        current_status = InvoiceStatus.overdue
+
+    status_text = (
+        "Paid"
+        if current_status == InvoiceStatus.paid
+        else "Overdue"
+        if current_status == InvoiceStatus.overdue
+        else "Unpaid"
+    )
+
+    return {
+        "invoice": inv,
+        "po": inv.po,
+        "vendor": inv.po.vendor,
+        "buyer": {
+            "org_name": inv.po.buyer_org_name or "",
+            "address": inv.po.buyer_address or "",
+            "gstin": inv.po.buyer_gstin or "",
+        },
+        "line_items": inv.po.line_items,
+        "status_text": status_text,
+    }
+
 @router.post("/", response_model=InvoiceResponse, status_code=status.HTTP_201_CREATED)
 async def generate_invoice(
     invoice_in: InvoiceCreate,
@@ -66,19 +92,7 @@ async def generate_invoice(
     await db.flush() # get invoice.id
     
     # 4. Generate PDF automatically and save URL (relative path)
-    # We will construct variables for Jinja2 template
-    data = {
-        "invoice": invoice,
-        "po": po,
-        "vendor": po.vendor,
-        "buyer": {
-            "org_name": po.buyer_org_name,
-            "address": po.buyer_address,
-            "gstin": po.buyer_gstin
-        },
-        "line_items": po.line_items
-    }
-    
+    data = build_invoice_pdf_data(invoice)
     pdf_bytes = render_invoice_to_pdf(data)
     
     # Save PDF locally
@@ -201,18 +215,7 @@ async def get_invoice_pdf(
         raise HTTPException(status_code=403, detail="You do not have access to this invoice.")
         
     # 2. Render PDF
-    data = {
-        "invoice": inv,
-        "po": inv.po,
-        "vendor": inv.po.vendor,
-        "buyer": {
-            "org_name": inv.po.buyer_org_name,
-            "address": inv.po.buyer_address,
-            "gstin": inv.po.buyer_gstin
-        },
-        "line_items": inv.po.line_items
-    }
-    
+    data = build_invoice_pdf_data(inv)
     pdf_bytes = render_invoice_to_pdf(data)
     
     # Return PDF file stream
@@ -253,17 +256,7 @@ async def email_invoice(
         )
         
     # 2. Render PDF bytes
-    data = {
-        "invoice": inv,
-        "po": inv.po,
-        "vendor": vendor,
-        "buyer": {
-            "org_name": inv.po.buyer_org_name,
-            "address": inv.po.buyer_address,
-            "gstin": inv.po.buyer_gstin
-        },
-        "line_items": inv.po.line_items
-    }
+    data = build_invoice_pdf_data(inv)
     pdf_bytes = render_invoice_to_pdf(data)
     
     # 3. Email dispatch

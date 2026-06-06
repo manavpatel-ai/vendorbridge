@@ -23,3 +23,19 @@ def render_invoice_to_pdf(data: dict) -> bytes:
         raise Exception(f"Failed to generate PDF invoice. Pisa error: {pisa_status.err}")
         
     return pdf_buffer.getvalue()
+
+def render_quotation_to_pdf(data: dict) -> bytes:
+    """
+    Renders quotation data to an HTML template, then converts it to PDF using xhtml2pdf.
+    Returns the raw PDF bytes.
+    """
+    template = env.get_template("quotation.html")
+    html_content = template.render(**data)
+
+    pdf_buffer = BytesIO()
+    pisa_status = pisa.CreatePDF(html_content, dest=pdf_buffer)
+
+    if pisa_status.err:
+        raise Exception(f"Failed to generate PDF quotation. Pisa error: {pisa_status.err}")
+
+    return pdf_buffer.getvalue()

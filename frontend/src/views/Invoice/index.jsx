@@ -42,7 +42,7 @@ const Invoices = () => {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-[#E8EDEA]">Invoices</h1>
-        <p className="text-xs text-[#8C9A93] mt-1">
+        <p className="text-xs text-[#94A3B8] mt-1">
           Collect, track and process invoices for approved transactions.
         </p>
       </div>
@@ -54,11 +54,11 @@ const Invoices = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-md">
+          <div className="bg-[#0B0F0E] border border-[#223027] rounded-xl overflow-hidden shadow-md">
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-xs text-left">
                 <thead>
-                  <tr className="bg-[#0F1513] border-b border-[#223027] text-[#8C9A93]">
+                  <tr className="bg-[#0F1513] border-b border-[#223027] text-[#94A3B8]">
                     <th className="p-4 font-semibold uppercase tracking-wider">Invoice Number</th>
                     <th className="p-4 font-semibold uppercase tracking-wider">Date</th>
                     <th className="p-4 font-semibold uppercase tracking-wider">Vendor</th>
@@ -67,10 +67,10 @@ const Invoices = () => {
                   </tr>
                 </thead>
                 
-                <tbody className="divide-y divide-[#223027]/40 bg-[#121A17]">
+                <tbody className="divide-y divide-[#223027]/40 bg-[#0B0F0E]">
                   {invoices.length === 0 ? (
                     <tr>
-                      <td colSpan="5" className="p-8 text-center text-[#8C9A93] italic">No Invoices available.</td>
+                      <td colSpan="5" className="p-8 text-center text-[#94A3B8] italic">No Invoices available.</td>
                     </tr>
                   ) : (
                     invoices.map(inv => (

@@ -122,7 +122,7 @@ const Activity = () => {
       {/* Header */}
       <div>
         <h1 className="text-xl sm:text-2xl font-bold text-[#E8EDEA] tracking-tight">Activity & Logs</h1>
-        <p className="text-[11px] sm:text-xs text-[#8C9A93] mt-1">
+        <p className="text-[11px] sm:text-xs text-[#94A3B8] mt-1">
           Procurement audit trail
         </p>
       </div>
@@ -136,7 +136,7 @@ const Activity = () => {
             className={`px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold border transition-all cursor-pointer ${
               entityFilter === opt.value
                 ? 'bg-[#93C5FD] border-[#2563EB] text-[#1E3A8A] font-semibold dark:bg-[#1E3A8A]/35 dark:border-[#3B82F6]/60 dark:text-[#60A5FA] shadow-sm'
-                : 'bg-transparent text-[#8C9A93] border-[#223027] hover:text-[#E8EDEA] hover:border-[#8C9A93]/40'
+                : 'bg-transparent text-[#94A3B8] border-[#223027] hover:text-[#E8EDEA] hover:border-[#94A3B8]/40'
             }`}
           >
             {opt.name}
@@ -150,8 +150,8 @@ const Activity = () => {
           <Loader2 className="h-8 w-8 animate-spin text-[#22C55E]" />
         </div>
       ) : logs.length === 0 ? (
-        <div className="text-center py-16 bg-[#121A17] border border-[#223027] rounded-xl">
-          <p className="text-xs sm:text-sm text-[#8C9A93] italic">No audit trail logs available for this filter.</p>
+        <div className="text-center py-16 bg-[#0B0F0E] border border-[#223027] rounded-xl">
+          <p className="text-xs sm:text-sm text-[#94A3B8] italic">No audit trail logs available for this filter.</p>
         </div>
       ) : (
         <div className="divide-y divide-[#223027]/40">
@@ -171,7 +171,7 @@ const Activity = () => {
                   <p className="text-xs sm:text-sm text-[#E8EDEA] font-medium leading-relaxed">
                     {log.description}
                   </p>
-                  <p className="text-[10px] sm:text-xs text-[#8C9A93] mt-1 sm:mt-1.5 font-medium lowercase">
+                  <p className="text-[10px] sm:text-xs text-[#94A3B8] mt-1 sm:mt-1.5 font-medium lowercase">
                     {formatLogDate(log.created_at)}
                   </p>
                 </div>
