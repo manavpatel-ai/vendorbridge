@@ -131,7 +131,7 @@ const RFQs = () => {
 
       {/* RFQ Cards Grid */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map(i => (
             <div key={i} className="h-48 bg-[#121A17] rounded-xl border border-[#223027] animate-pulse"></div>
           ))}
@@ -141,7 +141,7 @@ const RFQs = () => {
           <p className="text-sm text-[#8C9A93]">No RFQs found.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {rfqs.map((rfq) => {
             // Check if vendor has already quoted (if user is vendor)
             const hasQuoted = user?.role === 'vendor' && rfq.vendors?.find(v => v.vendor_id === user.vendor_id)?.status === 'quoted';

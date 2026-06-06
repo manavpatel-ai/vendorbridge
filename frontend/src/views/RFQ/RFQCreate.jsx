@@ -157,7 +157,7 @@ const RFQCreate = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-3xl mx-auto">
+    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[85%] xl:max-w-[75%] mx-auto">
       {/* Back to list */}
       <button
         onClick={() => navigate('/rfqs')}

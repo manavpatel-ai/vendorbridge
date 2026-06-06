@@ -132,7 +132,7 @@ const QuotationSubmit = () => {
   }
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
+    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[85%] xl:max-w-[80%] mx-auto">
       {/* Back button */}
       <button
         onClick={() => navigate(`/rfqs/${rfqId}`)}

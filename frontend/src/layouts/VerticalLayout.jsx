@@ -44,8 +44,8 @@ const VerticalLayout = () => {
         <Topbar onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
 
         {/* Dynamic Inner Page Content */}
-        <main className="flex-1 overflow-y-auto p-8 bg-[#0B0F0E]">
-          <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-[#0B0F0E]">
+          <div className="w-full space-y-8 animate-fade-in">
             <Outlet />
           </div>
         </main>

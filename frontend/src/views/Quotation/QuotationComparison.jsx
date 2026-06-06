@@ -75,7 +75,7 @@ const QuotationComparison = () => {
     : null;
 
   return (
-    <div className="space-y-8 max-w-6xl mx-auto">
+    <div className="space-y-8 w-full">
       {/* Back button */}
       <button
         onClick={() => navigate(`/rfqs/${id}`)}

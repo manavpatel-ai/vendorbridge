@@ -198,7 +198,7 @@ const Vendors = () => {
 
       {/* Vendors Grid */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           {[1, 2, 3].map(i => (
             <div key={i} className="h-64 bg-[#121A17] rounded-xl border border-[#223027] animate-pulse"></div>
           ))}
@@ -208,7 +208,7 @@ const Vendors = () => {
           <p className="text-sm text-[#8C9A93]">No vendors matching your filters were found.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           {vendors.map(vendor => (
             <div
               key={vendor.id}
