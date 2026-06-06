@@ -152,7 +152,7 @@ const Reports = () => {
   }
 
   return (
-    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[90%] xl:max-w-[85%] mx-auto">
+    <div className="space-y-8 w-full">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

@@ -75,7 +75,7 @@ const RFQDetails = () => {
   const hasQuoted = rfq.vendors?.find(v => v.vendor_id === user?.vendor_id)?.status === 'quoted';
 
   return (
-    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[90%] xl:max-w-[85%] mx-auto">
+    <div className="space-y-8 w-full">
       {/* Back link */}
       <button
         onClick={() => navigate('/rfqs')}

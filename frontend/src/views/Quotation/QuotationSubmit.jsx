@@ -135,7 +135,7 @@ const QuotationSubmit = () => {
     .join(', ') + ` - category ${rfq?.category || 'general'}`;
 
   return (
-    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[85%] xl:max-w-[80%] mx-auto">
+    <div className="space-y-8 w-full">
       {/* Back button */}
       <button
         onClick={() => navigate(`/rfqs/${rfqId}`)}

@@ -118,7 +118,7 @@ const Activity = () => {
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8 w-full max-w-[95%] lg:max-w-[90%] xl:max-w-[85%] mx-auto">
+    <div className="space-y-6 sm:space-y-8 w-full">
       {/* Header */}
       <div>
         <h1 className="text-xl sm:text-2xl font-bold text-[#E8EDEA] tracking-tight">Activity & Logs</h1>

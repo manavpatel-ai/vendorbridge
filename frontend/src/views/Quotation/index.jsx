@@ -85,7 +85,7 @@ const Quotations = () => {
   });
 
   return (
-    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[90%] xl:max-w-[85%] mx-auto">
+    <div className="space-y-8 w-full">
       {/* Header aligned with premium styling */}
       <div className="flex justify-between items-start">
         <div>

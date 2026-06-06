@@ -195,7 +195,7 @@ const RFQCreate = () => {
   const unselectedVendors = vendors.filter(v => !selectedVendors.includes(v.id));
 
   return (
-    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[90%] xl:max-w-[85%] mx-auto">
+    <div className="space-y-8 w-full">
       {/* Back to list */}
       <button
         onClick={() => navigate('/rfqs')}

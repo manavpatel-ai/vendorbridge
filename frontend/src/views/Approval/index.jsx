@@ -145,7 +145,7 @@ const Approval = () => {
   const l2Step = rfqApprovals.find(a => a.level === 2);
 
   return (
-    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[90%] xl:max-w-[85%] mx-auto">
+    <div className="space-y-8 w-full">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-extrabold text-[#E8EDEA] tracking-tight">Pending Approvals</h1>

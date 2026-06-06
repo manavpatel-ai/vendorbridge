@@ -132,7 +132,7 @@ const Vendors = () => {
   };
 
   return (
-    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[90%] xl:max-w-[85%] mx-auto">
+    <div className="space-y-8 w-full">
       {/* Header matching user's sketch */}
       <div className="flex justify-between items-start">
         <div>
