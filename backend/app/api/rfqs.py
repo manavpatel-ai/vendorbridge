@@ -38,10 +38,11 @@ async def list_rfqs(
     if status_filter:
         query = query.filter(Rfq.status == status_filter)
         
-    # Order by creation date descending and eager load line items and vendors
+    # Order by creation date descending and eager load line items, vendors, and attachments
     query = query.options(
         selectinload(Rfq.line_items),
-        selectinload(Rfq.vendors).selectinload(RfqVendor.vendor)
+        selectinload(Rfq.vendors).selectinload(RfqVendor.vendor),
+        selectinload(Rfq.attachments)
     ).order_by(Rfq.created_at.desc())
     
     result = await db.execute(query)
@@ -207,7 +208,8 @@ async def update_rfq(
         select(Rfq)
         .options(
             selectinload(Rfq.line_items),
-            selectinload(Rfq.vendors).selectinload(RfqVendor.vendor)
+            selectinload(Rfq.vendors).selectinload(RfqVendor.vendor),
+            selectinload(Rfq.attachments)
         )
         .filter(Rfq.id == id)
     )
@@ -275,7 +277,8 @@ async def publish_rfq(
         select(Rfq)
         .options(
             selectinload(Rfq.line_items),
-            selectinload(Rfq.vendors).selectinload(RfqVendor.vendor)
+            selectinload(Rfq.vendors).selectinload(RfqVendor.vendor),
+            selectinload(Rfq.attachments)
         )
         .filter(Rfq.id == id)
     )
