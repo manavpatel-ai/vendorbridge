@@ -1,0 +1,20 @@
+# Ignore Python bytecode and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Ignore local env file (secrets injected via docker-compose or runtime env)
+.env
+
+# Ignore uploads (mounted as volume)
+uploads/
+
+# Ignore tests and dev files
+*.log
+.git/
+.gitignore
+.vscode/
+.idea/
