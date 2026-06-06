@@ -5,7 +5,7 @@ from sqlalchemy.future import select
 from sqlalchemy import func, or_, and_
 from sqlalchemy.orm import selectinload
 from typing import Any, List, Optional
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import csv
 import io
 

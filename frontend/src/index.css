@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 html, body {
   background-color: #0B0F0E;
@@ -47,3 +45,188 @@ html, body {
   box-shadow: 0 0 15px rgba(34, 197, 94, 0.25);
   border-color: #22C55E;
 }
+
+/* Light Mode overrides */
+.light-mode {
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+.light-mode html, .light-mode body {
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+/* Override hex dark bg classes */
+.light-mode .bg-\[\#0B0F0E\] {
+  background-color: #F8FAFC !important;
+}
+.light-mode .bg-\[\#121A17\] {
+  background-color: #FFFFFF !important;
+}
+.light-mode .bg-\[\#0F1513\] {
+  background-color: #F1F5F9 !important;
+}
+.light-mode .bg-\[\#16211d\] {
+  background-color: #F1F5F9 !important;
+}
+.light-mode .bg-\[\#1a2d24\] {
+  background-color: #E2F0E9 !important;
+}
+.light-mode .bg-\[\#16211d\]\/50 {
+  background-color: rgba(241, 245, 249, 0.5) !important;
+}
+.light-mode .bg-emerald-950\/20 {
+  background-color: rgba(226, 240, 233, 0.4) !important;
+}
+.light-mode .bg-emerald-950\/40 {
+  background-color: rgba(226, 240, 233, 0.8) !important;
+}
+
+/* Overrides for borders */
+.light-mode .border-\[\#223027\] {
+  border-color: #E2E8F0 !important;
+}
+.light-mode .border-\[\#223027\]\/40 {
+  border-color: rgba(226, 232, 240, 0.4) !important;
+}
+.light-mode .border-r-\[\#223027\] {
+  border-right-color: #E2E8F0 !important;
+}
+.light-mode .border-b-\[\#223027\] {
+  border-bottom-color: #E2E8F0 !important;
+}
+
+/* Overrides for text color */
+.light-mode .text-\[\#E8EDEA\] {
+  color: #0F172A !important;
+}
+.light-mode .text-\[\#8C9A93\] {
+  color: #475569 !important;
+}
+.light-mode .text-\[\#8C9A93\]\/60 {
+  color: rgba(71, 85, 105, 0.6) !important;
+}
+.light-mode .text-\[\#8C9A93\]\/40 {
+  color: rgba(71, 85, 105, 0.4) !important;
+}
+.light-mode .text-\[\#8C9A93\]\/20 {
+  color: rgba(71, 85, 105, 0.2) !important;
+}
+
+/* Forms, inputs, dropdowns */
+.light-mode input, .light-mode select, .light-mode textarea {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+.light-mode input::placeholder, .light-mode textarea::placeholder {
+  color: #94A3B8 !important;
+}
+.light-mode select option {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+/* Sidebar & Topbar elements */
+.light-mode aside {
+  background-color: #FFFFFF !important;
+  border-right-color: #E2E8F0 !important;
+}
+.light-mode header {
+  background-color: #FFFFFF !important;
+  border-bottom-color: #E2E8F0 !important;
+}
+
+/* Hover effects */
+.light-mode .hover\:bg-\[\#16211d\]:hover {
+  background-color: #F1F5F9 !important;
+}
+.light-mode .group:hover .group-hover\:text-\[\#22C55E\] {
+  color: #16A34A !important;
+}
+.light-mode .hover\:bg-\[\#22C55E\]\/10:hover {
+  background-color: rgba(22, 163, 74, 0.08) !important;
+}
+
+/* Layout modifications */
+.light-mode main {
+  background-color: #F8FAFC !important;
+}
+
+/* Tables */
+.light-mode thead tr.bg-\[\#0F1513\] {
+  background-color: #F1F5F9 !important;
+}
+.light-mode tbody tr:hover {
+  background-color: #F8FAFC !important;
+}
+
+/* Auth Specific overrides */
+.light-mode .bg-gradient-to-tr.from-\[\#1b3d2b\].to-\[\#0B0F0E\] {
+  background-image: linear-gradient(to top right, #E2F0E9, #FFFFFF) !important;
+}
+
+/* Print styles for Invoice & PO */
+@media print {
+  /* Hide all non-printable elements */
+  body *, 
+  aside, 
+  header, 
+  nav, 
+  button, 
+  .no-print,
+  .lg\:col-span-1,
+  .absolute.top-4.right-4 {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Make details panel print-container visible and full width */
+  .print-container, 
+  .print-container * {
+    visibility: visible !important;
+  }
+  
+  .print-container {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    box-shadow: none !important;
+  }
+
+  /* Force background colors and colors to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Specific overrides for containers inside print-container to print cleanly in black on white */
+  .print-container .bg-\[\#121A17\],
+  .print-container .bg-\[\#0F1513\],
+  .print-container div,
+  .print-container table,
+  .print-container tr,
+  .print-container td,
+  .print-container th {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    border-color: #E2E8F0 !important;
+  }
+
+  /* Make invoice borders visible in print */
+  .print-container .border,
+  .print-container .border-\[\#223027\],
+  .print-container .border-b,
+  .print-container .border-t {
+    border-color: #94A3B8 !important;
+  }
+}
+
