@@ -7,6 +7,7 @@ import { Loader2 } from 'lucide-react';
 
 const VerticalLayout = () => {
   const { isAuthenticated, loading } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
   // Show fullscreen dark green loading spinner while checking auth status
   if (loading) {
@@ -17,8 +18,6 @@ const VerticalLayout = () => {
       </div>
     );
   }
-
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
   // Redirect to login if user session is invalid or expired
   if (!isAuthenticated) {

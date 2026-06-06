@@ -166,3 +166,67 @@ html, body {
 .light-mode .bg-gradient-to-tr.from-\[\#1b3d2b\].to-\[\#0B0F0E\] {
   background-image: linear-gradient(to top right, #E2F0E9, #FFFFFF) !important;
 }
+
+/* Print styles for Invoice & PO */
+@media print {
+  /* Hide all non-printable elements */
+  body *, 
+  aside, 
+  header, 
+  nav, 
+  button, 
+  .no-print,
+  .lg\:col-span-1,
+  .absolute.top-4.right-4 {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Make details panel print-container visible and full width */
+  .print-container, 
+  .print-container * {
+    visibility: visible !important;
+  }
+  
+  .print-container {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    box-shadow: none !important;
+  }
+
+  /* Force background colors and colors to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Specific overrides for containers inside print-container to print cleanly in black on white */
+  .print-container .bg-\[\#121A17\],
+  .print-container .bg-\[\#0F1513\],
+  .print-container div,
+  .print-container table,
+  .print-container tr,
+  .print-container td,
+  .print-container th {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    border-color: #E2E8F0 !important;
+  }
+
+  /* Make invoice borders visible in print */
+  .print-container .border,
+  .print-container .border-\[\#223027\],
+  .print-container .border-b,
+  .print-container .border-t {
+    border-color: #94A3B8 !important;
+  }
+}
+

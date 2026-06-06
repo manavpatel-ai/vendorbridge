@@ -14,6 +14,7 @@ const Quotations = lazy(() => import('../../views/Quotation'));
 const Approval = lazy(() => import('../../views/Approval'));
 const PurchaseOrderInvoice = lazy(() => import('../../views/PurchaseOrder'));
 const Invoices = lazy(() => import('../../views/Invoice'));
+const InvoiceDetails = lazy(() => import('../../views/Invoice/InvoiceDetails'));
 const Activity = lazy(() => import('../../views/Activity'));
 const Reports = lazy(() => import('../../views/Reports'));
 
@@ -108,6 +109,13 @@ export const RoutesList = [
   {
     path: '/invoices',
     element: <Invoices />,
+    meta: {
+      publicRoute: false
+    }
+  },
+  {
+    path: '/invoices/:id',
+    element: <InvoiceDetails />,
     meta: {
       publicRoute: false
     }
