@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../../utility/context/AuthContext';
 import { Search, Plus, Star, MapPin, Mail, Phone, Loader2, Edit3, X, SlidersHorizontal } from 'lucide-react';
-import api from '../lib/api';
+import api from '../../utility/api';
 
 const Vendors = () => {
   const { hasRole } = useAuth();

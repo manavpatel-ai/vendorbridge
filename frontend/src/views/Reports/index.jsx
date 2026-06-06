@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../../utility/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { 
   BarChart3, 
@@ -26,7 +26,7 @@ import {
   LineChart, 
   Line 
 } from 'recharts';
-import api from '../lib/api';
+import api from '../../utility/api';
 
 const Reports = () => {
   const navigate = useNavigate();

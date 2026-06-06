@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../../utility/context/AuthContext';
 import { ArrowLeft, Loader2, IndianRupee, FileText, CheckCircle } from 'lucide-react';
-import api from '../lib/api';
+import api from '../../utility/api';
 
 const QuotationSubmit = () => {
   const navigate = useNavigate();

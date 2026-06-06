@@ -1,64 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../lib/auth';
-import {
-  LayoutDashboard,
-  Users,
-  FileText,
-  CheckSquare,
-  FileSignature,
-  History,
-  BarChart3,
-  ShieldCheck
-} from 'lucide-react';
+import { useAuth } from '../../utility/context/AuthContext';
+import navigation from '../../navigation/vertical';
+import { ShieldCheck } from 'lucide-react';
 
 const Sidebar = () => {
   const { user, hasRole } = useAuth();
-
-  const navigation = [
-    {
-      name: 'Dashboard',
-      to: '/',
-      icon: LayoutDashboard,
-      roles: ['admin', 'procurement_officer', 'manager']
-    },
-    {
-      name: 'Vendors',
-      to: '/vendors',
-      icon: Users,
-      roles: ['admin', 'procurement_officer']
-    },
-    {
-      name: 'RFQs',
-      to: '/rfqs',
-      icon: FileText,
-      roles: ['admin', 'procurement_officer', 'manager', 'vendor']
-    },
-    {
-      name: 'Approvals',
-      to: '/approvals',
-      icon: CheckSquare,
-      roles: ['admin', 'manager']
-    },
-    {
-      name: 'POs & Invoices',
-      to: '/purchase-orders',
-      icon: FileSignature,
-      roles: ['admin', 'procurement_officer', 'manager', 'vendor']
-    },
-    {
-      name: 'Activity Logs',
-      to: '/activity',
-      icon: History,
-      roles: ['admin', 'procurement_officer', 'manager']
-    },
-    {
-      name: 'Reports',
-      to: '/reports',
-      icon: BarChart3,
-      roles: ['admin', 'procurement_officer', 'manager']
-    }
-  ];
 
   return (
     <aside className="w-64 bg-[#121A17] border-r border-[#223027] flex flex-col min-h-screen">

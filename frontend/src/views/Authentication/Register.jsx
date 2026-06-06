@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ShieldCheck, Loader2 } from 'lucide-react';
-import api from '../lib/api';
+import { Loader2 } from 'lucide-react';
+import api from '../../utility/api';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -67,20 +67,32 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-[#0B0F0E] flex flex-col items-center justify-center p-4 py-12">
-      {/* Brand Header */}
-      <div className="flex items-center gap-3 mb-8">
-        <ShieldCheck className="h-10 w-10 text-[#22C55E]" />
-        <span className="font-bold text-3xl tracking-wider text-[#E8EDEA]">
-          Vendor<span className="text-[#22C55E]">Bridge</span>
-        </span>
-      </div>
-
       {/* Register Card */}
       <div className="w-full max-w-2xl bg-[#121A17] border border-[#223027] rounded-xl p-8 shadow-2xl relative overflow-hidden">
         {/* Glow effect */}
         <div className="absolute -top-12 -left-12 w-24 h-24 bg-[#22C55E]/10 rounded-full blur-2xl"></div>
 
-        <h2 className="text-xl font-semibold text-[#E8EDEA] mb-2 text-center">Create Account</h2>
+        {/* Circular Logo & Brand Info */}
+        <div className="flex flex-col items-center mb-6 relative z-10">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#1b3d2b] to-[#0B0F0E] border-2 border-[#22C55E]/30 flex items-center justify-center shadow-lg shadow-[#22C55E]/10 mb-3 relative overflow-hidden group hover:border-[#22C55E]/80 transition-all duration-300">
+            {/* Logo background interactive glow */}
+            <div className="absolute inset-0 bg-[#22C55E]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            {/* SVG Shield + Bridge Logo */}
+            <svg viewBox="0 0 100 100" className="w-11 h-11 text-[#22C55E]" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 20 C62 20 72 24 72 24 V46 C72 59 59 69 50 76 C41 69 28 59 28 46 V24 C28 24 38 20 50 20 Z" fill="#121A17" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
+              <path d="M38 48 C38 41 62 41 62 48" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M34 54 H66" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <line x1="44" y1="48" x2="44" y2="54" stroke="currentColor" strokeWidth="2.5" />
+              <line x1="56" y1="48" x2="56" y2="54" stroke="currentColor" strokeWidth="2.5" />
+            </svg>
+          </div>
+          <span className="font-bold text-2xl tracking-wider text-[#E8EDEA]">
+            Vendor<span className="text-[#22C55E]">Bridge</span>
+          </span>
+          <p className="text-xs text-[#8C9A93] mt-1">Digital Procurement Network</p>
+        </div>
+
+        <h2 className="text-base font-semibold text-[#E8EDEA] mb-1 text-center">Create Account</h2>
         <p className="text-xs text-[#8C9A93] mb-6 text-center">Register to join the VendorBridge digital procurement network</p>
 
         {success ? (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useAuth } from '../lib/auth';
-import { LogOut, Bell, Check, User } from 'lucide-react';
-import api from '../lib/api';
+import { useAuth } from '../../utility/context/AuthContext';
+import { LogOut, Bell, Check } from 'lucide-react';
+import api from '../../utility/api';
 
 const Topbar = () => {
   const { user, logout } = useAuth();

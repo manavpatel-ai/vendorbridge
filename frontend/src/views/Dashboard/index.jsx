@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../../utility/context/AuthContext';
 import { 
   FileText, 
   CheckSquare, 
@@ -17,7 +17,7 @@ import {
   Tooltip, 
   ResponsiveContainer 
 } from 'recharts';
-import api from '../lib/api';
+import api from '../../utility/api';
 
 const Dashboard = () => {
   const { user } = useAuth();

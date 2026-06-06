@@ -1,11 +1,11 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../lib/auth';
-import Sidebar from './Sidebar';
-import Topbar from './Topbar';
+import { useAuth } from '../utility/context/AuthContext';
+import Sidebar from './components/Sidebar';
+import Topbar from './components/Topbar';
 import { Loader2 } from 'lucide-react';
 
-const Layout = () => {
+const VerticalLayout = () => {
   const { isAuthenticated, loading } = useAuth();
 
   // Show fullscreen dark green loading spinner while checking auth status
@@ -44,4 +44,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default VerticalLayout;

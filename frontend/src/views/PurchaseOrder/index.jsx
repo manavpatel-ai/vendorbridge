@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../../utility/context/AuthContext';
 import { 
   FileSignature, 
   Receipt, 
@@ -15,7 +15,7 @@ import {
   FileCheck2,
   X
 } from 'lucide-react';
-import api from '../lib/api';
+import api from '../../utility/api';
 
 const PurchaseOrderInvoice = () => {
   const { user, hasRole } = useAuth();

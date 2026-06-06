@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../../utility/context/AuthContext';
 import { ArrowLeft, Plus, Trash2, ShieldCheck, Check, Loader2 } from 'lucide-react';
-import api from '../lib/api';
+import api from '../../utility/api';
 
 const RFQCreate = () => {
   const navigate = useNavigate();

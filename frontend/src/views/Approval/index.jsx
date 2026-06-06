@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../../utility/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Check, X, FileText, User, ShieldAlert, Award, Clock, ArrowRight, Loader2 } from 'lucide-react';
-import api from '../lib/api';
+import api from '../../utility/api';
 
 const Approval = () => {
   const navigate = useNavigate();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../../utility/context/AuthContext';
 import { ArrowLeft, Star, Clock, Check, Loader2, Award, FileText } from 'lucide-react';
-import api from '../lib/api';
+import api from '../../utility/api';
 
 const QuotationComparison = () => {
   const { id } = useParams();
