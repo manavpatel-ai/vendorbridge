@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { RoutesList } from './routes';
 import VerticalLayout from '../layouts/VerticalLayout';
-import { Loader2 } from 'lucide-react';
+import ThemeLoader from '../layouts/components/ThemeLoader';
 
 const Router = () => {
   // Separate routes into public and protected
@@ -12,10 +12,7 @@ const Router = () => {
   return (
     <Suspense
       fallback={
-        <div className="h-screen w-screen bg-[#0B0F0E] flex flex-col items-center justify-center gap-4 text-[#E8EDEA]">
-          <Loader2 className="h-10 w-10 text-[#22C55E] animate-spin" />
-          <span className="text-sm font-medium tracking-wide text-[#94A3B8]">Loading...</span>
-        </div>
+        <ThemeLoader />
       }
     >
       <Routes>

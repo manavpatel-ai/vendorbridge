@@ -4,7 +4,7 @@ import { useAuth } from '../utility/context/AuthContext';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import ChatBot from '../views/Chat/ChatBot';
-import { Loader2 } from 'lucide-react';
+import ThemeLoader from './components/ThemeLoader';
 
 const VerticalLayout = () => {
   // Unconditional Hooks at the top
@@ -13,12 +13,7 @@ const VerticalLayout = () => {
 
   // Show fullscreen dark green loading spinner while checking auth status
   if (loading) {
-    return (
-      <div className="h-screen w-screen bg-[#0B0F0E] flex flex-col items-center justify-center gap-4 text-[#E8EDEA]">
-        <Loader2 className="h-10 w-10 text-[#22C55E] animate-spin" />
-        <span className="text-sm font-medium tracking-wide text-[#94A3B8]">Loading VendorBridge...</span>
-      </div>
-    );
+    return <ThemeLoader label="Loading VendorBridge..." />;
   }
 
   // Redirect to login if user session is invalid or expired
