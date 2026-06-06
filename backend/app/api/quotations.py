@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from typing import Any, List, Optional
 from uuid import UUID
 from datetime import datetime
+import io
 
 from app.core.deps import get_db, get_current_user, require_role
 from app.models.all_models import (
@@ -14,8 +16,41 @@ from app.models.all_models import (
 from app.schemas.all_schemas import QuotationCreate, QuotationResponse, ApprovalCreate
 from app.services.numbering import next_number
 from app.services.logging_service import write_activity
+from app.services.pdf_service import render_quotation_to_pdf
+from app.services.email_service import send_invoice_email
 
 router = APIRouter()
+
+def build_quotation_pdf_data(q: Quotation) -> dict:
+    return {
+        "quotation": q,
+        "rfq": q.rfq,
+        "vendor": q.vendor,
+        "line_items": q.line_items,
+    }
+
+async def load_quotation_for_document(
+    id: UUID,
+    current_user: User,
+    db: AsyncSession
+) -> Quotation:
+    result = await db.execute(
+        select(Quotation)
+        .options(
+            selectinload(Quotation.line_items),
+            selectinload(Quotation.vendor),
+            selectinload(Quotation.rfq),
+        )
+        .filter(Quotation.id == id)
+    )
+    q = result.scalars().first()
+    if not q:
+        raise HTTPException(status_code=404, detail="Quotation not found")
+
+    if current_user.role == UserRole.vendor and q.vendor_id != current_user.vendor_id:
+        raise HTTPException(status_code=403, detail="You do not have access to this quotation.")
+
+    return q
 
 @router.get("/", response_model=List[QuotationResponse])
 async def list_quotations(
@@ -73,6 +108,67 @@ async def get_quotation(
     item.vendor_name = q.vendor.name
     item.vendor_rating = float(q.vendor.rating) if q.vendor.rating else 0.0
     return item
+
+@router.get("/{id}/pdf")
+async def get_quotation_pdf(
+    id: UUID,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+) -> Any:
+    q = await load_quotation_for_document(id, current_user, db)
+    pdf_bytes = render_quotation_to_pdf(build_quotation_pdf_data(q))
+
+    return StreamingResponse(
+        io.BytesIO(pdf_bytes),
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"inline; filename=Quotation_{q.quotation_number}.pdf"}
+    )
+
+@router.post("/{id}/email")
+async def email_quotation(
+    id: UUID,
+    to_email: Optional[str] = Query(None, description="Optional override recipient email"),
+    current_user: User = Depends(require_role("admin", "procurement_officer", "manager")),
+    db: AsyncSession = Depends(get_db)
+) -> Any:
+    q = await load_quotation_for_document(id, current_user, db)
+    recipient_email = to_email or q.vendor.contact_email
+
+    if not recipient_email:
+        raise HTTPException(
+            status_code=400,
+            detail="No contact email available for this vendor. Please provide an email address in query parameter."
+        )
+
+    pdf_bytes = render_quotation_to_pdf(build_quotation_pdf_data(q))
+    success = await send_invoice_email(
+        to_email=recipient_email,
+        invoice_number=q.quotation_number,
+        pdf_bytes=pdf_bytes,
+        pdf_filename=f"Quotation_{q.quotation_number}.pdf",
+        subject=f"Quotation {q.quotation_number} from VendorBridge",
+        body=(
+            "Hello,\n\n"
+            f"Please find attached quotation {q.quotation_number} for your procurement review.\n\n"
+            "Best regards,\nProcurement Team"
+        )
+    )
+
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to dispatch quotation email via SMTP server.")
+
+    await write_activity(
+        db,
+        actor_id=current_user.id,
+        actor_name=f"{current_user.first_name} {current_user.last_name or ''}".strip(),
+        entity_type="quotation",
+        entity_id=q.id,
+        action="emailed",
+        description=f"Emailed quotation {q.quotation_number} to {recipient_email}"
+    )
+    await db.commit()
+
+    return {"message": f"Quotation emailed successfully to {recipient_email}."}
 
 @router.post("/", response_model=QuotationResponse, status_code=status.HTTP_201_CREATED)
 async def create_quotation(

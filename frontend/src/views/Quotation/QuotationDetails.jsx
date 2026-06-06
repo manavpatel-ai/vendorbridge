@@ -9,6 +9,9 @@ import {
   Clock,
   FileText,
   ShieldCheck,
+  Mail,
+  Download,
+  Printer,
 } from 'lucide-react';
 import api from '../../utility/api';
 
@@ -19,18 +22,64 @@ const QuotationDetails = () => {
   const isStaff = hasRole(['admin', 'procurement_officer', 'manager']);
 
   const [quotation, setQuotation] = useState(null);
+  const [po, setPo] = useState(null);
+  const [invoice, setInvoice] = useState(null);
+  const [vendorDetails, setVendorDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const fetchQuotation = async () => {
     setLoading(true);
     try {
       const res = await api.get(`/quotations/${id}`);
-      setQuotation(res.data);
+      const quotationData = res.data;
+      setQuotation(quotationData);
+      await fetchRelatedDocuments(quotationData);
     } catch (err) {
       console.error('Failed to load quotation details:', err);
       setQuotation(null);
+      setPo(null);
+      setInvoice(null);
+      setVendorDetails(null);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchRelatedDocuments = async (quotationData) => {
+    if (!quotationData) {
+      setPo(null);
+      setInvoice(null);
+      setVendorDetails(null);
+      return;
+    }
+
+    try {
+      const poRes = await api.get('/purchase-orders/');
+      const relatedPo = poRes.data.find((item) => item.quotation_id === quotationData.id) || null;
+      setPo(relatedPo);
+
+      if (relatedPo) {
+        const invoicesRes = await api.get('/invoices/');
+        const relatedInvoice = invoicesRes.data.find((item) => item.po_id === relatedPo.id) || null;
+        setInvoice(relatedInvoice);
+      } else {
+        setInvoice(null);
+      }
+
+      if (quotationData.vendor_id) {
+        try {
+          const vendorRes = await api.get(`/vendors/${quotationData.vendor_id}`);
+          setVendorDetails(vendorRes.data);
+        } catch (vendorErr) {
+          console.warn('Failed to load vendor details:', vendorErr);
+          setVendorDetails(null);
+        }
+      }
+    } catch (err) {
+      console.warn('Failed to load related purchase order or invoice:', err);
+      setPo(null);
+      setInvoice(null);
     }
   };
 
@@ -43,6 +92,91 @@ const QuotationDetails = () => {
       style: 'currency',
       currency: 'INR'
     }).format(val || 0);
+  };
+
+  const handleDownloadPDF = async () => {
+    if (!quotation) return;
+    setActionLoading(true);
+    try {
+      const response = await api.get(`/quotations/${quotation.id}/pdf`, {
+        responseType: 'arraybuffer'
+      });
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Quotation_${quotation.quotation_number}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Failed to download quotation PDF:', err);
+      alert(err.response?.data?.detail || err.message || 'Unable to download quotation PDF.');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handlePrintPDF = async () => {
+    if (!quotation) return;
+    setActionLoading(true);
+    try {
+      const response = await api.get(`/quotations/${quotation.id}/pdf`, {
+        responseType: 'arraybuffer'
+      });
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const printWindow = window.open(url, '_blank');
+      if (printWindow) {
+        printWindow.focus();
+        printWindow.onload = () => {
+          printWindow.print();
+          URL.revokeObjectURL(url);
+        };
+      } else {
+        URL.revokeObjectURL(url);
+        alert('Please allow popups to open the quotation for printing.');
+      }
+    } catch (err) {
+      console.error('Failed to open quotation PDF for printing:', err);
+      alert(err.response?.data?.detail || err.message || 'Unable to open quotation for printing.');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleEmailQuotation = async () => {
+    if (!quotation) return;
+    setActionLoading(true);
+    try {
+      const params = {};
+      if (vendorDetails?.contact_email) {
+        params.to_email = vendorDetails.contact_email;
+      }
+      await api.post(`/quotations/${quotation.id}/email`, null, { params });
+      alert('Quotation has been emailed successfully.');
+    } catch (err) {
+      console.error('Failed to email quotation:', err);
+      alert(err.response?.data?.detail || err.message || 'Unable to email quotation.');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleGenerateInvoice = async () => {
+    if (!po) return;
+    setActionLoading(true);
+    try {
+      await api.post('/invoices/', { po_id: po.id });
+      alert('Invoice generated successfully.');
+      await fetchQuotation();
+    } catch (err) {
+      console.error('Failed to generate invoice:', err);
+      alert(err.response?.data?.detail || err.message || 'Unable to generate invoice.');
+    } finally {
+      setActionLoading(false);
+    }
   };
 
   const getStatusStyle = (status) => {
@@ -120,9 +254,63 @@ const QuotationDetails = () => {
               )}
             </div>
           </div>
-          <div className="text-right">
-            <p className="text-[10px] uppercase tracking-[0.24em] text-[#94A3B8]">Quoted Total</p>
-            <p className="text-lg font-bold text-[#E8EDEA] mt-1">{formatCurrency(quotation.grand_total)}</p>
+          <div className="space-y-4 text-right">
+            <div className="flex flex-wrap justify-end items-center gap-2">
+              <button
+                onClick={handleDownloadPDF}
+                disabled={actionLoading}
+                title="Download quotation PDF"
+                className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#0B0F0E]"
+              >
+                <Download className="h-3.5 w-3.5" />
+                <span>Download PDF</span>
+              </button>
+              <button
+                onClick={handlePrintPDF}
+                disabled={actionLoading}
+                title="Print quotation PDF"
+                className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#0B0F0E]"
+              >
+                <Printer className="h-3.5 w-3.5" />
+                <span>Print</span>
+              </button>
+              {isStaff && (
+                <button
+                  onClick={handleEmailQuotation}
+                  disabled={actionLoading}
+                  title="Email quotation PDF to vendor"
+                  className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#0B0F0E]"
+                >
+                  <Mail className="h-3.5 w-3.5" />
+                  <span>Email invoice</span>
+                </button>
+              )}
+            </div>
+            {invoice ? null : po ? (
+              <div className="flex flex-wrap justify-end items-center gap-2">
+                <div className="rounded-2xl border border-[#223027] bg-[#081009] px-4 py-2 text-xs text-[#94A3B8]">
+                  Invoice has not been generated for this quotation yet.
+                </div>
+                {isStaff && (
+                  <button
+                    onClick={handleGenerateInvoice}
+                    disabled={actionLoading}
+                    className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#0B0F0E]"
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                    <span>Generate invoice</span>
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-[#223027] bg-[#081009] px-4 py-2 text-xs text-[#94A3B8]">
+                No related purchase order or invoice is available.
+              </div>
+            )}
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.24em] text-[#94A3B8]">Quoted Total</p>
+              <p className="text-lg font-bold text-[#E8EDEA] mt-1">{formatCurrency(quotation.grand_total)}</p>
+            </div>
           </div>
         </div>
 

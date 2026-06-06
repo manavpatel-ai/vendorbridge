@@ -5,7 +5,7 @@ import navigation from '../../navigation/vertical';
 import { ShieldCheck, X } from 'lucide-react';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
-  const { user, hasRole } = useAuth();
+  const { hasRole } = useAuth();
 
   return (
     <aside className={`w-64 bg-[#0B0F0E] border-r border-[#223027] flex flex-col min-h-screen fixed md:relative inset-y-0 left-0 z-30 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out`}>
@@ -54,22 +54,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         })}
       </nav>
 
-      {/* Footer / User Profile Summary */}
-      <div className="p-4 border-t border-[#223027] bg-[#0F1513]">
-        <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-full bg-[#1b3d2b] border border-[#22C55E] flex items-center justify-center text-xs font-bold text-[#22C55E]">
-            {user?.first_name?.charAt(0) || 'U'}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-[#E8EDEA] truncate">
-              {user?.first_name} {user?.last_name}
-            </p>
-            <p className="text-xs text-[#94A3B8] capitalize truncate">
-              {user?.role?.replace('_', ' ')}
-            </p>
-          </div>
-        </div>
-      </div>
     </aside>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../utility/context/AuthContext';
-import { LogOut, Bell, Check, Sun, Moon, Menu } from 'lucide-react';
+import { LogOut, Bell, Check, Sun, Moon, Menu, CircleUserRound } from 'lucide-react';
 import api from '../../utility/api';
 
 const Topbar = ({ onToggleSidebar }) => {
@@ -166,13 +166,18 @@ const Topbar = ({ onToggleSidebar }) => {
 
         {/* User Info & Logout */}
         <div className="flex items-center gap-4">
-          <div className="hidden md:block text-right">
-            <span className="block text-sm font-medium text-[#E8EDEA]">
-              {user?.first_name} {user?.last_name || ''}
-            </span>
-            <span className="block text-xs text-[#94A3B8] capitalize">
-              {user?.role?.replace('_', ' ')}
-            </span>
+          <div className="hidden md:flex items-center gap-2.5">
+            <div className="h-9 w-9 rounded-full bg-[#1b3d2b] border border-[#22C55E]/70 flex items-center justify-center text-[#22C55E]">
+              <CircleUserRound className="h-5 w-5" />
+            </div>
+            <div className="text-right">
+              <span className="block text-sm font-medium text-[#E8EDEA]">
+                {user?.first_name} {user?.last_name || ''}
+              </span>
+              <span className="block text-xs text-[#94A3B8] capitalize">
+                {user?.role?.replace('_', ' ')}
+              </span>
+            </div>
           </div>
 
           <button
