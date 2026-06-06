@@ -51,18 +51,17 @@ async def list_vendors(
     result = await db.execute(rows_query.order_by(Vendor.name))
     vendors = result.scalars().all()
     
-    # Calculate counts for each status
-    statuses = [VendorStatus.active, VendorStatus.pending, VendorStatus.blocked]
-    counts = {"all": 0, "active": 0, "pending": 0, "blocked": 0}
+    # Calculate counts for each status — single grouped query instead of 3 separate ones
+    count_base = select(Vendor.status, func.count(Vendor.id)).group_by(Vendor.status)
+    for f in count_filters:
+        count_base = count_base.filter(f)
+    cnt_res = await db.execute(count_base)
     
-    for s in statuses:
-        cq = select(func.count(Vendor.id)).filter(Vendor.status == s)
-        for f in count_filters:
-            cq = cq.filter(f)
-        cnt_res = await db.execute(cq)
-        count_val = cnt_res.scalar() or 0
-        counts[s.value] = count_val
-        counts["all"] += count_val
+    counts = {"all": 0, "active": 0, "pending": 0, "blocked": 0}
+    for s_val, cnt in cnt_res.all():
+        key = s_val.value if hasattr(s_val, 'value') else str(s_val)
+        counts[key] = cnt
+        counts["all"] += cnt
         
     return {
         "vendors": vendors,

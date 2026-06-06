@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, aliased
+from sqlalchemy import and_
 from typing import Any, List, Optional
 from uuid import UUID
 from datetime import datetime
@@ -18,36 +19,48 @@ async def list_pending_approvals(
     current_user: User = Depends(require_role("manager", "admin")),
     db: AsyncSession = Depends(get_db)
 ) -> Any:
-    # Get approvals assigned to current user that are pending
-    query = select(Approval).filter(
-        Approval.approver_id == current_user.id,
-        Approval.status == ApprovalStatus.pending
+    """
+    Optimized: fetches active pending approvals in 2 queries instead of N+1.
+    L1 pending approvals are always active.
+    L2 pending approvals are only active when their corresponding L1 is approved.
+    """
+    # Query 1: All L1 pending approvals for this user
+    l1_query = (
+        select(Approval)
+        .filter(
+            Approval.approver_id == current_user.id,
+            Approval.status == ApprovalStatus.pending,
+            Approval.level == 1
+        )
+        .order_by(Approval.created_at.desc())
     )
+    l1_res = await db.execute(l1_query)
+    l1_approvals = l1_res.scalars().all()
     
-    # We must check level order: if it's level 2, it's only pending if level 1 is approved!
-    # Let's write a filter to ensure we only get approvals that are CURRENTLY active.
-    # Level 1 is always active if pending.
-    # Level 2 is only active if the corresponding Level 1 approval is 'approved'.
-    result = await db.execute(query.order_by(Approval.created_at.desc()))
-    approvals = result.scalars().all()
+    # Query 2: All L2 pending approvals for this user WHERE L1 is approved (via JOIN)
+    L1 = aliased(Approval)
+    l2_query = (
+        select(Approval)
+        .join(L1, and_(
+            L1.rfq_id == Approval.rfq_id,
+            L1.quotation_id == Approval.quotation_id,
+            L1.level == 1,
+            L1.status == ApprovalStatus.approved
+        ))
+        .filter(
+            Approval.approver_id == current_user.id,
+            Approval.status == ApprovalStatus.pending,
+            Approval.level == 2
+        )
+        .order_by(Approval.created_at.desc())
+    )
+    l2_res = await db.execute(l2_query)
+    l2_approvals = l2_res.unique().scalars().all()
     
-    active_approvals = []
-    for appr in approvals:
-        if appr.level == 1:
-            active_approvals.append(appr)
-        elif appr.level == 2:
-            # Check L1 approval status
-            l1_res = await db.execute(
-                select(Approval).filter(
-                    Approval.rfq_id == appr.rfq_id,
-                    Approval.quotation_id == appr.quotation_id,
-                    Approval.level == 1
-                )
-            )
-            l1 = l1_res.scalars().first()
-            if l1 and l1.status == ApprovalStatus.approved:
-                active_approvals.append(appr)
-                
+    # Merge and sort by created_at desc
+    active_approvals = list(l1_approvals) + list(l2_approvals)
+    active_approvals.sort(key=lambda a: a.created_at, reverse=True)
+    
     return active_approvals
 
 @router.get("/rfq/{rfq_id}", response_model=List[ApprovalResponse])
