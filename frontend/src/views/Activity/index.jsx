@@ -43,7 +43,7 @@ const Activity = () => {
     if (!dateString) return '';
     const d = new Date(dateString);
     const day = d.getDate();
-    const months = ["may", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "jan", "feb", "mar", "apr"];
+    const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
     const month = months[d.getMonth()];
     const year = d.getFullYear();
     let hours = d.getHours();
@@ -118,7 +118,7 @@ const Activity = () => {
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto px-1 sm:px-0">
+    <div className="space-y-6 sm:space-y-8 w-full max-w-[95%] lg:max-w-[90%] xl:max-w-[85%] mx-auto">
       {/* Header */}
       <div>
         <h1 className="text-xl sm:text-2xl font-bold text-[#E8EDEA] tracking-tight">Activity & Logs</h1>

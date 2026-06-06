@@ -318,7 +318,7 @@ class ActivityLogResponse(BaseModel):
     entity_id: Optional[UUID] = None
     action: str
     description: str
-    metadata: Optional[dict] = {}
+    metadata: Optional[dict] = Field(default={}, validation_alias="log_metadata")
     created_at: datetime
 
     class Config:
