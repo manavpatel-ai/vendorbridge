@@ -29,7 +29,7 @@ const Topbar = ({ onToggleSidebar }) => {
   // Fetch notifications
   const fetchNotifications = async () => {
     try {
-      const res = await api.get('/notifications');
+      const res = await api.get('/notifications/');
       setNotifications(res.data);
     } catch (err) {
       console.error("Failed to fetch notifications:", err);

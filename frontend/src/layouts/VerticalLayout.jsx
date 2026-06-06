@@ -3,6 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../utility/context/AuthContext';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
+import ChatBot from '../views/Chat/ChatBot';
 import { Loader2 } from 'lucide-react';
 
 const VerticalLayout = () => {
@@ -50,6 +51,9 @@ const VerticalLayout = () => {
           </div>
         </main>
       </div>
+
+      {/* AI ChatBot Widget */}
+      <ChatBot />
     </div>
   );
 };

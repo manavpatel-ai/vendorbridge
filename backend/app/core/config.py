@@ -10,6 +10,9 @@ class Settings(BaseSettings):
     JWT_SECRET: str = "change-me-to-a-long-random-string-for-security"
     JWT_EXPIRE_MINUTES: int = 720
     
+    # Groq AI
+    GROQ_API_KEY: str = ""
+    
     # SMTP Configuration
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 587

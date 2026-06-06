@@ -113,14 +113,13 @@ const Login = () => {
 
         {/* Demo Credentials Alert Box */}
         <div className="mt-6 p-3 bg-[#16211d] border border-[#223027] rounded-lg text-[11px] text-[#8C9A93] space-y-1">
-          <p className="font-semibold text-[#22C55E]">Try out these seeded credentials:</p>
-          <div className="grid grid-cols-2 gap-1 text-[10px]">
-            <div><span className="font-medium text-[#E8EDEA]">Officer:</span> officer@vendorbridge.com</div>
-            <div><span className="font-medium text-[#E8EDEA]">Manager:</span> priya@vendorbridge.com</div>
-            <div><span className="font-medium text-[#E8EDEA]">Vendor 1:</span> vendor1@acme.com</div>
-            <div><span className="font-medium text-[#E8EDEA]">Vendor 2:</span> vendor2@globaltech.com</div>
+          <p className="font-semibold text-[#22C55E]">Demo Credentials:</p>
+          <div className="grid grid-cols-1 gap-1 text-[10px]">
+            <div><span className="font-medium text-[#E8EDEA]">Admin:</span> admin@vendorbridge.com / <code className="text-[#22C55E]">admin123</code></div>
+            <div><span className="font-medium text-[#E8EDEA]">Procurement:</span> procurement@vendorbridge.com / <code className="text-[#22C55E]">officer123</code></div>
+            <div><span className="font-medium text-[#E8EDEA]">Manager:</span> manager@vendorbridge.com / <code className="text-[#22C55E]">manager123</code></div>
+            <div><span className="font-medium text-[#E8EDEA]">Vendor:</span> contact@technoserv.in / <code className="text-[#22C55E]">vendor123</code></div>
           </div>
-          <p className="text-[9px] pt-1 border-t border-[#223027] text-center">Password for all is <code className="text-[#22C55E]">password123</code></p>
         </div>
 
         {/* Register Redirect */}
