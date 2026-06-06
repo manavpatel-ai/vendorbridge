@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utility/context/AuthContext';
-import { ArrowLeft, Star, Clock, Check, Loader2, Award, FileText } from 'lucide-react';
+import { ArrowLeft, Loader2, Award } from 'lucide-react';
 import api from '../../utility/api';
 
 const QuotationComparison = () => {
@@ -60,6 +60,10 @@ const QuotationComparison = () => {
     }).format(val);
   };
 
+  const formatRating = (val) => {
+    return parseFloat(val || 0).toFixed(1);
+  };
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-[#8C9A93]">
@@ -75,7 +79,7 @@ const QuotationComparison = () => {
     : null;
 
   return (
-    <div className="space-y-8 w-full">
+    <div className="space-y-8 w-full max-w-[95%] lg:max-w-[90%] xl:max-w-[85%] mx-auto">
       {/* Back button */}
       <button
         onClick={() => navigate(`/rfqs/${id}`)}
@@ -85,11 +89,11 @@ const QuotationComparison = () => {
         Back to RFQ Details
       </button>
 
-      {/* Header */}
+      {/* Header matching user sketch */}
       <div>
-        <h1 className="text-2xl font-bold text-[#E8EDEA]">Quotation Comparison Matrix</h1>
-        <p className="text-xs text-[#8C9A93] mt-1">
-          Review and compare side-by-side submissions for <span className="text-[#22C55E] font-semibold">{rfq?.rfq_number} - {rfq?.title}</span>.
+        <h1 className="text-3xl font-extrabold text-[#E8EDEA] tracking-tight">Quotation Comparison</h1>
+        <p className="text-xs sm:text-sm text-[#8C9A93] mt-1 font-semibold capitalize">
+          RFQ: {rfq?.title || 'procurement'} - {quotes.length} quotations received
         </p>
       </div>
 
@@ -104,176 +108,223 @@ const QuotationComparison = () => {
           </button>
         </div>
       ) : (
-        <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-xl">
-          {/* Scrollable table container */}
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-xs text-left">
-              <thead>
-                <tr className="bg-[#0F1513] border-b border-[#223027]">
-                  <th className="p-4 text-xs font-semibold text-[#8C9A93] uppercase tracking-wider min-w-[200px]">Criteria / Vendor</th>
-                  {quotes.map((q) => {
-                    const isLowest = q.grand_total === lowestTotal;
-                    return (
-                      <th 
-                        key={q.id} 
-                        className={`p-4 border-l border-[#223027] text-center min-w-[180px] ${
-                          isLowest ? 'bg-[#14261d]' : ''
-                        }`}
-                      >
-                        <span className="block font-bold text-sm text-[#E8EDEA]">{q.vendor_name}</span>
-                        <span className="inline-block text-[9px] font-mono text-[#8C9A93] mt-0.5">{q.quotation_number}</span>
-                        {isLowest && (
-                          <span className="mt-1.5 flex items-center justify-center gap-1 text-[9px] text-[#22C55E] bg-[#22C55E]/10 py-0.5 px-2 rounded-full font-bold uppercase tracking-wider mx-auto w-fit">
-                            <Award className="h-3 w-3" />
-                            Lowest Price
+        <div className="space-y-6 animate-fade-in">
+          {/* Comparison Matrix Box */}
+          <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-xl">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-xs text-left">
+                <thead>
+                  <tr className="bg-[#0F1513] border-b border-[#223027]">
+                    <th className="p-4 text-xs font-semibold text-[#8C9A93] uppercase tracking-wider min-w-[150px]">
+                      Criteria
+                    </th>
+                    {quotes.map((q) => {
+                      const isLowest = q.grand_total === lowestTotal;
+                      return (
+                        <th 
+                          key={q.id} 
+                          className={`p-4 border-l border-[#223027] text-center min-w-[180px] transition-all duration-200 ${
+                            isLowest 
+                              ? 'bg-emerald-950/20 text-[#22C55E] border-x border-[#22C55E]/20' 
+                              : 'text-[#E8EDEA]'
+                          }`}
+                        >
+                          <span className="block font-bold text-sm">
+                            {q.vendor_name} {isLowest && '(Lowest)'}
                           </span>
-                        )}
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              
-              <tbody className="divide-y divide-[#223027]/50">
-                {/* 1. Vendor Rating */}
-                <tr>
-                  <td className="p-4 font-medium text-[#8C9A93]">Vendor Rating</td>
-                  {quotes.map(q => (
-                    <td key={q.id} className="p-4 border-l border-[#223027]/50 text-center">
-                      <div className="flex items-center justify-center gap-1 font-semibold text-amber-400">
-                        <Star className="h-4 w-4 fill-amber-400" />
-                        <span>{parseFloat(q.vendor_rating || 0).toFixed(1)} / 5.0</span>
-                      </div>
-                    </td>
-                  ))}
-                </tr>
-
-                {/* 2. Delivery Lead Time */}
-                <tr>
-                  <td className="p-4 font-medium text-[#8C9A93]">Delivery Lead Time</td>
-                  {quotes.map(q => (
-                    <td key={q.id} className="p-4 border-l border-[#223027]/50 text-center text-[#E8EDEA]">
-                      <div className="flex items-center justify-center gap-1">
-                        <Clock className="h-4 w-4 text-[#8C9A93]" />
-                        <span>{q.delivery_days} Days</span>
-                      </div>
-                    </td>
-                  ))}
-                </tr>
-
-                {/* 3. Payment Terms */}
-                <tr>
-                  <td className="p-4 font-medium text-[#8C9A93]">Payment Terms</td>
-                  {quotes.map(q => (
-                    <td key={q.id} className="p-4 border-l border-[#223027]/50 text-center text-[#E8EDEA] italic max-w-xs truncate" title={q.payment_terms}>
-                      {q.payment_terms || 'N/A'}
-                    </td>
-                  ))}
-                </tr>
-
-                {/* 4. Line Item Prices */}
-                {rfq?.line_items?.map((rfqItem, itemIdx) => (
-                  <tr key={rfqItem.id}>
-                    <td className="p-4">
-                      <span className="font-semibold text-[#E8EDEA]">{rfqItem.item_name}</span>
-                      <span className="block text-[10px] text-[#8C9A93] mt-0.5">Required Qty: {parseInt(rfqItem.quantity)}</span>
-                    </td>
-                    {quotes.map(q => {
-                      // Find item in this quotation
-                      const qItem = q.line_items?.find(qi => qi.item_name === rfqItem.item_name);
-                      return (
-                        <td key={q.id} className="p-4 border-l border-[#223027]/50 text-center">
-                          {qItem ? (
-                            <div className="space-y-0.5">
-                              <span className="font-medium text-[#E8EDEA]">{formatCurrency(qItem.unit_price)} <span className="text-[10px] text-[#8C9A93]">/ unit</span></span>
-                              <span className="block text-[10px] text-[#8C9A93]">Total: {formatCurrency(qItem.total)}</span>
-                            </div>
-                          ) : (
-                            <span className="text-[#8C9A93] italic">Not Quoted</span>
+                          <span className="inline-block text-[9px] font-mono text-[#8C9A93] mt-0.5">
+                            {q.quotation_number}
+                          </span>
+                          {isLowest && (
+                            <span className="mt-1.5 flex items-center justify-center gap-1 text-[9px] text-[#22C55E] bg-[#22C55E]/10 py-0.5 px-2 rounded-full font-bold uppercase tracking-wider mx-auto w-fit">
+                              <Award className="h-3 w-3" />
+                              Best Value
+                            </span>
                           )}
-                        </td>
+                        </th>
                       );
                     })}
                   </tr>
-                ))}
-
-                {/* 5. Subtotal */}
-                <tr className="bg-[#0F1513]/40">
-                  <td className="p-4 font-medium text-[#8C9A93]">Subtotal</td>
-                  {quotes.map(q => (
-                    <td key={q.id} className="p-4 border-l border-[#223027]/50 text-center text-[#E8EDEA]">
-                      {formatCurrency(q.subtotal)}
-                    </td>
-                  ))}
-                </tr>
-
-                {/* 6. GST / Tax */}
-                <tr className="bg-[#0F1513]/40">
-                  <td className="p-4 font-medium text-[#8C9A93]">GST / Tax ({quotes[0]?.tax_percent}%)</td>
-                  {quotes.map(q => (
-                    <td key={q.id} className="p-4 border-l border-[#223027]/50 text-center text-[#8C9A93]">
-                      {formatCurrency(q.tax_amount)}
-                    </td>
-                  ))}
-                </tr>
-
-                {/* 7. Grand Total (Highlighted Row) */}
-                <tr className="bg-[#0F1513]/80 border-t-2 border-[#223027]">
-                  <td className="p-4 text-sm font-bold text-[#E8EDEA]">Grand Total</td>
-                  {quotes.map(q => {
-                    const isLowest = q.grand_total === lowestTotal;
-                    return (
-                      <td 
-                        key={q.id} 
-                        className={`p-4 border-l border-[#223027] text-center text-sm font-bold ${
-                          isLowest ? 'text-[#22C55E] bg-[#14261d]/50' : 'text-[#E8EDEA]'
-                        }`}
-                      >
-                        {formatCurrency(q.grand_total)}
-                      </td>
-                    );
-                  })}
-                </tr>
-
-                {/* 8. Action selector buttons */}
-                {isStaff && rfq?.status !== 'po_generated' && rfq?.status !== 'approved' && (
-                  <tr>
-                    <td className="p-4 font-medium text-[#8C9A93]">Selection Action</td>
-                    {quotes.map(q => {
-                      const isSubmitting = submittingId === q.id;
+                </thead>
+                <tbody className="divide-y divide-[#223027]/45">
+                  {/* Row 1: Grand Total */}
+                  <tr className="bg-[#0F1513]/20">
+                    <td className="p-4 font-bold text-[#E8EDEA]">Grand Total</td>
+                    {quotes.map((q) => {
+                      const isLowest = q.grand_total === lowestTotal;
                       return (
-                        <td key={q.id} className="p-4 border-l border-[#223027]/50 text-center">
-                          <button
-                            onClick={() => handleSelectQuote(q.id)}
-                            disabled={submittingId !== null}
-                            className="w-full bg-[#1a2d24] hover:bg-[#22C55E] text-[#22C55E] hover:text-black font-semibold py-2 rounded-lg text-xs cursor-pointer border border-[#22C55E]/30 hover:border-transparent transition-all flex items-center justify-center gap-1.5 disabled:opacity-45"
-                          >
-                            {isSubmitting ? (
-                              <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                            ) : (
-                              <Check className="h-3.5 w-3.5" />
-                            )}
-                            <span>Select & Route</span>
-                          </button>
+                        <td 
+                          key={q.id} 
+                          className={`p-4 border-l border-[#223027]/50 text-center font-black text-sm transition-all duration-200 ${
+                            isLowest ? 'bg-emerald-950/30 text-[#22C55E] border-x border-[#22C55E]/30' : 'text-[#E8EDEA]'
+                          }`}
+                        >
+                          {formatCurrency(q.grand_total)}
                         </td>
                       );
                     })}
                   </tr>
-                )}
-              </tbody>
-            </table>
+
+                  {/* Row 2: GST % */}
+                  <tr>
+                    <td className="p-4 font-medium text-[#8C9A93]">GST %</td>
+                    {quotes.map((q) => {
+                      const isLowest = q.grand_total === lowestTotal;
+                      return (
+                        <td 
+                          key={q.id} 
+                          className={`p-4 border-l border-[#223027]/50 text-center text-[#E8EDEA] font-mono ${
+                            isLowest ? 'bg-emerald-950/10 border-x border-[#22C55E]/10' : ''
+                          }`}
+                        >
+                          {q.tax_percent}%
+                        </td>
+                      );
+                    })}
+                  </tr>
+
+                  {/* Row 3: Delivery (days) */}
+                  <tr>
+                    <td className="p-4 font-medium text-[#8C9A93]">Delivery (days)</td>
+                    {quotes.map((q) => {
+                      const isLowest = q.grand_total === lowestTotal;
+                      return (
+                        <td 
+                          key={q.id} 
+                          className={`p-4 border-l border-[#223027]/50 text-center text-[#E8EDEA] font-semibold ${
+                            isLowest ? 'bg-emerald-950/10 border-x border-[#22C55E]/10' : ''
+                          }`}
+                        >
+                          {q.delivery_days} days
+                        </td>
+                      );
+                    })}
+                  </tr>
+
+                  {/* Row 4: Vendor rating */}
+                  <tr>
+                    <td className="p-4 font-medium text-[#8C9A93]">Vendor rating</td>
+                    {quotes.map((q) => {
+                      const isLowest = q.grand_total === lowestTotal;
+                      return (
+                        <td 
+                          key={q.id} 
+                          className={`p-4 border-l border-[#223027]/50 text-center ${
+                            isLowest ? 'bg-emerald-950/10 border-x border-[#22C55E]/10' : ''
+                          }`}
+                        >
+                          <span className="text-amber-400 font-semibold">{formatRating(q.vendor_rating)} / 5</span>
+                        </td>
+                      );
+                    })}
+                  </tr>
+
+                  {/* Row 5: Payment terms */}
+                  <tr>
+                    <td className="p-4 font-medium text-[#8C9A93]">Payment terms</td>
+                    {quotes.map((q) => {
+                      const isLowest = q.grand_total === lowestTotal;
+                      return (
+                        <td 
+                          key={q.id} 
+                          className={`p-4 border-l border-[#223027]/50 text-center text-[#E8EDEA] italic ${
+                            isLowest ? 'bg-emerald-950/10 border-x border-[#22C55E]/10' : ''
+                          }`}
+                        >
+                          {q.payment_terms || 'Immediate'}
+                        </td>
+                      );
+                    })}
+                  </tr>
+
+                  {/* Row 6: Selection Actions Row */}
+                  {isStaff && rfq?.status !== 'po_generated' && rfq?.status !== 'approved' && (
+                    <tr className="bg-[#0F1513]/10">
+                      <td className="p-4 font-bold text-[#E8EDEA]">Selection Action</td>
+                      {quotes.map((q) => {
+                        const isLowest = q.grand_total === lowestTotal;
+                        const isSubmitting = submittingId === q.id;
+                        return (
+                          <td 
+                            key={q.id} 
+                            className={`p-4 border-l border-[#223027]/50 text-center ${
+                              isLowest ? 'bg-emerald-950/20 border-x border-[#22C55E]/20' : ''
+                            }`}
+                          >
+                            <button
+                              onClick={() => handleSelectQuote(q.id)}
+                              disabled={submittingId !== null}
+                              className={`w-full py-2 px-4 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer shadow-md ${
+                                isLowest 
+                                  ? 'bg-[#22C55E] hover:bg-[#16a34a] text-black shadow-[#22C55E]/10' 
+                                  : 'bg-[#16211d] border border-[#223027] hover:border-[#22C55E]/40 text-[#E8EDEA]'
+                              }`}
+                            >
+                              {isSubmitting ? (
+                                <Loader2 className="h-3.5 w-3.5 animate-spin mx-auto text-current" />
+                              ) : (
+                                <span>{isLowest ? 'Select & Approve' : 'Select'}</span>
+                              )}
+                            </button>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          {/* Notes display footer */}
-          <div className="bg-[#0F1513] border-t border-[#223027] p-5 text-xs text-[#8C9A93] space-y-3">
-            <h4 className="font-semibold text-[#E8EDEA] uppercase text-[10px] tracking-wide">Vendor Remarks & Scope of Work:</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {quotes.map(q => (
-                <div key={q.id} className="space-y-1.5">
-                  <span className="font-semibold text-[#E8EDEA]">{q.vendor_name}:</span>
-                  <p className="italic leading-relaxed">"{q.notes || 'No remarks provided.'}"</p>
-                </div>
-              ))}
+          {/* Sketch notice box */}
+          <div className="p-3 bg-[#16211d]/50 border border-[#223027] rounded-lg text-xs text-[#8C9A93] flex items-center gap-2 animate-fade-in w-fit">
+            <div className="h-2 w-2 rounded-full bg-[#22C55E]" />
+            <span>Green = lowest price, selecting vendor initiates the approval workflow.</span>
+          </div>
+
+          {/* Detailed Item-wise Comparison Table */}
+          <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg mt-8">
+            <div className="p-4 border-b border-[#223027] bg-[#0F1513]/40">
+              <h3 className="text-xs font-semibold text-[#E8EDEA] uppercase tracking-wide">Detailed Item-wise Comparison</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-xs text-left">
+                <thead>
+                  <tr className="bg-[#0F1513]/60 border-b border-[#223027] text-[#8C9A93]">
+                    <th className="p-4 font-semibold uppercase tracking-wider">Item Details</th>
+                    {quotes.map(q => (
+                      <th key={q.id} className="p-4 border-l border-[#223027] text-center font-bold text-[#E8EDEA]">
+                        {q.vendor_name}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#223027]/40 bg-[#121A17]">
+                  {rfq?.line_items?.map((rfqItem) => (
+                    <tr key={rfqItem.id} className="hover:bg-[#16211d]/20 transition-colors">
+                      <td className="p-4">
+                        <span className="font-semibold text-[#E8EDEA]">{rfqItem.item_name}</span>
+                        <span className="block text-[10px] text-[#8C9A93] mt-0.5">Required Quantity: {parseInt(rfqItem.quantity)} {rfqItem.unit || 'pcs'}</span>
+                      </td>
+                      {quotes.map(q => {
+                        const qItem = q.line_items?.find(qi => qi.item_name === rfqItem.item_name);
+                        return (
+                          <td key={q.id} className="p-4 border-l border-[#223027]/50 text-center font-mono">
+                            {qItem ? (
+                              <div className="space-y-0.5">
+                                <span className="font-bold text-[#E8EDEA]">{formatCurrency(qItem.unit_price)} <span className="text-[9px] text-[#8C9A93] font-normal">/ unit</span></span>
+                                <span className="block text-[10px] text-[#8C9A93]">Total: {formatCurrency(qItem.total)}</span>
+                              </div>
+                            ) : (
+                              <span className="text-[#8C9A93] italic">Not Quoted</span>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
