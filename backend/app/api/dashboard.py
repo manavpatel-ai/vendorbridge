@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import func, and_, extract
+from sqlalchemy.orm import selectinload
 from typing import Any, List
 from datetime import date, datetime, timedelta
 from uuid import UUID
