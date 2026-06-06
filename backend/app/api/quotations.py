@@ -39,7 +39,7 @@ async def list_quotations(
         query = query.filter(Quotation.vendor_id == vendor_id)
         
     result = await db.execute(query.order_by(Quotation.created_at.desc()))
-    quotations = result.scalars().all()
+    quotations = result.unique().scalars().all()
     
     # Map vendor names and ratings onto response objects
     res_list = []
@@ -62,7 +62,7 @@ async def get_quotation(
         .options(selectinload(Quotation.line_items), selectinload(Quotation.vendor))
         .filter(Quotation.id == id)
     )
-    q = result.scalars().first()
+    q = result.unique().scalars().first()
     if not q:
         raise HTTPException(status_code=404, detail="Quotation not found")
         
@@ -181,7 +181,7 @@ async def create_quotation(
         .options(selectinload(Quotation.line_items), selectinload(Quotation.vendor))
         .filter(Quotation.id == q.id)
     )
-    db_q = result.scalars().first()
+    db_q = result.unique().scalars().first()
     item = QuotationResponse.model_validate(db_q)
     item.vendor_name = db_q.vendor.name
     item.vendor_rating = float(db_q.vendor.rating) if db_q.vendor.rating else 0.0
@@ -198,7 +198,7 @@ async def submit_quotation(
         .options(selectinload(Quotation.line_items), selectinload(Quotation.vendor))
         .filter(Quotation.id == id)
     )
-    q = result.scalars().first()
+    q = result.unique().scalars().first()
     if not q:
         raise HTTPException(status_code=404, detail="Quotation not found")
         
@@ -261,7 +261,7 @@ async def select_quotation(
         .options(selectinload(Quotation.vendor))
         .filter(Quotation.id == id)
     )
-    q = q_res.scalars().first()
+    q = q_res.unique().scalars().first()
     if not q:
         raise HTTPException(status_code=404, detail="Quotation not found")
         
@@ -320,14 +320,14 @@ async def select_quotation(
             
         approver_ids = [m.id for m in managers[:2]]
         
-    # Level 1 Approval
-    l1_user_res = await db.execute(select(User).filter(User.id == approver_ids[0]))
-    l1_user = l1_user_res.scalars().first()
+    # Fetch both approvers in a single query
+    approver_res = await db.execute(select(User).filter(User.id.in_(approver_ids[:2])))
+    approver_map = {u.id: u for u in approver_res.scalars().all()}
+    
+    l1_user = approver_map.get(approver_ids[0])
     l1_name = f"{l1_user.first_name} {l1_user.last_name or ''}".strip() if l1_user else "L1 Manager"
     
-    # Level 2 Approval
-    l2_user_res = await db.execute(select(User).filter(User.id == approver_ids[1]))
-    l2_user = l2_user_res.scalars().first()
+    l2_user = approver_map.get(approver_ids[1])
     l2_name = f"{l2_user.first_name} {l2_user.last_name or ''}".strip() if l2_user else "L2 Manager"
     
     l1_approval = Approval(
@@ -378,7 +378,7 @@ async def select_quotation(
         .options(selectinload(Quotation.line_items), selectinload(Quotation.vendor))
         .filter(Quotation.id == id)
     )
-    db_q = result.scalars().first()
+    db_q = result.unique().scalars().first()
     item = QuotationResponse.model_validate(db_q)
     item.vendor_name = db_q.vendor.name
     item.vendor_rating = float(db_q.vendor.rating) if db_q.vendor.rating else 0.0

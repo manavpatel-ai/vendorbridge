@@ -44,7 +44,7 @@ async def generate_purchase_order(
         .options(selectinload(Quotation.line_items), selectinload(Quotation.vendor))
         .filter(Quotation.rfq_id == po_in.rfq_id, Quotation.status == QuotationStatus.selected)
     )
-    quotation = q_res.scalars().first()
+    quotation = q_res.unique().scalars().first()
     if not quotation:
         raise HTTPException(
             status_code=400,
@@ -125,7 +125,7 @@ async def generate_purchase_order(
         .options(selectinload(PurchaseOrder.line_items), selectinload(PurchaseOrder.vendor))
         .filter(PurchaseOrder.id == po.id)
     )
-    db_po = reload_res.scalars().first()
+    db_po = reload_res.unique().scalars().first()
     res = PurchaseOrderResponse.model_validate(db_po)
     res.vendor_name = db_po.vendor.name
     return res
@@ -145,7 +145,7 @@ async def list_purchase_orders(
         query = query.filter(PurchaseOrder.vendor_id == current_user.vendor_id)
         
     result = await db.execute(query.order_by(PurchaseOrder.created_at.desc()))
-    pos = result.scalars().all()
+    pos = result.unique().scalars().all()
     
     res_list = []
     for po in pos:
@@ -166,7 +166,7 @@ async def get_purchase_order(
         .options(selectinload(PurchaseOrder.line_items), selectinload(PurchaseOrder.vendor))
         .filter(PurchaseOrder.id == id)
     )
-    po = result.scalars().first()
+    po = result.unique().scalars().first()
     if not po:
         raise HTTPException(status_code=404, detail="Purchase Order not found")
         

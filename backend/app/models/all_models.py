@@ -149,6 +149,11 @@ class RfqVendor(Base):
     rfq = relationship("Rfq", back_populates="vendors")
     vendor = relationship("Vendor", back_populates="rfq_assignments")
 
+    @property
+    def vendor_name(self) -> Optional[str]:
+        return self.vendor.name if self.vendor else None
+
+
 
 class RfqAttachment(Base):
     __tablename__ = "rfq_attachments"

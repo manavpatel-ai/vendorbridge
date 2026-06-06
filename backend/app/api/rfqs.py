@@ -38,14 +38,15 @@ async def list_rfqs(
     if status_filter:
         query = query.filter(Rfq.status == status_filter)
         
-    # Order by creation date descending and eager load line items and vendors
+    # Order by creation date descending and eager load line items, vendors, and attachments
     query = query.options(
         selectinload(Rfq.line_items),
-        selectinload(Rfq.vendors).selectinload(RfqVendor.vendor)
+        selectinload(Rfq.vendors).selectinload(RfqVendor.vendor),
+        selectinload(Rfq.attachments)
     ).order_by(Rfq.created_at.desc())
     
     result = await db.execute(query)
-    rfqs = result.scalars().all()
+    rfqs = result.unique().scalars().all()
     
     return rfqs
 
@@ -134,7 +135,7 @@ async def create_rfq(
         )
         .filter(Rfq.id == rfq.id)
     )
-    return result.scalars().first()
+    return result.unique().scalars().first()
 
 @router.get("/{id}", response_model=RfqResponse)
 async def get_rfq(
@@ -152,7 +153,7 @@ async def get_rfq(
         )
         .filter(Rfq.id == id)
     )
-    rfq = result.scalars().first()
+    rfq = result.unique().scalars().first()
     if not rfq:
         raise HTTPException(status_code=404, detail="RFQ not found")
         
@@ -207,11 +208,12 @@ async def update_rfq(
         select(Rfq)
         .options(
             selectinload(Rfq.line_items),
-            selectinload(Rfq.vendors).selectinload(RfqVendor.vendor)
+            selectinload(Rfq.vendors).selectinload(RfqVendor.vendor),
+            selectinload(Rfq.attachments)
         )
         .filter(Rfq.id == id)
     )
-    return result.scalars().first()
+    return result.unique().scalars().first()
 
 @router.post("/{id}/publish", response_model=RfqResponse)
 async def publish_rfq(
@@ -275,11 +277,12 @@ async def publish_rfq(
         select(Rfq)
         .options(
             selectinload(Rfq.line_items),
-            selectinload(Rfq.vendors).selectinload(RfqVendor.vendor)
+            selectinload(Rfq.vendors).selectinload(RfqVendor.vendor),
+            selectinload(Rfq.attachments)
         )
         .filter(Rfq.id == id)
     )
-    return result.scalars().first()
+    return result.unique().scalars().first()
 
 @router.get("/{id}/quotations", response_model=List[QuotationResponse])
 async def list_rfq_quotations(
@@ -305,7 +308,7 @@ async def list_rfq_quotations(
         .order_by(Quotation.grand_total.asc())
     )
     result = await db.execute(q_query)
-    quotations = result.scalars().all()
+    quotations = result.unique().scalars().all()
     
     # Map vendor names and ratings onto response objects
     res_list = []

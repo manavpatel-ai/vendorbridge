@@ -11,6 +11,7 @@ from app.api.dashboard import router as dashboard_router
 from app.api.reports import router as reports_router
 from app.api.activity import router as activity_router
 from app.api.notifications import router as notifications_router
+from app.api.chat import router as chat_router
 
 api_router = APIRouter()
 
@@ -25,3 +26,4 @@ api_router.include_router(dashboard_router, prefix="/dashboard", tags=["Dashboar
 api_router.include_router(reports_router, prefix="/reports", tags=["Reports & Analytics"])
 api_router.include_router(activity_router, prefix="/activity", tags=["Activity Audit Log"])
 api_router.include_router(notifications_router, prefix="/notifications", tags=["Notifications"])
+api_router.include_router(chat_router, prefix="/chat", tags=["AI Chat"])

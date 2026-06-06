@@ -116,32 +116,46 @@ async def get_analytics(
             "count": po_cnt or 0
         })
         
-    # 7. Monthly Trend (overall monthly spend for previous 6 months including this month)
+    # 7. Monthly Trend — optimized: single grouped query instead of 6 sequential ones
     monthly_trend = []
     from calendar import month_name
+    from sqlalchemy import extract
+    
+    # Calculate month boundaries
+    month_boundaries = []
     for i in range(5, -1, -1):
-        # Subtract months
-        # A simple estimation: subtracting i * 30 days
         target_date = start_date - timedelta(days=i * 30)
         t_month = target_date.month
         t_year = target_date.year
-        
         t_start = date(t_year, t_month, 1)
         if t_month == 12:
             t_end = date(t_year + 1, 1, 1)
         else:
             t_end = date(t_year, t_month + 1, 1)
-            
-        trend_query = select(func.sum(PurchaseOrder.grand_total)).filter(
-            PurchaseOrder.po_date >= t_start,
-            PurchaseOrder.po_date < t_end
+        month_boundaries.append((t_year, t_month, t_start, t_end))
+    
+    overall_start = month_boundaries[0][2]
+    overall_end = month_boundaries[-1][3]
+    
+    trend_query = (
+        select(
+            extract('year', PurchaseOrder.po_date).label('yr'),
+            extract('month', PurchaseOrder.po_date).label('mn'),
+            func.sum(PurchaseOrder.grand_total)
         )
-        trend_res = await db.execute(trend_query)
-        month_spend = float(trend_res.scalar() or 0)
-        
+        .filter(
+            PurchaseOrder.po_date >= overall_start,
+            PurchaseOrder.po_date < overall_end
+        )
+        .group_by('yr', 'mn')
+    )
+    trend_res = await db.execute(trend_query)
+    trend_data = {(int(row[0]), int(row[1])): float(row[2] or 0) for row in trend_res.all()}
+    
+    for t_year, t_month, _, _ in month_boundaries:
         monthly_trend.append({
             "name": f"{month_name[t_month][:3]} {t_year}",
-            "value": month_spend
+            "value": trend_data.get((t_year, t_month), 0)
         })
         
     return {
@@ -180,7 +194,7 @@ async def export_monthly_report(
         .order_by(PurchaseOrder.po_date.asc())
     )
     result = await db.execute(po_query)
-    pos = result.scalars().all()
+    pos = result.unique().scalars().all()
     
     # Create CSV memory buffer
     output = io.StringIO()

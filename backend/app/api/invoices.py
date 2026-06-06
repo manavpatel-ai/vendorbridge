@@ -7,6 +7,7 @@ from typing import Any, List, Optional
 from uuid import UUID
 from datetime import date, datetime, timedelta
 import io
+import os
 
 from app.core.deps import get_db, get_current_user, require_role
 from app.models.all_models import (
@@ -32,7 +33,7 @@ async def generate_invoice(
         .options(selectinload(PurchaseOrder.line_items), selectinload(PurchaseOrder.vendor))
         .filter(PurchaseOrder.id == invoice_in.po_id)
     )
-    po = po_res.scalars().first()
+    po = po_res.unique().scalars().first()
     if not po:
         raise HTTPException(status_code=404, detail="Purchase Order not found")
         
@@ -130,7 +131,7 @@ async def list_invoices(
         query = query.filter(PurchaseOrder.vendor_id == current_user.vendor_id)
         
     result = await db.execute(query.order_by(Invoice.created_at.desc()))
-    invoices = result.scalars().all()
+    invoices = result.unique().scalars().all()
     
     res_list = []
     for inv in invoices:
@@ -159,7 +160,7 @@ async def get_invoice(
         .options(selectinload(Invoice.po).selectinload(PurchaseOrder.vendor))
         .filter(Invoice.id == id)
     )
-    inv = result.scalars().first()
+    inv = result.unique().scalars().first()
     if not inv:
         raise HTTPException(status_code=404, detail="Invoice not found")
         
@@ -192,7 +193,7 @@ async def get_invoice_pdf(
         )
         .filter(Invoice.id == id)
     )
-    inv = result.scalars().first()
+    inv = result.unique().scalars().first()
     if not inv:
         raise HTTPException(status_code=404, detail="Invoice not found")
         
@@ -238,7 +239,7 @@ async def email_invoice(
         )
         .filter(Invoice.id == id)
     )
-    inv = result.scalars().first()
+    inv = result.unique().scalars().first()
     if not inv:
         raise HTTPException(status_code=404, detail="Invoice not found")
         
@@ -308,7 +309,7 @@ async def update_invoice_status(
         .options(selectinload(Invoice.po).selectinload(PurchaseOrder.vendor))
         .filter(Invoice.id == id)
     )
-    inv = result.scalars().first()
+    inv = result.unique().scalars().first()
     if not inv:
         raise HTTPException(status_code=404, detail="Invoice not found")
         
