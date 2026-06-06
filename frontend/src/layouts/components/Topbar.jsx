@@ -75,7 +75,7 @@ const Topbar = ({ onToggleSidebar }) => {
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleSidebar}
-          className="p-2 text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg md:hidden cursor-pointer"
+          className="p-2 text-[#94A3B8] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg md:hidden cursor-pointer"
           aria-label="Toggle Navigation Menu"
         >
           <Menu className="h-5 w-5" />
@@ -91,7 +91,7 @@ const Topbar = ({ onToggleSidebar }) => {
         {/* Theme Toggle Button */}
         <button
           onClick={toggleTheme}
-          className="p-2 text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg transition-all cursor-pointer"
+          className="p-2 text-[#94A3B8] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg transition-all cursor-pointer"
           aria-label="Toggle Theme"
         >
           {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -101,7 +101,7 @@ const Topbar = ({ onToggleSidebar }) => {
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setShowNotifDropdown(!showNotifDropdown)}
-            className="p-2 text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg transition-all relative"
+            className="p-2 text-[#94A3B8] hover:text-[#E8EDEA] hover:bg-[#16211d] rounded-lg transition-all relative"
             aria-label="Notifications"
           >
             <Bell className="h-5 w-5" />
@@ -125,7 +125,7 @@ const Topbar = ({ onToggleSidebar }) => {
               </div>
               <div className="max-h-64 overflow-y-auto divide-y divide-[#223027]">
                 {notifications.length === 0 ? (
-                  <div className="p-4 text-center text-xs text-[#8C9A93]">
+                  <div className="p-4 text-center text-xs text-[#94A3B8]">
                     No notifications
                   </div>
                 ) : (
@@ -140,7 +140,7 @@ const Topbar = ({ onToggleSidebar }) => {
                         <p className={`text-[#E8EDEA] ${!notif.is_read ? 'font-medium' : ''}`}>
                           {notif.message}
                         </p>
-                        <span className="text-[10px] text-[#8C9A93] block mt-1">
+                        <span className="text-[10px] text-[#94A3B8] block mt-1">
                           {new Date(notif.created_at).toLocaleString()}
                         </span>
                       </div>
@@ -170,7 +170,7 @@ const Topbar = ({ onToggleSidebar }) => {
             <span className="block text-sm font-medium text-[#E8EDEA]">
               {user?.first_name} {user?.last_name || ''}
             </span>
-            <span className="block text-xs text-[#8C9A93] capitalize">
+            <span className="block text-xs text-[#94A3B8] capitalize">
               {user?.role?.replace('_', ' ')}
             </span>
           </div>

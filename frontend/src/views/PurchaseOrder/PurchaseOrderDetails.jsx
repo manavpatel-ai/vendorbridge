@@ -4,21 +4,23 @@ import { useAuth } from '../../utility/context/AuthContext';
 import { 
   Loader2, 
   ArrowLeft,
+  X,
+  Printer,
+  Download,
   Mail,
   CreditCard,
-  Download,
-  Printer
+  FileCheck2
 } from 'lucide-react';
 import api from '../../utility/api';
 
-const InvoiceDetails = () => {
+const PurchaseOrderDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, hasRole } = useAuth();
   const isStaff = hasRole(['admin', 'procurement_officer']);
 
-  const [invoice, setInvoice] = useState(null);
-  const [poDetails, setPoDetails] = useState(null);
+  const [po, setPo] = useState(null);
+  const [invoices, setInvoices] = useState([]);
   const [vendorDetails, setVendorDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -26,16 +28,15 @@ const InvoiceDetails = () => {
   const fetchAllDetails = async () => {
     setLoading(true);
     try {
-      // Fetch invoice details
-      const invoiceRes = await api.get(`/invoices/${id}`);
-      const invoiceData = invoiceRes.data;
-      setInvoice(invoiceData);
-      
       // Fetch PO details
-      const poRes = await api.get(`/purchase-orders/${invoiceData.po_id}`);
+      const poRes = await api.get(`/purchase-orders/${id}`);
       const poData = poRes.data;
-      setPoDetails(poData);
-      
+      setPo(poData);
+
+      // Fetch all invoices to find related one
+      const invoicesRes = await api.get('/invoices/');
+      setInvoices(invoicesRes.data);
+
       // Fetch Vendor details
       if (poData.vendor_id) {
         try {
@@ -46,7 +47,7 @@ const InvoiceDetails = () => {
         }
       }
     } catch (err) {
-      console.error("Failed to load invoice details:", err);
+      console.error("Failed to load PO details:", err);
     } finally {
       setLoading(false);
     }
@@ -56,11 +57,12 @@ const InvoiceDetails = () => {
     fetchAllDetails();
   }, [id]);
 
-  const handleDownloadPDF = async () => {
-    if (!invoice) return;
+  const relatedInvoice = po ? invoices.find(inv => inv.po_id === po.id) : null;
+
+  const handleDownloadPDF = async (invoiceId) => {
     setActionLoading(true);
     try {
-      const response = await api.get(`/invoices/${invoice.id}/pdf`, {
+      const response = await api.get(`/invoices/${invoiceId}/pdf`, {
         responseType: 'blob'
       });
       const file = new Blob([response.data], { type: 'application/pdf' });
@@ -74,11 +76,10 @@ const InvoiceDetails = () => {
     }
   };
 
-  const handleEmailInvoice = async () => {
-    if (!invoice) return;
+  const handleEmailInvoice = async (invoiceId) => {
     setActionLoading(true);
     try {
-      await api.post(`/invoices/${invoice.id}/email`);
+      await api.post(`/invoices/${invoiceId}/email`);
       alert("Invoice dispatched to vendor via email!");
     } catch (err) {
       console.error(err);
@@ -88,20 +89,32 @@ const InvoiceDetails = () => {
     }
   };
 
-  const handleMarkAsPaid = async () => {
-    if (!invoice) return;
+  const handleMarkAsPaid = async (invoiceId) => {
     setActionLoading(true);
     try {
-      await api.patch(`/invoices/${invoice.id}/status`, null, {
+      await api.patch(`/invoices/${invoiceId}/status`, null, {
         params: { status: 'paid' }
       });
       alert("Invoice marked as PAID!");
-      // Reload details
-      const updatedInv = await api.get(`/invoices/${invoice.id}`);
-      setInvoice(updatedInv.data);
+      fetchAllDetails();
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.detail || "Failed to update payment status.");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleGenerateInvoice = async () => {
+    if (!po) return;
+    setActionLoading(true);
+    try {
+      await api.post('/invoices/', { po_id: po.id });
+      alert("Invoice generated and specification PDF created successfully!");
+      fetchAllDetails();
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.detail || "Failed to generate invoice");
     } finally {
       setActionLoading(false);
     }
@@ -118,37 +131,37 @@ const InvoiceDetails = () => {
     return (
       <div className="flex flex-col items-center justify-center py-32 space-y-4">
         <Loader2 className="h-8 w-8 animate-spin text-[#22C55E]" />
-        <span className="text-xs text-[#94A3B8]">Loading invoice details...</span>
+        <span className="text-xs text-[#94A3B8]">Loading purchase order details...</span>
       </div>
     );
   }
 
-  if (!invoice) {
+  if (!po) {
     return (
       <div className="space-y-4">
         <button 
-          onClick={() => navigate('/invoices')}
-          className="flex items-center gap-2 text-xs font-semibold text-[#94A3B8] hover:text-[#E8EDEA] transition-colors cursor-pointer no-print"
+          onClick={() => navigate('/purchase-orders')}
+          className="flex items-center gap-2 text-xs font-semibold text-[#94A3B8] hover:text-[#E8EDEA] transition-colors cursor-pointer"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Back to Invoices</span>
+          <span>Back to Purchase Orders</span>
         </button>
         <div className="bg-[#121A17] border border-[#223027] rounded-xl p-8 text-center text-[#94A3B8]">
-          Invoice not found or failed to load.
+          Purchase Order not found or failed to load.
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4 max-w-5xl mx-auto">
+    <div className="space-y-4 max-w-5xl mx-auto w-full">
       {/* Back link */}
       <button 
-        onClick={() => navigate('/invoices')}
+        onClick={() => navigate('/purchase-orders')}
         className="flex items-center gap-2 text-xs font-semibold text-[#94A3B8] hover:text-[#E8EDEA] transition-colors cursor-pointer no-print"
       >
         <ArrowLeft className="h-4 w-4" />
-        <span>Back to Invoices</span>
+        <span>Back to Purchase Orders</span>
       </button>
 
       {/* Main Details Sheet */}
@@ -158,20 +171,22 @@ const InvoiceDetails = () => {
           <div>
             <h2 className="text-xl font-bold text-[#E8EDEA] tracking-tight">Purchase Order & Invoice</h2>
             <p className="text-xs text-[#94A3B8] mt-1 font-mono">
-              {poDetails?.po_number || invoice.po_number || 'PO-XXXX'} - auto-generated after approval
+              {po.po_number} - auto-generated after approval
             </p>
           </div>
           
           {/* Action buttons */}
           <div className="flex items-center gap-2 no-print">
-            <button
-              onClick={handleDownloadPDF}
-              disabled={actionLoading}
-              className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#121A17]"
-            >
-              <Download className="h-3.5 w-3.5" />
-              <span>Download PDF</span>
-            </button>
+            {relatedInvoice && (
+              <button
+                onClick={() => handleDownloadPDF(relatedInvoice.id)}
+                disabled={actionLoading}
+                className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#121A17]"
+              >
+                <Download className="h-3.5 w-3.5" />
+                <span>Download PDF</span>
+              </button>
+            )}
             <button
               onClick={() => window.print()}
               disabled={actionLoading}
@@ -180,9 +195,9 @@ const InvoiceDetails = () => {
               <Printer className="h-3.5 w-3.5" />
               <span>Print</span>
             </button>
-            {isStaff && (
+            {isStaff && relatedInvoice && (
               <button
-                onClick={handleEmailInvoice}
+                onClick={() => handleEmailInvoice(relatedInvoice.id)}
                 disabled={actionLoading}
                 className="flex items-center gap-1.5 border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-all disabled:opacity-45 bg-[#121A17]"
               >
@@ -203,13 +218,13 @@ const InvoiceDetails = () => {
                 <span className="font-semibold text-[#94A3B8] uppercase text-[9px] tracking-wider block">Bill to:</span>
                 <div className="space-y-1">
                   <p className="font-bold text-[#E8EDEA] text-sm">
-                    {poDetails?.buyer_org_name || 'your Organization Name'}
+                    {po.buyer_org_name || 'Your Organization Name'}
                   </p>
                   <p className="text-[#94A3B8] leading-relaxed">
-                    {poDetails?.buyer_address || '123 business park, ahmedabad'}
+                    {po.buyer_address || 'Corporate Head Office, India'}
                   </p>
                   <p className="font-mono text-[10px] text-[#22C55E] mt-1 font-semibold">
-                    GSTIN: {poDetails?.buyer_gstin || '253834384FB'}
+                    GSTIN: {po.buyer_gstin || '29AAAAA1111A1Z1'}
                   </p>
                 </div>
               </div>
@@ -219,7 +234,7 @@ const InvoiceDetails = () => {
                 <span className="font-semibold text-[#94A3B8] uppercase text-[9px] tracking-wider block">Vendor</span>
                 <div className="space-y-1">
                   <p className="font-bold text-[#22C55E] text-sm">
-                    {vendorDetails?.name || invoice.vendor_name || 'Vendor Name'}
+                    {po.vendor_name || 'Vendor Name'}
                   </p>
                   <p className="text-[#94A3B8] leading-relaxed">
                     {vendorDetails?.address || 'Vendor Address'}
@@ -240,13 +255,13 @@ const InvoiceDetails = () => {
                 <div className="flex justify-between md:justify-start gap-4">
                   <span className="text-[#94A3B8] w-24">PO Number:</span>
                   <span className="font-mono font-semibold text-[#E8EDEA]">
-                    {poDetails?.po_number || invoice.po_number}
+                    {po.po_number}
                   </span>
                 </div>
                 <div className="flex justify-between md:justify-start gap-4">
                   <span className="text-[#94A3B8] w-24">PO date:</span>
                   <span className="text-[#E8EDEA]">
-                    {poDetails?.po_date ? new Date(poDetails.po_date).toLocaleDateString('en-IN', {
+                    {po.po_date ? new Date(po.po_date).toLocaleDateString('en-IN', {
                       day: '2-digit',
                       month: 'long',
                       year: 'numeric'
@@ -259,21 +274,21 @@ const InvoiceDetails = () => {
                 <div className="flex justify-between md:justify-start gap-4">
                   <span className="text-[#94A3B8] w-28">invoice date:</span>
                   <span className="text-[#E8EDEA]">
-                    {new Date(invoice.invoice_date).toLocaleDateString('en-IN', {
+                    {relatedInvoice ? new Date(relatedInvoice.invoice_date).toLocaleDateString('en-IN', {
                       day: '2-digit',
                       month: 'long',
                       year: 'numeric'
-                    })}
+                    }) : 'Not Generated'}
                   </span>
                 </div>
                 <div className="flex justify-between md:justify-start gap-4">
                   <span className="text-[#94A3B8] w-28">Due date:</span>
-                  <span className="text-[#E8EDEA] font-semibold text-rose-400">
-                    {new Date(invoice.due_date).toLocaleDateString('en-IN', {
+                  <span className={`text-[#E8EDEA] ${relatedInvoice ? 'font-semibold text-rose-400' : ''}`}>
+                    {relatedInvoice ? new Date(relatedInvoice.due_date).toLocaleDateString('en-IN', {
                       day: '2-digit',
                       month: 'long',
                       year: 'numeric'
-                    })}
+                    }) : 'Not Generated'}
                   </span>
                 </div>
               </div>
@@ -292,7 +307,7 @@ const InvoiceDetails = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#223027]/40">
-                {poDetails?.line_items?.map((item, index) => (
+                {po.line_items?.map((item, index) => (
                   <tr key={index} className="hover:bg-[#16211d]/20 transition-colors">
                     <td className="p-4 font-semibold text-[#E8EDEA]">{item.item_name}</td>
                     <td className="p-4 text-center text-[#E8EDEA]">{parseInt(item.quantity)}</td>
@@ -309,51 +324,71 @@ const InvoiceDetails = () => {
             <div className="w-full md:w-80 space-y-3 text-xs">
               <div className="flex justify-between items-center">
                 <span className="text-[#94A3B8]">Subtotal</span>
-                <span className="text-[#E8EDEA] font-medium">{formatCurrency(invoice.subtotal)}</span>
+                <span className="text-[#E8EDEA] font-medium">{formatCurrency(po.subtotal)}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[#94A3B8]">CGST (9%)</span>
-                <span className="text-[#E8EDEA] font-medium">{formatCurrency(invoice.cgst)}</span>
+                <span className="text-[#E8EDEA] font-medium">{formatCurrency(po.cgst)}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[#94A3B8]">SGST (9%)</span>
-                <span className="text-[#E8EDEA] font-medium">{formatCurrency(invoice.sgst)}</span>
+                <span className="text-[#E8EDEA] font-medium">{formatCurrency(po.sgst)}</span>
               </div>
               <div className="flex justify-between items-center text-sm font-bold border-t border-[#223027] pt-3">
                 <span className="text-[#22C55E]">Grand total</span>
-                <span className="text-[#E8EDEA] text-base">{formatCurrency(invoice.grand_total)}</span>
+                <span className="text-[#E8EDEA] text-base">{formatCurrency(po.grand_total)}</span>
               </div>
             </div>
           </div>
 
-          {/* Footer: Status Badge and Mark as Paid Action */}
+          {/* Footer: Status Badge and Actions */}
           <div className="pt-4 border-t border-[#223027] flex items-center justify-between text-xs">
             <div className="flex items-center gap-2">
               <span className="text-[#94A3B8]">status:</span>
-              <span className={`text-[11px] font-bold px-3 py-1 rounded-lg uppercase tracking-wider ${
-                invoice.status === 'paid'
-                  ? 'bg-emerald-950/40 text-emerald-400 border border-emerald-900/60'
-                  : 'bg-amber-950/40 text-amber-400 border border-amber-900/60'
-              }`}>
-                {invoice.status === 'paid' ? 'Paid' : 'Pending Payment'}
-              </span>
-              
-              {/* Mark as Paid Action */}
-              {isStaff && invoice.status !== 'paid' && (
-                <button
-                  onClick={handleMarkAsPaid}
-                  disabled={actionLoading}
-                  className="ml-4 text-[#22C55E] hover:text-[#16a34a] font-bold cursor-pointer transition-colors hover:underline flex items-center gap-1 no-print animate-pulse"
-                >
-                  <CreditCard className="h-3.5 w-3.5" />
-                  <span>Mark as Paid</span>
-                </button>
+              {relatedInvoice ? (
+                <>
+                  <span className={`text-[11px] font-bold px-3 py-1 rounded-lg uppercase tracking-wider ${
+                    relatedInvoice.status === 'paid'
+                      ? 'bg-emerald-950/40 text-emerald-400 border border-emerald-900/60'
+                      : 'bg-amber-950/40 text-amber-400 border border-amber-900/60'
+                  }`}>
+                    {relatedInvoice.status === 'paid' ? 'Paid' : 'Pending Payment'}
+                  </span>
+                  
+                  {isStaff && relatedInvoice.status !== 'paid' && (
+                    <button
+                      onClick={() => handleMarkAsPaid(relatedInvoice.id)}
+                      disabled={actionLoading}
+                      className="ml-4 text-[#22C55E] hover:text-[#16a34a] font-bold cursor-pointer transition-colors hover:underline flex items-center gap-1 no-print animate-pulse"
+                    >
+                      <CreditCard className="h-3.5 w-3.5" />
+                      <span>Mark as Paid</span>
+                    </button>
+                  )}
+                </>
+              ) : (
+                <>
+                  <span className="text-[11px] font-bold px-3 py-1 rounded-lg uppercase tracking-wider bg-rose-950/40 text-rose-400 border border-rose-900/60">
+                    Invoice Pending
+                  </span>
+
+                  {isStaff && (
+                    <button
+                      onClick={handleGenerateInvoice}
+                      disabled={actionLoading}
+                      className="ml-4 text-[#22C55E] hover:text-[#16a34a] font-bold cursor-pointer transition-colors hover:underline flex items-center gap-1 no-print animate-pulse"
+                    >
+                      <FileCheck2 className="h-3.5 w-3.5" />
+                      <span>Generate Invoice</span>
+                    </button>
+                  )}
+                </>
               )}
             </div>
-            
-            {invoice.paid_at && (
+
+            {relatedInvoice?.paid_at && (
               <span className="text-[#94A3B8] italic">
-                Paid on: {new Date(invoice.paid_at).toLocaleString('en-IN', {
+                Paid on: {new Date(relatedInvoice.paid_at).toLocaleString('en-IN', {
                   day: '2-digit',
                   month: 'short',
                   year: 'numeric',
@@ -369,4 +404,4 @@ const InvoiceDetails = () => {
   );
 };
 
-export default InvoiceDetails;
+export default PurchaseOrderDetails;

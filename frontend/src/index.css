@@ -67,6 +67,30 @@ html, body {
 .light-mode .bg-\[\#0F1513\] {
   background-color: #F1F5F9 !important;
 }
+.light-mode .bg-\[\#0F1513\]\/10 {
+  background-color: rgba(241, 245, 249, 0.2) !important;
+}
+.light-mode .bg-\[\#0F1513\]\/20 {
+  background-color: rgba(241, 245, 249, 0.5) !important;
+}
+.light-mode .bg-\[\#0F1513\]\/40 {
+  background-color: rgba(241, 245, 249, 0.8) !important;
+}
+.light-mode .bg-\[\#0F1513\]\/60 {
+  background-color: #E2E8F0 !important;
+}
+.light-mode .bg-\[\#0B0F0E\]\/10 {
+  background-color: rgba(241, 245, 249, 0.2) !important;
+}
+.light-mode .bg-\[\#0B0F0E\]\/20 {
+  background-color: rgba(241, 245, 249, 0.5) !important;
+}
+.light-mode .bg-\[\#0B0F0E\]\/40 {
+  background-color: rgba(241, 245, 249, 0.8) !important;
+}
+.light-mode .bg-\[\#0B0F0E\]\/60 {
+  background-color: #E2E8F0 !important;
+}
 .light-mode .bg-\[\#16211d\] {
   background-color: #F1F5F9 !important;
 }
@@ -81,6 +105,15 @@ html, body {
 }
 .light-mode .bg-emerald-950\/40 {
   background-color: rgba(226, 240, 233, 0.8) !important;
+}
+.light-mode .bg-red-950\/40 {
+  background-color: #FEE2E2 !important;
+}
+.light-mode .border-red-800\/60 {
+  border-color: #FCA5A5 !important;
+}
+.light-mode .text-red-400 {
+  color: #B91C1C !important;
 }
 
 /* Overrides for borders */
@@ -101,16 +134,16 @@ html, body {
 .light-mode .text-\[\#E8EDEA\] {
   color: #0F172A !important;
 }
-.light-mode .text-\[\#8C9A93\] {
+.light-mode .text-\[\#94A3B8\] {
   color: #475569 !important;
 }
-.light-mode .text-\[\#8C9A93\]\/60 {
+.light-mode .text-\[\#94A3B8\]\/60 {
   color: rgba(71, 85, 105, 0.6) !important;
 }
-.light-mode .text-\[\#8C9A93\]\/40 {
+.light-mode .text-\[\#94A3B8\]\/40 {
   color: rgba(71, 85, 105, 0.4) !important;
 }
-.light-mode .text-\[\#8C9A93\]\/20 {
+.light-mode .text-\[\#94A3B8\]\/20 {
   color: rgba(71, 85, 105, 0.2) !important;
 }
 

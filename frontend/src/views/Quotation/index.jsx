@@ -90,7 +90,7 @@ const Quotations = () => {
       <div className="flex justify-between items-start">
         <div>
           <h1 className="text-3xl font-extrabold text-[#E8EDEA] tracking-tight">Quotations</h1>
-          <p className="text-xs sm:text-sm text-[#8C9A93] mt-1 font-medium">
+          <p className="text-xs sm:text-sm text-[#94A3B8] mt-1 font-medium">
             {isStaff 
               ? "Analyze submitted vendor quotes, check pricing, and track approvals"
               : "Manage your submitted quotes and track approval status"
@@ -102,13 +102,13 @@ const Quotations = () => {
       {/* Toolbar Search Input */}
       <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl shadow-md space-y-4">
         <div className="relative w-full">
-          <Search className="absolute left-4 top-3 h-5 w-5 text-[#8C9A93]/60" />
+          <Search className="absolute left-4 top-3 h-5 w-5 text-[#94A3B8]/60" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by quotation number or vendor partner..."
-            className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg pl-12 pr-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/30 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all"
+            className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg pl-12 pr-4 py-2.5 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/30 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all"
           />
         </div>
 
@@ -127,7 +127,7 @@ const Quotations = () => {
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all whitespace-nowrap capitalize ${
                 statusFilter === tab.value
                   ? 'bg-[#1a2d24] text-[#22C55E] border border-[#22C55E]/30'
-                  : 'text-[#8C9A93] hover:text-[#E8EDEA] border border-transparent'
+                  : 'text-[#94A3B8] hover:text-[#E8EDEA] border border-transparent'
               }`}
             >
               {tab.label} <span className="text-[10px] opacity-75 font-mono ml-1">({tab.count})</span>
@@ -143,14 +143,14 @@ const Quotations = () => {
         </div>
       ) : filteredQuotations.length === 0 ? (
         <div className="text-center py-16 bg-[#121A17] border border-[#223027] rounded-xl">
-          <p className="text-sm text-[#8C9A93] italic">No quotations found matching your criteria.</p>
+          <p className="text-sm text-[#94A3B8] italic">No quotations found matching your criteria.</p>
         </div>
       ) : (
         <div className="bg-[#121A17] border border-[#223027] rounded-xl overflow-hidden shadow-lg">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-xs text-left">
               <thead>
-                <tr className="bg-[#0F1513] border-b border-[#223027] text-[#8C9A93]">
+                <tr className="bg-[#0F1513] border-b border-[#223027] text-[#94A3B8]">
                   <th className="p-4 font-semibold uppercase tracking-wider">Quote Number</th>
                   {isStaff && <th className="p-4 font-semibold uppercase tracking-wider">Vendor</th>}
                   <th className="p-4 font-semibold uppercase tracking-wider">Delivery Time</th>
@@ -177,7 +177,7 @@ const Quotations = () => {
                     {isStaff && (
                       <td className="p-4 font-medium text-[#E8EDEA]">
                         <div className="flex items-center gap-2">
-                          <Building className="h-4 w-4 text-[#8C9A93]" />
+                          <Building className="h-4 w-4 text-[#94A3B8]" />
                           <span>{q.vendor_name}</span>
                         </div>
                       </td>
@@ -239,7 +239,7 @@ const Quotations = () => {
               </div>
               <button
                 onClick={() => setSelectedQuotation(null)}
-                className="p-1.5 rounded-lg text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d] cursor-pointer"
+                className="p-1.5 rounded-lg text-[#94A3B8] hover:text-[#E8EDEA] hover:bg-[#16211d] cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -260,7 +260,7 @@ const Quotations = () => {
                       {selectedQuotation.status}
                     </span>
                     {selectedQuotation.submitted_at && (
-                      <span className="text-[10px] text-[#8C9A93] flex items-center gap-1">
+                      <span className="text-[10px] text-[#94A3B8] flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         {new Date(selectedQuotation.submitted_at).toLocaleDateString()}
                       </span>
@@ -277,7 +277,7 @@ const Quotations = () => {
                 </h4>
                 <div className="bg-[#0F1513]/40 border border-[#223027] p-4 rounded-xl space-y-2 text-xs">
                   <div>
-                    <span className="text-[#8C9A93] block text-[10px] uppercase">Vendor Name</span>
+                    <span className="text-[#94A3B8] block text-[10px] uppercase">Vendor Name</span>
                     <span className="text-[#E8EDEA] font-semibold text-sm mt-0.5 block">{selectedQuotation.vendor_name || 'System Vendor'}</span>
                   </div>
                   {selectedQuotation.vendor_rating && (
@@ -298,23 +298,23 @@ const Quotations = () => {
                 <div className="bg-[#0F1513]/40 border border-[#223027] p-4 rounded-xl space-y-3 text-xs">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <span className="text-[#8C9A93] block text-[10px] uppercase">Lead Time</span>
+                      <span className="text-[#94A3B8] block text-[10px] uppercase">Lead Time</span>
                       <span className="text-[#E8EDEA] font-semibold mt-0.5 block">{selectedQuotation.delivery_days ? `${selectedQuotation.delivery_days} Days` : 'N/A'}</span>
                     </div>
                     <div>
-                      <span className="text-[#8C9A93] block text-[10px] uppercase">GST/Tax Applied</span>
+                      <span className="text-[#94A3B8] block text-[10px] uppercase">GST/Tax Applied</span>
                       <span className="text-[#E8EDEA] font-semibold mt-0.5 block">{selectedQuotation.tax_percent}%</span>
                     </div>
                   </div>
                   <div className="pt-2.5 border-t border-[#223027]/40">
-                    <span className="text-[#8C9A93] block text-[10px] uppercase">Payment Terms</span>
+                    <span className="text-[#94A3B8] block text-[10px] uppercase">Payment Terms</span>
                     <p className="text-[#E8EDEA] font-medium mt-0.5 leading-relaxed italic">
                       "{selectedQuotation.payment_terms || 'Not Specified'}"
                     </p>
                   </div>
                   {selectedQuotation.notes && (
                     <div className="pt-2.5 border-t border-[#223027]/40">
-                      <span className="text-[#8C9A93] block text-[10px] uppercase">Additional Notes</span>
+                      <span className="text-[#94A3B8] block text-[10px] uppercase">Additional Notes</span>
                       <p className="text-[#E8EDEA] mt-0.5 leading-relaxed">
                         {selectedQuotation.notes}
                       </p>
@@ -334,11 +334,11 @@ const Quotations = () => {
                     <div key={idx} className="p-3 bg-[#0F1513]/40 flex justify-between items-center">
                       <div>
                         <span className="font-semibold text-[#E8EDEA]">{item.item_name}</span>
-                        <span className="block text-[10px] text-[#8C9A93] mt-0.5">Quantity: {parseInt(item.quantity)} {item.delivery_days ? `(Delivery: ${item.delivery_days} Days)` : ''}</span>
+                        <span className="block text-[10px] text-[#94A3B8] mt-0.5">Quantity: {parseInt(item.quantity)} {item.delivery_days ? `(Delivery: ${item.delivery_days} Days)` : ''}</span>
                       </div>
                       <div className="text-right">
                         <span className="font-bold text-[#E8EDEA]">{formatCurrency(item.unit_price)}</span>
-                        <span className="block text-[10px] text-[#8C9A93] mt-0.5">Total: {formatCurrency(item.total)}</span>
+                        <span className="block text-[10px] text-[#94A3B8] mt-0.5">Total: {formatCurrency(item.total)}</span>
                       </div>
                     </div>
                   ))}
@@ -348,11 +348,11 @@ const Quotations = () => {
               {/* Pricing Totals breakdown summary */}
               <div className="bg-[#0B0F0E] border border-[#223027] p-4 rounded-xl space-y-2.5 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-[#8C9A93]">Subtotal</span>
+                  <span className="text-[#94A3B8]">Subtotal</span>
                   <span className="text-[#E8EDEA] font-mono">{formatCurrency(selectedQuotation.subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#8C9A93]">GST / Tax ({selectedQuotation.tax_percent}%)</span>
+                  <span className="text-[#94A3B8]">GST / Tax ({selectedQuotation.tax_percent}%)</span>
                   <span className="text-[#E8EDEA] font-mono">{formatCurrency(selectedQuotation.tax_amount)}</span>
                 </div>
                 <div className="flex justify-between text-sm font-bold border-t border-[#223027] pt-2">

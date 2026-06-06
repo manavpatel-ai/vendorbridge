@@ -19,7 +19,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
         <button 
           onClick={() => setIsOpen(false)}
-          className="p-1 rounded-lg text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d] md:hidden cursor-pointer"
+          className="p-1 rounded-lg text-[#94A3B8] hover:text-[#E8EDEA] hover:bg-[#16211d] md:hidden cursor-pointer"
           aria-label="Close Sidebar"
         >
           <X className="h-5 w-5" />
@@ -43,7 +43,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 `flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
                   isActive
                     ? 'bg-[#1a2d24] text-[#22C55E] border-l-4 border-[#22C55E] pl-3'
-                    : 'text-[#8C9A93] hover:text-[#E8EDEA] hover:bg-[#16211d]'
+                    : 'text-[#94A3B8] hover:text-[#E8EDEA] hover:bg-[#16211d]'
                 }`
               }
             >
@@ -64,7 +64,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <p className="text-sm font-medium text-[#E8EDEA] truncate">
               {user?.first_name} {user?.last_name}
             </p>
-            <p className="text-xs text-[#8C9A93] capitalize truncate">
+            <p className="text-xs text-[#94A3B8] capitalize truncate">
               {user?.role?.replace('_', ' ')}
             </p>
           </div>

@@ -83,7 +83,7 @@ const RFQs = () => {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-[#E8EDEA]">Request for Quotations (RFQs)</h1>
-          <p className="text-xs text-[#8C9A93] mt-1">
+          <p className="text-xs text-[#94A3B8] mt-1">
             Create RFQs, view vendor quotation submissions, and compare offers.
           </p>
         </div>
@@ -101,13 +101,13 @@ const RFQs = () => {
       {/* Filter Toolbar */}
       <div className="bg-[#121A17] border border-[#223027] p-5 rounded-xl flex flex-wrap gap-4 items-center justify-between">
         <div className="flex-1 min-w-[260px] relative">
-          <Search className="absolute left-3 top-2.5 h-4.5 w-4.5 text-[#8C9A93]/60" />
+          <Search className="absolute left-3 top-2.5 h-4.5 w-4.5 text-[#94A3B8]/60" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by RFQ number, title, or category..."
-            className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg pl-10 pr-4 py-2 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/30 focus:outline-none focus:border-[#22C55E]"
+            className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg pl-10 pr-4 py-2 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/30 focus:outline-none focus:border-[#22C55E]"
           />
         </div>
 
@@ -138,7 +138,7 @@ const RFQs = () => {
         </div>
       ) : rfqs.length === 0 ? (
         <div className="text-center py-12 bg-[#121A17] border border-[#223027] rounded-xl">
-          <p className="text-sm text-[#8C9A93]">No RFQs found.</p>
+          <p className="text-sm text-[#94A3B8]">No RFQs found.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -168,7 +168,7 @@ const RFQs = () => {
                   </div>
 
                   {/* Middle details */}
-                  <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-[#8C9A93] border-t border-[#223027]/40 pt-3">
+                  <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-[#94A3B8] border-t border-[#223027]/40 pt-3">
                     <span className="flex items-center gap-1.5">
                       <FileText className="h-3.5 w-3.5" />
                       {rfq.category || 'General'}
@@ -180,7 +180,7 @@ const RFQs = () => {
                   </div>
 
                   {/* Items summary */}
-                  <div className="mt-3 text-xs text-[#8C9A93]">
+                  <div className="mt-3 text-xs text-[#94A3B8]">
                     <span className="font-medium text-[#E8EDEA]">Items:</span>{' '}
                     {rfq.line_items?.map(item => `${item.item_name} (x${parseInt(item.quantity)})`).join(', ') || 'No items listed'}
                   </div>
@@ -189,7 +189,7 @@ const RFQs = () => {
                 {/* Bottom Actions */}
                 <div className="border-t border-[#223027]/40 pt-4 mt-4 flex items-center justify-between">
                   {/* Info text */}
-                  <span className="text-[10px] font-semibold text-[#8C9A93] uppercase">
+                  <span className="text-[10px] font-semibold text-[#94A3B8] uppercase">
                     {user?.role === 'vendor' ? (
                       hasQuoted ? (
                         <span className="text-[#22C55E]">Quotation Submitted</span>

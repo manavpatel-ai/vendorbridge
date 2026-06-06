@@ -122,7 +122,7 @@ const QuotationSubmit = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-[#8C9A93]">
+      <div className="flex flex-col items-center justify-center py-20 text-[#94A3B8]">
         <Loader2 className="h-8 w-8 animate-spin text-[#22C55E] mb-2" />
         <span>Loading RFQ details...</span>
       </div>
@@ -139,7 +139,7 @@ const QuotationSubmit = () => {
       {/* Back button */}
       <button
         onClick={() => navigate(`/rfqs/${rfqId}`)}
-        className="flex items-center gap-2 text-xs text-[#8C9A93] hover:text-[#E8EDEA] transition-all cursor-pointer"
+        className="flex items-center gap-2 text-xs text-[#94A3B8] hover:text-[#E8EDEA] transition-all cursor-pointer"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to RFQ specifications
@@ -148,7 +148,7 @@ const QuotationSubmit = () => {
       {/* Title block matching user's sketch */}
       <div>
         <h1 className="text-3xl font-extrabold text-[#E8EDEA] tracking-tight">Submit Quotations</h1>
-        <p className="text-xs sm:text-sm text-[#8C9A93] mt-1 font-semibold capitalize">
+        <p className="text-xs sm:text-sm text-[#94A3B8] mt-1 font-semibold capitalize">
           RFQ: {rfq?.title || 'procurement'} - deadline {rfq?.deadline ? new Date(rfq.deadline).toLocaleDateString() : 'N/A'}
         </p>
       </div>
@@ -164,7 +164,7 @@ const QuotationSubmit = () => {
         <div className="absolute top-0 left-0 w-1 h-full bg-[#22C55E]" />
         <Info className="h-5 w-5 text-[#22C55E] flex-shrink-0 mt-0.5" />
         <div>
-          <span className="text-[10px] font-bold text-[#8C9A93] uppercase tracking-wider block">RFQ Summary</span>
+          <span className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider block">RFQ Summary</span>
           <span className="text-xs text-[#E8EDEA] mt-1 block font-medium capitalize">
             {rfqSummaryStr}
           </span>
@@ -180,7 +180,7 @@ const QuotationSubmit = () => {
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-xs text-left">
             <thead>
-              <tr className="bg-[#0F1513]/60 border-b border-[#223027] text-[#8C9A93]">
+              <tr className="bg-[#0F1513]/60 border-b border-[#223027] text-[#94A3B8]">
                 <th className="p-4 font-semibold uppercase tracking-wider">Item</th>
                 <th className="p-4 font-semibold uppercase tracking-wider text-center w-24">Qty</th>
                 <th className="p-4 font-semibold uppercase tracking-wider text-center w-36">Unit price</th>
@@ -197,14 +197,14 @@ const QuotationSubmit = () => {
                   </td>
                   
                   {/* Quantity */}
-                  <td className="p-4 text-center text-[#8C9A93] font-mono">
+                  <td className="p-4 text-center text-[#94A3B8] font-mono">
                     {parseInt(item.quantity)}
                   </td>
                   
                   {/* Unit Price Input */}
                   <td className="p-4">
                     <div className="relative max-w-[130px] mx-auto">
-                      <span className="absolute left-3 top-2.5 text-[11px] text-[#8C9A93]">₹</span>
+                      <span className="absolute left-3 top-2.5 text-[11px] text-[#94A3B8]">₹</span>
                       <input
                         type="number"
                         value={item.unit_price || ''}
@@ -244,7 +244,7 @@ const QuotationSubmit = () => {
         {/* Left Side: Tax Rate and Note/Terms */}
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">tax / GST %</label>
+            <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">tax / GST %</label>
             <select
               value={taxPercent}
               onChange={(e) => setTaxPercent(parseInt(e.target.value))}
@@ -259,7 +259,7 @@ const QuotationSubmit = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Note / terms</label>
+            <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Note / terms</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -274,11 +274,11 @@ const QuotationSubmit = () => {
         <div className="bg-[#121A17] border border-[#223027] p-6 rounded-xl space-y-4 shadow-lg">
           <div className="space-y-3 text-xs font-medium">
             <div className="flex justify-between">
-              <span className="text-[#8C9A93]">Subtotal</span>
+              <span className="text-[#94A3B8]">Subtotal</span>
               <span className="text-[#E8EDEA] font-mono">{formatCurrency(subtotal)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-[#8C9A93]">GST ({taxPercent}%)</span>
+              <span className="text-[#94A3B8]">GST ({taxPercent}%)</span>
               <span className="text-[#E8EDEA] font-mono">{formatCurrency(taxAmount)}</span>
             </div>
             <div className="border-t border-[#223027] pt-3 flex justify-between text-sm font-bold">

@@ -5,6 +5,7 @@ const Login = lazy(() => import('../../views/Authentication/Login'));
 const Register = lazy(() => import('../../views/Authentication/Register'));
 const Dashboard = lazy(() => import('../../views/Dashboard'));
 const Vendors = lazy(() => import('../../views/Vendors'));
+const VendorDetails = lazy(() => import('../../views/Vendors/VendorDetails'));
 const RFQs = lazy(() => import('../../views/RFQ/RFQs'));
 const RFQCreate = lazy(() => import('../../views/RFQ/RFQCreate'));
 const RFQDetails = lazy(() => import('../../views/RFQ/RFQDetails'));
@@ -13,6 +14,7 @@ const QuotationComparison = lazy(() => import('../../views/Quotation/QuotationCo
 const Quotations = lazy(() => import('../../views/Quotation'));
 const Approval = lazy(() => import('../../views/Approval'));
 const PurchaseOrderInvoice = lazy(() => import('../../views/PurchaseOrder'));
+const PurchaseOrderDetails = lazy(() => import('../../views/PurchaseOrder/PurchaseOrderDetails'));
 const Invoices = lazy(() => import('../../views/Invoice'));
 const InvoiceDetails = lazy(() => import('../../views/Invoice/InvoiceDetails'));
 const Activity = lazy(() => import('../../views/Activity'));
@@ -46,6 +48,13 @@ export const RoutesList = [
   {
     path: '/vendors',
     element: <Vendors />,
+    meta: {
+      publicRoute: false
+    }
+  },
+  {
+    path: '/vendors/:id',
+    element: <VendorDetails />,
     meta: {
       publicRoute: false
     }
@@ -102,6 +111,13 @@ export const RoutesList = [
   {
     path: '/purchase-orders',
     element: <PurchaseOrderInvoice />,
+    meta: {
+      publicRoute: false
+    }
+  },
+  {
+    path: '/purchase-orders/:id',
+    element: <PurchaseOrderDetails />,
     meta: {
       publicRoute: false
     }

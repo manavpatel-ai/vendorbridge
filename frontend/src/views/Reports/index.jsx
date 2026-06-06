@@ -157,7 +157,7 @@ const Reports = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#E8EDEA] tracking-tight">Reports & analytics</h1>
-          <p className="text-xs text-[#8C9A93] mt-1 font-medium lowercase">
+          <p className="text-xs text-[#94A3B8] mt-1 font-medium lowercase">
             Procurement Insights- {formatMonthTitle(selectedMonth)}
           </p>
         </div>
@@ -179,7 +179,7 @@ const Reports = () => {
           <button
             onClick={handleExportCSV}
             disabled={exporting}
-            className="border border-[#223027] hover:border-[#22C55E]/40 text-[#8C9A93] hover:text-[#E8EDEA] font-semibold px-5 py-2 rounded-xl text-xs cursor-pointer transition-all bg-[#121A17] flex items-center gap-1.5 disabled:opacity-45"
+            className="border border-[#223027] hover:border-[#22C55E]/40 text-[#94A3B8] hover:text-[#E8EDEA] font-semibold px-5 py-2 rounded-xl text-xs cursor-pointer transition-all bg-[#121A17] flex items-center gap-1.5 disabled:opacity-45"
           >
             {exporting && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
             <span>Export</span>
@@ -194,7 +194,7 @@ const Reports = () => {
           <h3 className="text-3xl font-bold text-[#3B82F6] dark:text-[#60A5FA] tracking-tight">
             {formatSpendKPI(analytics?.total_spend)}
           </h3>
-          <span className="text-xs text-[#8C9A93] font-medium mt-2 lowercase">total spend</span>
+          <span className="text-xs text-[#94A3B8] font-medium mt-2 lowercase">total spend</span>
         </div>
 
         {/* Active Vendors */}
@@ -202,7 +202,7 @@ const Reports = () => {
           <h3 className="text-3xl font-bold text-[#10B981] dark:text-[#34D399] tracking-tight">
             {analytics?.active_vendors}
           </h3>
-          <span className="text-xs text-[#8C9A93] font-medium mt-2">Active vendors</span>
+          <span className="text-xs text-[#94A3B8] font-medium mt-2">Active vendors</span>
         </div>
 
         {/* PO Fulfillment */}
@@ -210,7 +210,7 @@ const Reports = () => {
           <h3 className="text-3xl font-bold text-[#F59E0B] dark:text-[#FBBF24] tracking-tight">
             {parseFloat(analytics?.po_fulfillment_pct || 100).toFixed(0)}%
           </h3>
-          <span className="text-xs text-[#8C9A93] font-medium mt-2">PO Fulfillment</span>
+          <span className="text-xs text-[#94A3B8] font-medium mt-2">PO Fulfillment</span>
         </div>
 
         {/* Overdue Invoices */}
@@ -218,7 +218,7 @@ const Reports = () => {
           <h3 className="text-3xl font-bold text-[#EF4444] dark:text-[#F87171] tracking-tight">
             {analytics?.overdue_invoices}
           </h3>
-          <span className="text-xs text-[#8C9A93] font-medium mt-2 lowercase">overdue invoices</span>
+          <span className="text-xs text-[#94A3B8] font-medium mt-2 lowercase">overdue invoices</span>
         </div>
       </div>
 
@@ -227,10 +227,10 @@ const Reports = () => {
         
         {/* Spend by Category Column */}
         <div className="flex flex-col">
-          <h3 className="text-xs font-bold text-[#8C9A93] uppercase tracking-wider mb-4">Spend by Category</h3>
+          <h3 className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-4">Spend by Category</h3>
           <div className="bg-[#121A17] border border-[#223027] p-6 rounded-2xl shadow-md flex-1">
             {analytics?.spend_by_category?.length === 0 ? (
-              <div className="h-full flex items-center justify-center text-xs text-[#8C9A93] italic py-16">
+              <div className="h-full flex items-center justify-center text-xs text-[#94A3B8] italic py-16">
                 No categorical spend recorded for this month.
               </div>
             ) : (
@@ -241,7 +241,7 @@ const Reports = () => {
                     <div key={idx} className="space-y-2">
                       <div className="flex justify-between items-center text-xs">
                         <span className="text-[#E8EDEA] font-semibold">{cat.name}</span>
-                        <span className="text-[#8C9A93] font-mono">{formatCategorySpend(cat.value)}</span>
+                        <span className="text-[#94A3B8] font-mono">{formatCategorySpend(cat.value)}</span>
                       </div>
                       {/* Custom progress bar */}
                       <div className="h-2.5 bg-[#223027]/40 rounded-full w-full overflow-hidden">
@@ -263,11 +263,11 @@ const Reports = () => {
           
           {/* Top Vendors by Spend */}
           <div className="flex flex-col">
-            <h3 className="text-xs font-bold text-[#8C9A93] uppercase tracking-wider mb-4">Top Vendors by Spend</h3>
+            <h3 className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-4">Top Vendors by Spend</h3>
             <div className="bg-[#121A17] border border-[#223027] rounded-2xl overflow-hidden shadow-md">
               <table className="w-full text-xs text-left border-collapse">
                 <thead>
-                  <tr className="bg-[#0F1513] border-b border-[#223027] text-[#8C9A93]">
+                  <tr className="bg-[#0F1513] border-b border-[#223027] text-[#94A3B8]">
                     <th className="p-3.5 font-semibold uppercase tracking-wider">Vendor</th>
                     <th className="p-3.5 font-semibold uppercase tracking-wider text-right">Spend (₹)</th>
                     <th className="p-3.5 font-semibold uppercase tracking-wider text-center">POs</th>
@@ -276,7 +276,7 @@ const Reports = () => {
                 <tbody className="divide-y divide-[#223027]/40 bg-[#121A17]">
                   {analytics?.top_vendors_by_spend?.length === 0 ? (
                     <tr>
-                      <td colSpan="3" className="p-8 text-center text-[#8C9A93] italic">No supplier spend recorded.</td>
+                      <td colSpan="3" className="p-8 text-center text-[#94A3B8] italic">No supplier spend recorded.</td>
                     </tr>
                   ) : (
                     analytics?.top_vendors_by_spend?.map((vendor, index) => (
@@ -294,7 +294,7 @@ const Reports = () => {
 
           {/* Monthly Trend */}
           <div className="flex flex-col">
-            <h3 className="text-xs font-bold text-[#8C9A93] uppercase tracking-wider mb-4">Monthly Trend</h3>
+            <h3 className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-4">Monthly Trend</h3>
             <div className="bg-[#121A17] border border-[#223027] p-6 rounded-2xl shadow-md">
               <div className="w-full pt-2">
                 <ResponsiveContainer width="100%" height={150}>
@@ -304,7 +304,7 @@ const Reports = () => {
                   >
                     <XAxis 
                       dataKey="name" 
-                      stroke="#8C9A93" 
+                      stroke="#94A3B8" 
                       fontSize={10} 
                       tickLine={false} 
                       tickFormatter={(val) => val ? val.split(' ')[0] : ''}

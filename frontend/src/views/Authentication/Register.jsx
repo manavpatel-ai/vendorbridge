@@ -66,9 +66,9 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F0E] flex flex-col items-center justify-center p-4 py-12">
+    <div className="min-h-screen bg-[#0B0F0E] flex flex-col items-center justify-center p-4 py-12 sm:p-6 md:p-8 lg:p-12">
       {/* Register Card */}
-      <div className="w-full max-w-2xl bg-[#121A17] border border-[#223027] rounded-xl p-8 shadow-2xl relative overflow-hidden">
+      <div className="w-[95%] sm:w-[85%] md:w-[70%] lg:w-[55%] xl:w-[45%] min-w-[320px] max-w-[800px] bg-[#121A17] border border-[#223027] rounded-xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
         {/* Glow effect */}
         <div className="absolute -top-12 -left-12 w-24 h-24 bg-[#22C55E]/10 rounded-full blur-2xl"></div>
 
@@ -89,16 +89,16 @@ const Register = () => {
           <span className="font-bold text-2xl tracking-wider text-[#E8EDEA]">
             Vendor<span className="text-[#22C55E]">Bridge</span>
           </span>
-          <p className="text-xs text-[#8C9A93] mt-1">Digital Procurement Network</p>
+          <p className="text-xs text-[#94A3B8] mt-1">Digital Procurement Network</p>
         </div>
 
         <h2 className="text-base font-semibold text-[#E8EDEA] mb-1 text-center">Create Account</h2>
-        <p className="text-xs text-[#8C9A93] mb-6 text-center">Register to join the VendorBridge digital procurement network</p>
+        <p className="text-xs text-[#94A3B8] mb-6 text-center">Register to join the VendorBridge digital procurement network</p>
 
         {success ? (
           <div className="p-6 bg-[#1a2d24] border border-[#22C55E]/40 rounded-lg text-center space-y-3">
             <p className="text-[#22C55E] font-medium text-sm">Account Registered Successfully!</p>
-            <p className="text-xs text-[#8C9A93]">Redirecting you to the login screen in a few seconds...</p>
+            <p className="text-xs text-[#94A3B8]">Redirecting you to the login screen in a few seconds...</p>
             <Loader2 className="h-6 w-6 animate-spin text-[#22C55E] mx-auto" />
           </div>
         ) : (
@@ -110,72 +110,72 @@ const Register = () => {
             )}
 
             {/* Grid 1: Basic Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">First Name</label>
+                <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">First Name</label>
                 <input
                   type="text"
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleChange}
-                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
+                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
                   placeholder="John"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Last Name</label>
+                <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Last Name</label>
                 <input
                   type="text"
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleChange}
-                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
+                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
                   placeholder="Doe"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Email Address</label>
+                <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Email Address</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
+                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
                   placeholder="john.doe@example.com"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Password</label>
+                <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Password</label>
                 <input
                   type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
+                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
                   placeholder="••••••••"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Phone Number</label>
+                <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Phone Number</label>
                 <input
                   type="text"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
+                  className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
                   placeholder="+91 9876543210"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Role Type</label>
+                <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Role Type</label>
                 <select
                   name="role"
                   value={formData.role}
@@ -195,22 +195,22 @@ const Register = () => {
               <div className="border-t border-[#223027] pt-5 space-y-4 animate-slide-down">
                 <h3 className="text-sm font-semibold text-[#22C55E]">Vendor Organization Details</h3>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Company Name</label>
+                    <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Company Name</label>
                     <input
                       type="text"
                       name="vendor_name"
                       value={formData.vendor_name}
                       onChange={handleChange}
-                      className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
+                      className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
                       placeholder="e.g. Acme Supplies Pvt Ltd"
                       required={formData.role === 'vendor'}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Business Category</label>
+                    <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Business Category</label>
                     <select
                       name="vendor_category"
                       value={formData.vendor_category}
@@ -226,26 +226,26 @@ const Register = () => {
                     </select>
                   </div>
 
-                  <div className="md:col-span-2">
-                    <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">GSTIN Number</label>
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">GSTIN Number</label>
                     <input
                       type="text"
                       name="vendor_gst_number"
                       value={formData.vendor_gst_number}
                       onChange={handleChange}
-                      className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
+                      className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
                       placeholder="e.g. 29AAAAA1111A1Z1"
                     />
                   </div>
 
-                  <div className="md:col-span-2">
-                    <label className="block text-xs font-semibold text-[#8C9A93] mb-1.5 uppercase tracking-wider">Company Address</label>
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-semibold text-[#94A3B8] mb-1.5 uppercase tracking-wider">Company Address</label>
                     <textarea
                       name="vendor_address"
                       value={formData.vendor_address}
                       onChange={handleChange}
                       rows={3}
-                      className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#8C9A93]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
+                      className="w-full bg-[#0B0F0E] border border-[#223027] rounded-lg px-4 py-2 text-sm text-[#E8EDEA] placeholder-[#94A3B8]/20 focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E]/30 transition-all duration-200"
                       placeholder="Full company correspondence address..."
                     />
                   </div>
@@ -272,7 +272,7 @@ const Register = () => {
         )}
 
         {/* Login Redirect */}
-        <div className="mt-6 text-center text-xs text-[#8C9A93]">
+        <div className="mt-6 text-center text-xs text-[#94A3B8]">
           Already have an account?{' '}
           <Link to="/login" className="text-[#22C55E] hover:underline font-medium">
             Sign In

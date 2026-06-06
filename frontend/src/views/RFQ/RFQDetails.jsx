@@ -65,7 +65,7 @@ const RFQDetails = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-[#8C9A93]">
+      <div className="flex flex-col items-center justify-center py-20 text-[#94A3B8]">
         <Loader2 className="h-8 w-8 animate-spin text-[#22C55E] mb-2" />
         <span>Loading RFQ details...</span>
       </div>
@@ -79,7 +79,7 @@ const RFQDetails = () => {
       {/* Back link */}
       <button
         onClick={() => navigate('/rfqs')}
-        className="flex items-center gap-2 text-xs text-[#8C9A93] hover:text-[#E8EDEA] transition-all cursor-pointer"
+        className="flex items-center gap-2 text-xs text-[#94A3B8] hover:text-[#E8EDEA] transition-all cursor-pointer"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to RFQ List
@@ -90,7 +90,7 @@ const RFQDetails = () => {
         <div className="space-y-2">
           <span className="font-mono text-xs text-[#22C55E] font-semibold">{rfq.rfq_number}</span>
           <h1 className="text-xl font-bold text-[#E8EDEA]">{rfq.title}</h1>
-          <p className="text-xs text-[#8C9A93] flex items-center gap-1.5 pt-1">
+          <p className="text-xs text-[#94A3B8] flex items-center gap-1.5 pt-1">
             <Calendar className="h-3.5 w-3.5" />
             Deadline for responses:{' '}
             <span className="text-[#E8EDEA] font-semibold">
@@ -172,7 +172,7 @@ const RFQDetails = () => {
             </h3>
 
             {rfq.attachments?.length === 0 ? (
-              <p className="text-xs text-[#8C9A93] italic">No attachments uploaded yet.</p>
+              <p className="text-xs text-[#94A3B8] italic">No attachments uploaded yet.</p>
             ) : (
               <div className="space-y-2">
                 {rfq.attachments?.map(attach => (
@@ -183,9 +183,9 @@ const RFQDetails = () => {
                     rel="noreferrer"
                     className="flex items-center gap-2 p-2.5 rounded-lg bg-[#0B0F0E] border border-[#223027] hover:border-[#22C55E]/40 text-xs text-[#E8EDEA] hover:text-[#22C55E] transition-all"
                   >
-                    <FileText className="h-4 w-4 text-[#8C9A93]" />
+                    <FileText className="h-4 w-4 text-[#94A3B8]" />
                     <span className="truncate">{attach.file_name}</span>
-                    <span className="text-[10px] text-[#8C9A93] ml-auto">
+                    <span className="text-[10px] text-[#94A3B8] ml-auto">
                       {new Date(attach.uploaded_at).toLocaleDateString()}
                     </span>
                   </a>
@@ -196,7 +196,7 @@ const RFQDetails = () => {
             {/* Staff File Upload */}
             {isStaff && (
               <form onSubmit={handleUploadAttachment} className="border-t border-[#223027]/40 pt-4 space-y-3">
-                <span className="text-[10px] font-semibold text-[#8C9A93] uppercase block">Upload Specification Document</span>
+                <span className="text-[10px] font-semibold text-[#94A3B8] uppercase block">Upload Specification Document</span>
                 {uploadError && <p className="text-[11px] text-rose-500">{uploadError}</p>}
                 
                 <div className="flex gap-2">
@@ -204,7 +204,7 @@ const RFQDetails = () => {
                     type="file"
                     id="attachment-file-input"
                     onChange={handleFileChange}
-                    className="block w-full text-xs text-[#8C9A93] file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#1a2d24] file:text-[#22C55E] file:cursor-pointer hover:file:bg-[#22C55E]/10"
+                    className="block w-full text-xs text-[#94A3B8] file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#1a2d24] file:text-[#22C55E] file:cursor-pointer hover:file:bg-[#22C55E]/10"
                     required
                   />
                   <button
